@@ -88,6 +88,22 @@
   - HTTP Egress and Ingress for the containers running on Homelab
   - Maybe Docker + Nomad node?
 
+## Mobile setup
+
+- Zerotier on all mobile devices
+- Wireguard on Android
+- IKEv2 on Windows
+
+### GL.iNet Slate
+
+- Wireguard setup
+- Zerotier Layer 2 bridge configured
+
+### GL.iNet AR300M
+
+- Needs: Wireguard setup
+- Needs: Zerotier Layer 2 bridge configured
+
 ## Plans
 
 ### Cluster
