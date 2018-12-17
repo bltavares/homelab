@@ -1,0 +1,23 @@
+allow-hotplug ethpi1
+iface ethpi1 inet manual
+        pre-up ifup br0
+pre-up brctl addif br0 ethpi1
+        up ifconfig ethpi1 up
+
+allow-hotplug ethpi2
+iface ethpi2 inet manual
+        pre-up ifup br0
+pre-up brctl addif br0 ethpi2
+        up ifconfig ethpi2 up
+
+allow-hotplug ethpi3
+iface ethpi3 inet manual
+        pre-up ifup br0
+pre-up brctl addif br0 ethpi3
+        up ifconfig ethpi3 up
+
+allow-hotplug ethpi4
+iface ethpi4 inet manual
+        pre-up ifup br0
+pre-up brctl addif br0 ethpi4
+        up ifconfig ethpi4 up

@@ -1,0 +1,69 @@
+#cloud-config
+
+hostname: p2
+manage_etc_hosts: true
+
+users:
+  - name: bltavares
+    shell: /bin/bash
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    groups: users,docker,netdev,video
+    lock_passwd: true
+    ssh-authorized-keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC5027ecdYFEWCaO45DuB2681dIYS7ThssorL61x9FZPp7TL1Ul+g84kGlHSRjs7btPpqilhq4G8cC8qLE28uNNTdRMGvxWqWYJvpXIYUeiGlNS+Tm8XsUxJ6XAlAdXmLXH5Mu2T2Glqh7vugpOGEiDZTmxHGcsU2SlcQthRQNrDKhMl5k9IgNsJxxbGM1PzFlCumF3HTM/RK0hYKdwdnj4THqMb7iTRQdVuFobVrqz/U8Gdv6CAHdieU/3YmLr+Pphrm8rWXjQMr3Yn22jzMq0FXreM1e76emN+UHfwf3MmSVVTeaEndbBpVXV1LANNXlYAv9QNiR0kXyBhGFhRvaz bltav@Vaporware
+
+locale: "en_US.UTF-8"
+timezone: "UTC"
+
+# These commands will be ran once on first boot only
+runcmd:
+  - 'systemctl enable github-keys@bltavares.timer'
+  # Cluster Node
+  ## Configures network after initial setup
+  - 'systemctl enable --now getty@ttyGS0.service'
+  - 'cat /etc/dhcpcd.conf.controller >> /etc/dhcpcd.conf'
+  - 'systemctl restart dhcpcd'
+  - 'sleep 3'
+  - "apt-get update" 
+  - "apt-get install -y ntp libnss-mdns ssh-import-id"
+  - "apt-get upgrade"
+  - "reboot"
+  
+write_files:
+  - content: |
+      [Unit]
+      Description=Import keys on boot and keep updated
+      [Timer]
+      OnBootSec=1min
+      OnUnitActiveSec=1d 
+      [Install]
+      WantedBy=timers.target
+    path: /etc/systemd/system/github-keys@.timer
+
+  - content: |
+      [Unit]
+      Description=Import keys for %i
+      Wants=network-online.target
+      After=network-online.target
+      [Service]
+      Type=oneshot
+      ExecStart=/usr/bin/ssh-import-id gh:%i
+      User=%i
+    path: /etc/systemd/system/github-keys@.service
+
+  # Cluster Node
+  ## Content to show on login console
+  - content: |
+      HypriotOS (Debian GNU/Linux 9) \n \l
+      usb0 - IPv4: \4{usb0} IPv6: \6{usb0}
+    path: /etc/issue
+    
+  - content: |
+      ##  Fallback ip configuration
+      profile clusterhat_fallback_usb0
+      static ip_address=172.19.181.2/24
+      static routers=172.19.181.254
+      static domain_name_servers=8.8.8.8 208.67.222.222
+      interface usb0
+      fallback clusterhat_fallback_usb0
+    path: /etc/dhcpcd.conf.controller

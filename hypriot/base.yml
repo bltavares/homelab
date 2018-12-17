@@ -1,0 +1,52 @@
+#cloud-config
+
+hostname: pi-node
+manage_etc_hosts: true
+
+users:
+  - name: bltavares
+    shell: /bin/bash
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    groups: users,docker,netdev,video
+    lock_passwd: true
+    ssh-authorized-keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC5027ecdYFEWCaO45DuB2681dIYS7ThssorL61x9FZPp7TL1Ul+g84kGlHSRjs7btPpqilhq4G8cC8qLE28uNNTdRMGvxWqWYJvpXIYUeiGlNS+Tm8XsUxJ6XAlAdXmLXH5Mu2T2Glqh7vugpOGEiDZTmxHGcsU2SlcQthRQNrDKhMl5k9IgNsJxxbGM1PzFlCumF3HTM/RK0hYKdwdnj4THqMb7iTRQdVuFobVrqz/U8Gdv6CAHdieU/3YmLr+Pphrm8rWXjQMr3Yn22jzMq0FXreM1e76emN+UHfwf3MmSVVTeaEndbBpVXV1LANNXlYAv9QNiR0kXyBhGFhRvaz bltav@Vaporware
+
+package_update: true
+package_upgrade: true
+package_reboot_if_required: true
+
+packages:
+ - ntp
+ - ssh-import-id
+
+locale: "en_US.UTF-8"
+timezone: "UTC"
+
+write_files:
+  - content: |
+      [Unit]
+      Description=Import keys on boot and keep updated
+      [Timer]
+      OnBootSec=5min
+      OnUnitActiveSec=1d 
+      [Install]
+      WantedBy=timers.target
+    path: /etc/systemd/system/github-keys@.timer
+
+  - content: |
+      [Unit]
+      Description=Import keys for %i
+      Wants=network-online.target
+      After=network-online.target
+      [Service]
+      Type=oneshot
+      ExecStart=/usr/bin/ssh-import-id gh:%i
+      User=%i
+    path: /etc/systemd/system/github-keys@.service
+
+# These commands will be ran once on first boot only
+runcmd:
+  - 'systemctl restart avahi-daemon'
+  - 'systemctl enable github-keys@bltavares.timer'
+  - 'systemctl start github-keys@bltavares.timer'

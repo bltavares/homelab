@@ -1,0 +1,51 @@
+# ClusterHAT Pi Zero Ethernet Devices
+SUBSYSTEM=="net", ATTR{address}=="00:22:82:ff:fe:01", NAME="ethpi1"
+SUBSYSTEM=="net", ATTR{address}=="00:22:82:ff:fe:02", NAME="ethpi2"
+SUBSYSTEM=="net", ATTR{address}=="00:22:82:ff:fe:03", NAME="ethpi3"
+SUBSYSTEM=="net", ATTR{address}=="00:22:82:ff:fe:04", NAME="ethpi4"
+
+# ClusterHAT Pi Zero Serial Ports (top left USB port on Pi3+)
+SUBSYSTEM=="tty", KERNELS=="1-1.1.2.1", ATTRS{idProduct}=="a4aa", ATTRS{idVendor}=="0525", SYMLINK+="ttypi4"
+SUBSYSTEM=="tty", KERNELS=="1-1.1.2.2", ATTRS{idProduct}=="a4aa", ATTRS{idVendor}=="0525", SYMLINK+="ttypi3"
+SUBSYSTEM=="tty", KERNELS=="1-1.1.2.3", ATTRS{idProduct}=="a4aa", ATTRS{idVendor}=="0525", SYMLINK+="ttypi2"
+SUBSYSTEM=="tty", KERNELS=="1-1.1.2.4", ATTRS{idProduct}=="a4aa", ATTRS{idVendor}=="0525", SYMLINK+="ttypi1"
+# ClusterHAT Pi Zero Serial Ports (bottom left USB port on Pi3+)
+SUBSYSTEM=="tty", KERNELS=="1-1.1.3.1", ATTRS{idProduct}=="a4aa", ATTRS{idVendor}=="0525", SYMLINK+="ttypi4"
+SUBSYSTEM=="tty", KERNELS=="1-1.1.3.2", ATTRS{idProduct}=="a4aa", ATTRS{idVendor}=="0525", SYMLINK+="ttypi3"
+SUBSYSTEM=="tty", KERNELS=="1-1.1.3.3", ATTRS{idProduct}=="a4aa", ATTRS{idVendor}=="0525", SYMLINK+="ttypi2"
+SUBSYSTEM=="tty", KERNELS=="1-1.1.3.4", ATTRS{idProduct}=="a4aa", ATTRS{idVendor}=="0525", SYMLINK+="ttypi1"
+# ClusterHAT Pi Zero Serial Ports (top right USB port on Pi3+)
+SUBSYSTEM=="tty", KERNELS=="1-1.3.1", ATTRS{idProduct}=="a4aa", ATTRS{idVendor}=="0525", SYMLINK+="ttypi4"
+SUBSYSTEM=="tty", KERNELS=="1-1.3.2", ATTRS{idProduct}=="a4aa", ATTRS{idVendor}=="0525", SYMLINK+="ttypi3"
+SUBSYSTEM=="tty", KERNELS=="1-1.3.3", ATTRS{idProduct}=="a4aa", ATTRS{idVendor}=="0525", SYMLINK+="ttypi2"
+SUBSYSTEM=="tty", KERNELS=="1-1.3.4", ATTRS{idProduct}=="a4aa", ATTRS{idVendor}=="0525", SYMLINK+="ttypi1"
+# ClusterHAT Pi Zero Serial Ports (bottom right USB port on Pi3+)
+SUBSYSTEM=="tty", KERNELS=="1-1.2.1", ATTRS{idProduct}=="a4aa", ATTRS{idVendor}=="0525", SYMLINK+="ttypi4"
+SUBSYSTEM=="tty", KERNELS=="1-1.2.2", ATTRS{idProduct}=="a4aa", ATTRS{idVendor}=="0525", SYMLINK+="ttypi3"
+SUBSYSTEM=="tty", KERNELS=="1-1.2.3", ATTRS{idProduct}=="a4aa", ATTRS{idVendor}=="0525", SYMLINK+="ttypi2"
+SUBSYSTEM=="tty", KERNELS=="1-1.2.4", ATTRS{idProduct}=="a4aa", ATTRS{idVendor}=="0525", SYMLINK+="ttypi1"
+# ClusterHAT Pi Zero Serial Ports (top left USB port on B+/2/3)
+SUBSYSTEM=="tty", KERNELS=="1-1.2.1", ATTRS{idProduct}=="a4aa", ATTRS{idVendor}=="0525", SYMLINK+="ttypi4"
+SUBSYSTEM=="tty", KERNELS=="1-1.2.2", ATTRS{idProduct}=="a4aa", ATTRS{idVendor}=="0525", SYMLINK+="ttypi3"
+SUBSYSTEM=="tty", KERNELS=="1-1.2.3", ATTRS{idProduct}=="a4aa", ATTRS{idVendor}=="0525", SYMLINK+="ttypi2"
+SUBSYSTEM=="tty", KERNELS=="1-1.2.4", ATTRS{idProduct}=="a4aa", ATTRS{idVendor}=="0525", SYMLINK+="ttypi1"
+# ClusterHAT Pi Zero Serial Ports (bottom left USB port on B+/2/3)
+SUBSYSTEM=="tty", KERNELS=="1-1.3.1", ATTRS{idProduct}=="a4aa", ATTRS{idVendor}=="0525", SYMLINK+="ttypi4"
+SUBSYSTEM=="tty", KERNELS=="1-1.3.2", ATTRS{idProduct}=="a4aa", ATTRS{idVendor}=="0525", SYMLINK+="ttypi3"
+SUBSYSTEM=="tty", KERNELS=="1-1.3.3", ATTRS{idProduct}=="a4aa", ATTRS{idVendor}=="0525", SYMLINK+="ttypi2"
+SUBSYSTEM=="tty", KERNELS=="1-1.3.4", ATTRS{idProduct}=="a4aa", ATTRS{idVendor}=="0525", SYMLINK+="ttypi1"
+# CluserHAT Pi Zero Serial Ports (top right USB port on B+/2/3)
+SUBSYSTEM=="tty", KERNELS=="1-1.4.1", ATTRS{idProduct}=="a4aa", ATTRS{idVendor}=="0525", SYMLINK+="ttypi4"
+SUBSYSTEM=="tty", KERNELS=="1-1.4.2", ATTRS{idProduct}=="a4aa", ATTRS{idVendor}=="0525", SYMLINK+="ttypi3"
+SUBSYSTEM=="tty", KERNELS=="1-1.4.3", ATTRS{idProduct}=="a4aa", ATTRS{idVendor}=="0525", SYMLINK+="ttypi2"
+SUBSYSTEM=="tty", KERNELS=="1-1.4.4", ATTRS{idProduct}=="a4aa", ATTRS{idVendor}=="0525", SYMLINK+="ttypi1"
+# CluserHAT Pi Zero Serial Ports (bottom right USB port on B+/2/3)
+SUBSYSTEM=="tty", KERNELS=="1-1.5.1", ATTRS{idProduct}=="a4aa", ATTRS{idVendor}=="0525", SYMLINK+="ttypi4"
+SUBSYSTEM=="tty", KERNELS=="1-1.5.2", ATTRS{idProduct}=="a4aa", ATTRS{idVendor}=="0525", SYMLINK+="ttypi3"
+SUBSYSTEM=="tty", KERNELS=="1-1.5.3", ATTRS{idProduct}=="a4aa", ATTRS{idVendor}=="0525", SYMLINK+="ttypi2"
+SUBSYSTEM=="tty", KERNELS=="1-1.5.4", ATTRS{idProduct}=="a4aa", ATTRS{idVendor}=="0525", SYMLINK+="ttypi1"
+# CluserHAT Pi Zero Serial Ports (USB Port on A+)
+SUBSYSTEM=="tty", KERNELS=="1-1.1", ATTRS{idProduct}=="a4aa", ATTRS{idVendor}=="0525", SYMLINK+="ttypi4"
+SUBSYSTEM=="tty", KERNELS=="1-1.2", ATTRS{idProduct}=="a4aa", ATTRS{idVendor}=="0525", SYMLINK+="ttypi3"
+SUBSYSTEM=="tty", KERNELS=="1-1.3", ATTRS{idProduct}=="a4aa", ATTRS{idVendor}=="0525", SYMLINK+="ttypi2"
+SUBSYSTEM=="tty", KERNELS=="1-1.4", ATTRS{idProduct}=="a4aa", ATTRS{idVendor}=="0525", SYMLINK+="ttypi1"
