@@ -1,21 +1,29 @@
 TARGETDIR := build
 
-all: | p2
+COMPILE_NODE = m4 -D NODE=$* $< > $@
 
-controller: | $(TARGETDIR)/controller/user-data
+all: | controller p1 p2 p3 p4
 
-$(TARGETDIR)/controller/user-data: files/controller/* $(TARGETDIR)/controller
-	m4 -P -Dclusterhat=$(base64 files/controller/) source/controller/user-data.yml > $(TARGETDIR)/controller/user-data
+controller: $(TARGETDIR)/controller/user-data
+p1 p2 p3 p4: p% : $(TARGETDIR)/p%/cmdline.txt $(TARGETDIR)/p%/user-data
 
-$(TARGETDIR)/p%/cmdline.txt: source/cluster-nodes/cmdline.txt
-	m4 -D NODE=$@ $<
+$(TARGETDIR)/controller/user-data: source/controller/* | $(TARGETDIR)/controller/
+	m4 -D CLUSTERHAT="$(shell base64 -w0 source/controller/clusterhat)" \
+	   -D UDEV_RULES="$(shell base64 -w0 source/controller/90-clusterhat.rules)" \
+	   -D INTERFACES="$(shell base64 -w0 source/controller/interfaces)" \
+	   source/controller/user-data.yml \
+	   > $@
 
-p1 p2 p3 p4: $(TARGETDIR)/p%/cmdline.txt
+$(TARGETDIR)/p%/cmdline.txt : source/cluster-nodes/cmdline.txt | $(TARGETDIR)/p%/
+	$(COMPILE_NODE)
 
-$(TARGETDIR)/controller: $(TARGETDIR)
-	mkdir -p $(TARGETDIR)/controller
+$(TARGETDIR)/p%/user-data : source/cluster-nodes/user-data.yml | $(TARGETDIR)/p%/
+	$(COMPILE_NODE)
 
-$(TARGETDIR):
-	mkdir -p $(TARGETDIR)
+$(TARGETDIR)/%/:
+	mkdir -p $(TARGETDIR)/$*
 
-.PHONY: all controller
+clean:
+	rm -rd build
+
+.PHONY: all controller p1 p2 p3 p4 clean
