@@ -15,6 +15,8 @@ make
 Flash Hypriot v9 (or v10 RC), then copy the filese from `build` to the boot partition.
 Also change `config.txt` as the recomendations below.
 
+Original scripts and configuration for ClusterHAT sourced from https://github.com/burtyb/clusterhat-image
+
 ### Controller
 
 Needs `enable_uart=1` on `config.txt`
