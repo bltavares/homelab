@@ -60,9 +60,9 @@ cat >/etc/avahi/services/smb.service <<<'<?xml version="1.0" standalone="no"?>
 
 kickstart.info "Expose disks - NFS"
 
-cat >/etc/exports <<<'/media   192.168.15.0/24(ro,crossmnt,all_squash,insecure,no_subtree_check) 10.147.16.0/23(ro,crossmnt,all_squash,insecure,no_subtree_check)
-/media/onetb   192.168.15.0/24(rw,all_squash,insecure,no_subtree_check) 10.147.16.0/23(rw,all_squash,insecure,no_subtree_check)
-/media/twotb   192.168.15.0/24(rw,all_squash,insecure,no_subtree_check) 10.147.16.0/23(rw,all_squash,insecure,no_subtree_check)'
+: >/etc/exports
+echo "/media/onetb   192.168.15.0/24(rw,all_squash,insecure,no_subtree_check) 10.147.16.0/23(rw,all_squash,insecure,no_subtree_check)" >>/etc/exports
+echo "/media/twotb   192.168.15.0/24(rw,all_squash,insecure,no_subtree_check) 10.147.16.0/23(rw,all_squash,insecure,no_subtree_check)" >>/etc/exports
 
 cat >/etc/avahi/services/nfs-onetb.service <<<'<?xml version="1.0" standalone="no"?>
  <!DOCTYPE service-group SYSTEM "avahi-service.dtd">
