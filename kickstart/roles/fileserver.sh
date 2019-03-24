@@ -11,11 +11,11 @@ mkdir -p /media/onetb
 mkdir -p /media/twotb
 
 grep -v 50B6-F043 /etc/fstab >/tmp/fstab
-echo "UUID=50B6-F043 /media/onetb     auto     nofail,lazytime,x-systemd.device-timeout=1,noauto,x-systemd.automount     0 2" >>/tmp/fstab
+echo "UUID=50B6-F043 /media/onetb     auto     nofail,lazytime,x-systemd.device-timeout=1,noauto,x-systemd.automount,x-systemd.before=docker     0 2" >>/tmp/fstab
 mv /tmp/fstab /etc/fstab
 
 grep -v 5C90-2806 /etc/fstab >/tmp/fstab
-echo "UUID=5C90-2806 /media/twotb     auto     nofail,lazytime,x-systemd.device-timeout=1,noauto,x-systemd.automount    0 2" >>/tmp/fstab
+echo "UUID=5C90-2806 /media/twotb     auto     nofail,lazytime,x-systemd.device-timeout=1,noauto,x-systemd.automount,x-systemd.before=docker    0 2" >>/tmp/fstab
 mv /tmp/fstab /etc/fstab
 
 # Spin down all rotational disks after a while
@@ -60,25 +60,25 @@ cat >/etc/avahi/services/smb.service <<<'<?xml version="1.0" standalone="no"?>
 
 kickstart.info "Expose disks - NFS"
 
-: >/etc/exports
-echo "/media/onetb   192.168.15.0/24(rw,all_squash,insecure) 10.147.16.0/23(rw,all_squash,insecure)" >>/etc/exports
-echo "/media/twotb   192.168.15.0/24(rw,all_squash,insecure) 10.147.16.0/23(rw,all_squash,insecure)" >>/etc/exports
+cat >/etc/exports <<<'/media   192.168.15.0/24(ro,crossmnt,all_squash,insecure,no_subtree_check) 10.147.16.0/23(ro,crossmnt,all_squash,insecure,no_subtree_check)
+/media/onetb   192.168.15.0/24(rw,all_squash,insecure,no_subtree_check) 10.147.16.0/23(rw,all_squash,insecure,no_subtree_check)
+/media/twotb   192.168.15.0/24(rw,all_squash,insecure,no_subtree_check) 10.147.16.0/23(rw,all_squash,insecure,no_subtree_check)'
 
 cat >/etc/avahi/services/nfs-onetb.service <<<'<?xml version="1.0" standalone="no"?>
  <!DOCTYPE service-group SYSTEM "avahi-service.dtd">
  <service-group>
-   <name replace-wildcards="yes">NFS server at %h</name>  
+   <name replace-wildcards="yes">NFS twotb on %h</name>  
    <service>
      <type>_nfs._tcp</type>
      <port>2049</port>
-     <txt-record>path=/media/onetb</txt-record>
+     <txt-record>path=/media/twotb</txt-record>
    </service>
  </service-group>'
 
 cat >/etc/avahi/services/nfs-twotb.service <<<'<?xml version="1.0" standalone="no"?>
  <!DOCTYPE service-group SYSTEM "avahi-service.dtd">
  <service-group>
-   <name replace-wildcards="yes">NFS server at %h</name>  
+   <name replace-wildcards="yes">NFS twotb on %h</name>  
    <service>
      <type>_nfs._tcp</type>
      <port>2049</port>
@@ -87,4 +87,4 @@ cat >/etc/avahi/services/nfs-twotb.service <<<'<?xml version="1.0" standalone="n
  </service-group>'
 
 kickstart.package.install nfs-kernel-server
-kickstart.service.restart nfs-kernel-server
+kickstart.service.restart nfs-server
