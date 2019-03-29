@@ -14,7 +14,8 @@ provider "zerotier" {
 }
 
 resource "zerotier_network" "homelab" {
-  name = "zerotier.bltavares.com"
+  name         = "zerotier.bltavares.com"
+  rules_source = file("../secrets/zerotier.config")
 
   auto_assign_v4     = true
   auto_assign_6plane = true
@@ -34,8 +35,6 @@ resource "zerotier_network" "homelab" {
       target = route.value.target
     }
   }
-
-  rules_source = "${file("../secrets/zerotier.config")}"
 }
 
 variable "zerotier_members" {
