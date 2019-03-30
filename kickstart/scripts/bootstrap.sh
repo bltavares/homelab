@@ -22,4 +22,5 @@ source "${current_dir}/../../secrets/env.sh"
 #Archiver
 #kickstart deploy root@"192.168.15.10" bootstrap-debian ssh-keys
 #kickstart deploy --sudo bltavares@"192.168.15.10" docker-ce connection <<<"$NETWORK_ID"
-kickstart deploy --sudo bltavares@"192.168.15.10" fileserver #mediacenter
+#kickstart deploy --sudo bltavares@"192.168.15.10" fileserver mediacenter
+kickstart deploy --sudo bltavares@"192.168.15.2" monitoring
