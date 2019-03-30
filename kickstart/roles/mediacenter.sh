@@ -18,6 +18,7 @@ docker run --name=syncthing \
     -v "${CONFIG_FOLDER}/syncthing/:/config" \
     -v "${SYNCTHING_SHARE}/:/data1" \
     --network=host \
+    -p 8384:8384 \
     --restart=unless-stopped -d \
     $REPO/syncthing
 
@@ -30,6 +31,7 @@ docker run --name=transmission \
     -v "${DOWNLOADS}/:/downloads" \
     -v "${DOWNLOADS}/watch:/watch" \
     --net=host \
+    -p 9091:9091 \
     --restart=unless-stopped -d \
     $REPO/transmission
 
@@ -42,6 +44,7 @@ docker run --name sonarr \
     -v "${SERIES}/:/tv" \
     -v "${DOWNLOADS}:/downloads" \
     --net=host \
+    -p 8989:8989 \
     --restart=unless-stopped -d \
     $REPO/sonarr
 
@@ -53,6 +56,7 @@ docker run --name=jackett \
     -v "${CONFIG_FOLDER}/jackett/:/config" \
     -v "${DOWNLOADS}/:/downloads" \
     --net=host \
+    -p 9117:9117 \
     --restart=unless-stopped -d \
     $REPO/jackett
 
@@ -65,19 +69,20 @@ docker run --name=radarr \
     -v "${DOWNLOADS}/:/downloads" \
     -v "${MOVIES}/:/movies" \
     --net=host \
+    -p 7878:7878 \
     --restart=unless-stopped -d \
     $REPO/radarr
 
-docker pull $REPO/bazarr
-docker rm -f bazarr
-docker run --name=bazarr \
-    -e PGID=0 -e PUID=0 \
-    -e TZ \
-    -v "${CONFIG_FOLDER}/bazarr/:/config" \
-    -v "${MOVIES}/:/movies" \
-    -v "${SERIES}/:/tv" \
-    --net=host \
-    --restart=unless-stopped -d \
-    $REPO/bazarr
+# docker pull $REPO/bazarr
+# docker rm -f bazarr
+# docker run --name=bazarr \
+#     -e PGID=0 -e PUID=0 \
+#     -e TZ \
+#     -v "${CONFIG_FOLDER}/bazarr/:/config" \
+#     -v "${MOVIES}/:/movies" \
+#     -v "${SERIES}/:/tv" \
+#     --net=host \
+#     --restart=unless-stopped -d \
+#     $REPO/bazarr
 
 docker image prune -f

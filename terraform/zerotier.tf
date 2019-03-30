@@ -59,3 +59,19 @@ resource "zerotier_member" "archiver" {
 
   ip_assignments = var.zerotier_members.archiver.assignment_ips
 }
+
+resource "zerotier_member" "libreelec" {
+  node_id    = var.zerotier_members.libreelec.node_id
+  network_id = zerotier_network.homelab.id
+  name       = "libreelec"
+
+  ip_assignments = var.zerotier_members.libreelec.assignment_ips
+}
+
+resource "zerotier_member" "pve" {
+  node_id    = var.zerotier_members.pve.node_id
+  network_id = zerotier_network.homelab.id
+  name       = "pve"
+
+  ip_assignments = var.zerotier_members.pve.assignment_ips
+}

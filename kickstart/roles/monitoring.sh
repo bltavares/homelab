@@ -9,6 +9,7 @@ docker pull netdata/netdata
 docker rm -f netdata
 docker run -d --name=netdata \
     --net=host \
+    -p 19999:19999 \
     -v /proc:/host/proc:ro \
     -v /sys:/host/sys:ro \
     -v /var/run/docker.sock:/var/run/docker.sock:ro \
