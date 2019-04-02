@@ -1,7 +1,10 @@
 #!/bin/bash
 kickstart.context "Web Proxy: Lab side"
 
-cp files/lab-traefik.toml /etc/traefik.toml
+mkdir -p /etc/traefik/
+cp files/lab-traefik.toml /etc/traefik/traefik.toml
+cp files/certificates/lab.bltavares.com.cert /etc/traefik/traefik.crt
+cp files/certificates/lab.bltavares.com.key /etc/traefik/traefik.key
 
 docker pull traefik
 docker rm -f traefik
@@ -13,6 +16,6 @@ docker run --name traefik \
     -l SERVICE_8080_NAME="lab-traefik" \
     -l SERVICE_80_NAME=proxy \
     -l SERVICE_80_TAGS="traefik.enable=false" \
-    -v /etc/traefik.toml:/etc/traefik/traefik.toml \
+    -v /etc/traefik:/etc/traefik:ro \
     traefik
 docker system prune -f

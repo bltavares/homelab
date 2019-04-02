@@ -1,6 +1,16 @@
+defaultEntryPoints = ["http", "https"]
+
 [entryPoints]
-  [entryPoints.http]
-  address = ":80"
+[entryPoints.http]
+address = ":80"
+[entryPoints.http.redirect]
+entryPoint = "https"
+[entryPoints.https]
+address = ":443"
+[entryPoints.https.tls]
+[[entryPoints.https.tls.certificates]]
+certFile = "/etc/traefik/traefik.crt"
+keyFile = "/etc/traefik/traefik.key"
 
 [web]
     address = ":8080"
