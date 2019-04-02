@@ -8,6 +8,8 @@ docker rm -f consul
 docker volume create consul
 docker run --name consul \
     --net=host \
+    -p 8500:8500 \
+    -l SERVICE_NAME="consul-server" \
     -v consul:/consul/data \
     -d --restart=unless-stopped \
     consul agent -server \
@@ -17,7 +19,8 @@ docker run --name consul \
     -retry-join "vaporware.zerotier.bltavares.com" \
     -retry-join "archiver.zerotier.bltavares.com" \
     -retry-join "libreelec.zerotier.bltavares.com" \
-    -retry-join "pve.zerotier.bltavares.com"
+    -retry-join "pve.zerotier.bltavares.com" \
+    -ui
 
 docker pull gliderlabs/registrator:latest
 docker rm -f registrator

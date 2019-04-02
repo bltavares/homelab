@@ -1,0 +1,33 @@
+[entryPoints]
+  [entryPoints.http]
+  address = ":80"
+
+[web]
+    address = ":8080"
+
+[consulCatalog]
+    frontEndRule = "Host:{{.ServiceName}}.lab.bltavares.com"
+    endpoint = "127.0.0.1:8500"
+
+[file]
+
+[frontends.radarr]
+backend = "radarr"
+[frontends.radarr.routes.route0]
+rule = "Host:radarr.lab.bltavares.com"
+[backends.radarr.servers.server0]
+url = "http://10.147.17.110:7878"
+
+[frontends.sonarr]
+backend = "sonarr"
+[frontends.sonarr.routes.route0]
+rule = "Host:sonarr.lab.bltavares.com"
+[backends.sonarr.servers.server0]
+url = "http://10.147.17.110:8989"
+
+[frontends.transmission]
+backend = "transmission"
+[frontends.transmission.routes.route0]
+rule = "Host:transmission.lab.bltavares.com"
+[backends.transmission.servers.server0]
+url = "http://10.147.17.110:9091"

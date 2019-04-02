@@ -17,6 +17,8 @@ docker run -d --name=netdata \
     -v /etc/localtime:/etc/localtime:ro \
     -v /etc/netdata/netdata.conf:/etc/netdata/netdata.conf:ro \
     -v /etc/netdata/charts.d.conf:/etc/netdata/charts.d.conf:ro \
+    -l SERVICE_NAME="$(hostname)-netdata" \
+    -l SERVICE_TAGS="traefik.frontends.lab-status-$(hostname).rule=Host:$(hostname).status.lab.bltavares.com,traefik.frontends.cloud-status-$(hostname).rule=Host:$(hostname).status.cloud.bltavares.com" \
     -e PGID="$(grep docker /etc/group | cut -d ':' -f 3)" \
     --cap-add SYS_PTRACE \
     --security-opt apparmor=unconfined \

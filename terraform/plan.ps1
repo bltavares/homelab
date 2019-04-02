@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-terraform plan --var-file ../secrets/production.tfvars --out terraform.plan
+terraform.exe plan --var-file ../secrets/production.tfvars --out terraform.plan

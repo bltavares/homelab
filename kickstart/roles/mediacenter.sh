@@ -32,6 +32,7 @@ docker run --name=transmission \
     -v "${DOWNLOADS}/watch:/watch" \
     --net=host \
     -p 9091:9091 \
+    -l SERVICE_TAGS="traefik.enable=false" \
     --restart=unless-stopped -d \
     $REPO/transmission
 
@@ -45,6 +46,7 @@ docker run --name sonarr \
     -v "${DOWNLOADS}:/downloads" \
     --net=host \
     -p 8989:8989 \
+    -l SERVICE_TAGS="traefik.enable=false" \
     --restart=unless-stopped -d \
     $REPO/sonarr
 
@@ -70,6 +72,7 @@ docker run --name=radarr \
     -v "${MOVIES}/:/movies" \
     --net=host \
     -p 7878:7878 \
+    -l SERVICE_TAGS="traefik.enable=false" \
     --restart=unless-stopped -d \
     $REPO/radarr
 
