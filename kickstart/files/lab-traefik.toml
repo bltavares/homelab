@@ -1,4 +1,5 @@
 defaultEntryPoints = ["http", "https"]
+insecureSkipVerify = true
 
 [entryPoints]
 [entryPoints.http]

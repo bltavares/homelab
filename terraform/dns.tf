@@ -104,19 +104,19 @@ resource "cloudflare_record" "lab-6plane" {
   domain = "bltavares.com"
   name   = "*.lab"
   type   = "AAAA"
-  value  = zerotier_member.pve["6plane_address"]
+  value  = zerotier_member.pve-debian["6plane_address"]
 }
 
 resource "cloudflare_record" "lab-rfc" {
   domain = "bltavares.com"
   name   = "*.lab"
   type   = "AAAA"
-  value  = zerotier_member.pve.rfc4193_address
+  value  = zerotier_member.pve-debian.rfc4193_address
 }
 
 resource "cloudflare_record" "lab-dhcp" {
   domain = "bltavares.com"
   name   = "*.lab"
   type   = "A"
-  value  = element(tolist(zerotier_member.pve.ipv4_assignments), 0)
+  value  = element(tolist(zerotier_member.pve-debian.ipv4_assignments), 0)
 }

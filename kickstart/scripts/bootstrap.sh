@@ -7,21 +7,33 @@ source "${current_dir}/../../secrets/env.sh"
 ## PVE
 #kickstart deploy root@"192.168.15.32" ssh-keys connection <<<"$NETWORK_ID"
 #kickstart deploy root@"192.168.15.3" bootstrap-debian ssh-keys
-# kickstart deploy --sudo bltavares@"192.168.15.3" docker-ce monitoring consul-server <../secrets/consul.key
-kickstart deploy --sudo bltavares@192.168.15.3 lab-web
+#kickstart deploy --sudo bltavares@"192.168.15.3" docker-ce monitoring consul-server <../secrets/consul.key
+#kickstart deploy --sudo bltavares@192.168.15.3 lab-web
 #kickstart deploy --sudo bltavares@192.168.15.2 mediacenter
 
+# PVE: Debian vm
+#kickstart deploy root@192.168.15.193 bootstrap-debian ssh-keys
+#kickstart deploy --sudo bltavares@192.168.15.193 docker-ce connection <<<"$NETWORK_ID"
+#kickstart deploy --sudo bltavares@192.168.15.193 consul-client <../secrets/consul.key
+#kickstart deploy --sudo bltavares@192.168.15.193 lab-web
+
 ## Controller
-#kickstart deploy --sudo bltavares@"fe80::ba27:ebff:fef1:7e91%9" ssh-keys connection <<<"$NETWORK_ID"
+#kickstart deploy --sudo bltavares@"192.168.15.245" consul-client <../secrets/consul.key
 
 ## Pi Zeros
-#kickstart deploy --sudo bltavares@"192.168.15.19" ssh-keys connection <<<"$NETWORK_ID"
+# P1
+#kickstart deploy --sudo bltavares@"192.168.15.159" consul-client <../secrets/consul.key
 
-#kickstart deploy --sudo bltavares@"192.168.15.18" ssh-keys connection <<<"$NETWORK_ID"
+# P2
+#kickstart deploy --sudo bltavares@"192.168.15.160" consul-client <../secrets/consul.key
 
-#kickstart deploy --sudo bltavares@"192.168.15.17" ssh-keys connection <<<"$NETWORK_ID"
+# P3
+#kickstart deploy --sudo bltavares@192.168.15.163 ssh-keys connection <<<"$NETWORK_ID"
+#kickstart deploy --sudo bltavares@"192.168.15.163" consul-client <../secrets/consul.key
 
-#kickstart deploy --sudo bltavares@"192.168.15.16" ssh-keys connection <<<"$NETWORK_ID"
+# P4
+#kickstart deploy --sudo bltavares@192.168.15.162 ssh-keys connection <<<"$NETWORK_ID"
+#kickstart deploy --sudo bltavares@"192.168.15.162" consul-client <../secrets/consul.key
 
 #Archiver
 #kickstart deploy root@"192.168.15.2" bootstrap-debian ssh-keys
