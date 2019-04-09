@@ -84,3 +84,10 @@ resource "zerotier_member" "pve-debian" {
   ip_assignments = var.zerotier_members.pve-debian.assignment_ips
 }
 
+resource "zerotier_member" "controller" {
+  node_id    = var.zerotier_members.controller.node_id
+  network_id = zerotier_network.homelab.id
+  name       = "controller"
+
+  ip_assignments = var.zerotier_members.controller.assignment_ips
+}

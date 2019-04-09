@@ -99,6 +99,29 @@ resource "cloudflare_record" "pve-dhcp" {
   value  = element(tolist(zerotier_member.pve.ipv4_assignments), 0)
 }
 
+## controller
+
+resource "cloudflare_record" "controller-6plane" {
+  domain = "bltavares.com"
+  name   = "${zerotier_member.controller.name}.zerotier"
+  type   = "AAAA"
+  value  = zerotier_member.controller["6plane_address"]
+}
+
+resource "cloudflare_record" "controller-rfc" {
+  domain = "bltavares.com"
+  name   = "${zerotier_member.controller.name}.zerotier"
+  type   = "AAAA"
+  value  = zerotier_member.controller.rfc4193_address
+}
+
+resource "cloudflare_record" "controller-dhcp" {
+  domain = "bltavares.com"
+  name   = "${zerotier_member.controller.name}.zerotier"
+  type   = "A"
+  value  = element(tolist(zerotier_member.controller.ipv4_assignments), 0)
+}
+
 ## Lab: Web proxy
 resource "cloudflare_record" "lab-6plane" {
   domain = "bltavares.com"
