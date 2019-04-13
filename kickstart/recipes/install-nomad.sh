@@ -1,5 +1,5 @@
 #!/bin/bash
-nomad_version=0.8.7
+nomad_version=0.9.0
 
 arch="$(uname -m)"
 
@@ -51,7 +51,7 @@ WantedBy=network-online.target
 KillSignal=INT
 ExecStart=/usr/local/bin/nomad agent -config="/etc/nomad.d"
 Restart=always
-ExecStopPost=sleep 5
+ExecStopPost=/bin/sleep 5
 EOF
 )
 
