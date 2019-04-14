@@ -11,4 +11,10 @@ server {
 client {
   enabled           = true
   network_interface = "zt5u44ufvb"
+  node_class = "$arch"
+
+  meta {
+    "arch" = "$arch"
+    "arch_base" = "$arch_base"
+  }
 }

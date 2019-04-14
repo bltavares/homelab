@@ -5,7 +5,7 @@ kickstart.context "Nomad: Server"
 read -r NOMAD_KEY
 source recipes/install-nomad.sh
 
-nomad_key="$NOMAD_KEY" kickstart.file.template files/nomad-server.tmpl.hcl >/etc/nomad.d/server.hcl
+arch="$(uname -m)" nomad_key="$NOMAD_KEY" kickstart.file.template files/nomad-server.tmpl.hcl >/etc/nomad.d/server.hcl
 
 kickstart.service.enable nomad
 kickstart.service.restart nomad

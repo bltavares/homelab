@@ -6,18 +6,23 @@ arch="$(uname -m)"
 case "$arch" in
 armv6*)
     url=https://github.com/bltavares/nomad/releases/download/v${nomad_version}-armel/linux_armel.zip
+    arch_base="arm32v6"
     ;;
 armv7*)
     url=https://releases.hashicorp.com/nomad/${nomad_version}/nomad_${nomad_version}_linux_arm.zip
+    arch_base="arm32v7"
     ;;
 x86_64)
     url=https://releases.hashicorp.com/nomad/${nomad_version}/nomad_${nomad_version}_linux_amd64.zip
+    arch_base="amd64"
     ;;
 *)
     url=https://releases.hashicorp.com/nomad/${nomad_version}/nomad_${nomad_version}_linux_arm64.zip
+    arch_base="arm64v8"
     ;;
 esac
 
+export arch_base
 kickstart.info "Fetching Nomad..."
 kickstart.info "Arch: ${arch} - url: ${url}"
 (
