@@ -9,5 +9,6 @@ server {
 }
 
 client {
-  enabled = true
+  enabled           = true
+  network_interface = "zt5u44ufvb"
 }
