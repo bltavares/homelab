@@ -5,7 +5,7 @@ arch="$(uname -m)"
 
 case "$arch" in
 armv6*)
-    url=https://github.com/bltavares/nomad-arm6l/releases/download/v${nomad_version}-armv6l/nomad-armv6l.zip
+    url=https://github.com/bltavares/nomad/releases/download/v${nomad_version}-armel/linux_armel.zip
     ;;
 armv7*)
     url=https://releases.hashicorp.com/nomad/${nomad_version}/nomad_${nomad_version}_linux_arm.zip

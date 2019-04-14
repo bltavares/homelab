@@ -1,6 +1,6 @@
 #!/bin/bash
 
-kickstart.context "Consul Server"
+kickstart.context "Consul Client"
 read -r CONSUL_KEY
 
 docker volume create consul
