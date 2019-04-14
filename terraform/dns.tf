@@ -122,6 +122,98 @@ resource "cloudflare_record" "controller-dhcp" {
   value  = element(tolist(zerotier_member.controller.ipv4_assignments), 0)
 }
 
+## p1
+
+resource "cloudflare_record" "p1-6plane" {
+  domain = "bltavares.com"
+  name   = "${zerotier_member.p1.name}.zerotier"
+  type   = "AAAA"
+  value  = zerotier_member.p1["6plane_address"]
+}
+
+resource "cloudflare_record" "p1-rfc" {
+  domain = "bltavares.com"
+  name   = "${zerotier_member.p1.name}.zerotier"
+  type   = "AAAA"
+  value  = zerotier_member.p1.rfc4193_address
+}
+
+resource "cloudflare_record" "p1-dhcp" {
+  domain = "bltavares.com"
+  name   = "${zerotier_member.p1.name}.zerotier"
+  type   = "A"
+  value  = element(tolist(zerotier_member.p1.ipv4_assignments), 0)
+}
+
+## p2
+
+resource "cloudflare_record" "p2-6plane" {
+  domain = "bltavares.com"
+  name   = "${zerotier_member.p2.name}.zerotier"
+  type   = "AAAA"
+  value  = zerotier_member.p2["6plane_address"]
+}
+
+resource "cloudflare_record" "p2-rfc" {
+  domain = "bltavares.com"
+  name   = "${zerotier_member.p2.name}.zerotier"
+  type   = "AAAA"
+  value  = zerotier_member.p2.rfc4193_address
+}
+
+resource "cloudflare_record" "p2-dhcp" {
+  domain = "bltavares.com"
+  name   = "${zerotier_member.p2.name}.zerotier"
+  type   = "A"
+  value  = element(tolist(zerotier_member.p2.ipv4_assignments), 0)
+}
+
+## p3
+
+resource "cloudflare_record" "p3-6plane" {
+  domain = "bltavares.com"
+  name   = "${zerotier_member.p3.name}.zerotier"
+  type   = "AAAA"
+  value  = zerotier_member.p3["6plane_address"]
+}
+
+resource "cloudflare_record" "p3-rfc" {
+  domain = "bltavares.com"
+  name   = "${zerotier_member.p3.name}.zerotier"
+  type   = "AAAA"
+  value  = zerotier_member.p3.rfc4193_address
+}
+
+resource "cloudflare_record" "p3-dhcp" {
+  domain = "bltavares.com"
+  name   = "${zerotier_member.p3.name}.zerotier"
+  type   = "A"
+  value  = element(tolist(zerotier_member.p3.ipv4_assignments), 0)
+}
+
+## p4
+
+resource "cloudflare_record" "p4-6plane" {
+  domain = "bltavares.com"
+  name   = "${zerotier_member.p4.name}.zerotier"
+  type   = "AAAA"
+  value  = zerotier_member.p4["6plane_address"]
+}
+
+resource "cloudflare_record" "p4-rfc" {
+  domain = "bltavares.com"
+  name   = "${zerotier_member.p4.name}.zerotier"
+  type   = "AAAA"
+  value  = zerotier_member.p4.rfc4193_address
+}
+
+resource "cloudflare_record" "p4-dhcp" {
+  domain = "bltavares.com"
+  name   = "${zerotier_member.p4.name}.zerotier"
+  type   = "A"
+  value  = element(tolist(zerotier_member.p4.ipv4_assignments), 0)
+}
+
 ## Lab: Web proxy
 resource "cloudflare_record" "lab-6plane" {
   domain = "bltavares.com"

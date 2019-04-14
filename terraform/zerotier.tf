@@ -91,3 +91,35 @@ resource "zerotier_member" "controller" {
 
   ip_assignments = var.zerotier_members.controller.assignment_ips
 }
+
+resource "zerotier_member" "p1" {
+  node_id    = var.zerotier_members.p1.node_id
+  network_id = zerotier_network.homelab.id
+  name       = "p1"
+
+  ip_assignments = var.zerotier_members.p1.assignment_ips
+}
+
+resource "zerotier_member" "p2" {
+  node_id    = var.zerotier_members.p2.node_id
+  network_id = zerotier_network.homelab.id
+  name       = "p2"
+
+  ip_assignments = var.zerotier_members.p2.assignment_ips
+}
+
+resource "zerotier_member" "p3" {
+  node_id    = var.zerotier_members.p3.node_id
+  network_id = zerotier_network.homelab.id
+  name       = "p3"
+
+  ip_assignments = var.zerotier_members.p3.assignment_ips
+}
+
+resource "zerotier_member" "p4" {
+  node_id    = var.zerotier_members.p4.node_id
+  network_id = zerotier_network.homelab.id
+  name       = "p4"
+
+  ip_assignments = var.zerotier_members.p4.assignment_ips
+}
