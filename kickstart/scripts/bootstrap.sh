@@ -8,24 +8,24 @@ source "${current_dir}/../../secrets/env.sh"
 #kickstart deploy root@"192.168.15.32" ssh-keys connection <<<"$NETWORK_ID"
 #kickstart deploy root@"192.168.15.3" bootstrap-debian ssh-keys
 #kickstart deploy --sudo bltavares@"192.168.15.3" docker-ce monitoring consul-server <../secrets/consul.key
-#kickstart deploy --sudo bltavares@192.168.15.3 lab-web
 #kickstart deploy --sudo bltavares@192.168.15.2 mediacenter
+kickstart deploy --sudo bltavares@192.168.15.2 bouncer
 
-kickstart deploy --sudo bltavares@archiver.zerotier.bltavares.com nomad-server <../secrets/nomad.key
-kickstart deploy --sudo bltavares@pve.zerotier.bltavares.com nomad-server <../secrets/nomad.key
-kickstart deploy --sudo bltavares@controller.zerotier.bltavares.com nomad-server <../secrets/nomad.key
+# kickstart deploy --sudo bltavares@archiver.zerotier.bltavares.com nomad-server <../secrets/nomad.key
+# kickstart deploy --sudo bltavares@pve.zerotier.bltavares.com nomad-server <../secrets/nomad.key
+# kickstart deploy --sudo bltavares@controller.zerotier.bltavares.com nomad-server <../secrets/nomad.key
 
-kickstart deploy --sudo bltavares@192.168.15.193 consul-client nomad-client <../secrets/consul.key
-kickstart deploy --sudo bltavares@p1.zerotier.bltavares.com consul-client nomad-client <../secrets/consul.key
-kickstart deploy --sudo bltavares@p2.zerotier.bltavares.com consul-client nomad-client <../secrets/consul.key
-kickstart deploy --sudo bltavares@p3.zerotier.bltavares.com consul-client nomad-client <../secrets/consul.key
-kickstart deploy --sudo bltavares@p4.zerotier.bltavares.com consul-client nomad-client <../secrets/consul.key
+# kickstart deploy --sudo bltavares@192.168.15.193 consul-client nomad-client <../secrets/consul.key
+# kickstart deploy --sudo bltavares@p1.zerotier.bltavares.com consul-client nomad-client <../secrets/consul.key
+# kickstart deploy --sudo bltavares@p2.zerotier.bltavares.com consul-client nomad-client <../secrets/consul.key
+# kickstart deploy --sudo bltavares@p3.zerotier.bltavares.com consul-client nomad-client <../secrets/consul.key
+# kickstart deploy --sudo bltavares@p4.zerotier.bltavares.com consul-client nomad-client <../secrets/consul.key
 
 # PVE: Debian vm
 #kickstart deploy root@192.168.15.193 bootstrap-debian ssh-keys
 #kickstart deploy --sudo bltavares@192.168.15.193 docker-ce connection <<<"$NETWORK_ID"
 #kickstart deploy --sudo bltavares@192.168.15.193 consul-client <../secrets/consul.key
-#kickstart deploy --sudo bltavares@192.168.15.193 lab-web
+# kickstart deploy --sudo bltavares@192.168.15.193 lab-web
 
 ## Controller
 #kickstart deploy --sudo bltavares@"192.168.15.245" consul-client <../secrets/consul.key
