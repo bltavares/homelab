@@ -3,6 +3,7 @@
 set -e
 kickstart.context "Setup Bouncer"
 
+docker pull bltavares/znc
 docker rm -f znc || true
 docker run --name znc \
   -p 6997:6997 \
