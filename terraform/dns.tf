@@ -214,6 +214,29 @@ resource "cloudflare_record" "p4-dhcp" {
   value  = element(tolist(zerotier_member.p4.ipv4_assignments), 0)
 }
 
+## pve-debian
+
+resource "cloudflare_record" "pve-debian-6plane" {
+  domain = "bltavares.com"
+  name   = "${zerotier_member.pve-debian.name}.zerotier"
+  type   = "AAAA"
+  value  = zerotier_member.pve-debian["6plane_address"]
+}
+
+resource "cloudflare_record" "pve-debian-rfc" {
+  domain = "bltavares.com"
+  name   = "${zerotier_member.pve-debian.name}.zerotier"
+  type   = "AAAA"
+  value  = zerotier_member.pve-debian.rfc4193_address
+}
+
+resource "cloudflare_record" "pve-debian-dhcp" {
+  domain = "bltavares.com"
+  name   = "${zerotier_member.pve-debian.name}.zerotier"
+  type   = "A"
+  value  = element(tolist(zerotier_member.pve-debian.ipv4_assignments), 0)
+}
+
 ## Lab: Web proxy
 resource "cloudflare_record" "lab-6plane" {
   domain = "bltavares.com"
