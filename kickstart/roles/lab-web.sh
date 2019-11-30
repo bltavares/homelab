@@ -6,7 +6,7 @@ cp files/lab-traefik.toml /etc/traefik/traefik.toml
 cp files/certificates/lab.bltavares.com.cert /etc/traefik/traefik.crt
 cp files/certificates/lab.bltavares.com.key /etc/traefik/traefik.key
 
-docker pull traefik
+docker pull traefik:maroilles
 docker rm -f traefik
 docker run --name traefik \
     -d --restart unless-stopped \
@@ -17,5 +17,5 @@ docker run --name traefik \
     -l SERVICE_80_NAME=proxy \
     -l SERVICE_80_TAGS="traefik.enable=false" \
     -v /etc/traefik:/etc/traefik:ro \
-    traefik
+    traefik:maroilles
 docker system prune -f
