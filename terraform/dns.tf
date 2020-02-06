@@ -258,3 +258,26 @@ resource "cloudflare_record" "lab-dhcp" {
   type   = "A"
   value  = element(tolist(zerotier_member.pve-debian.ipv4_assignments), 0)
 }
+
+## pve-dat
+
+resource "cloudflare_record" "pve-dat-6plane" {
+  domain = "bltavares.com"
+  name   = "${zerotier_member.pve-dat.name}.zerotier"
+  type   = "AAAA"
+  value  = zerotier_member.pve-dat["6plane_address"]
+}
+
+resource "cloudflare_record" "pve-dat-rfc" {
+  domain = "bltavares.com"
+  name   = "${zerotier_member.pve-dat.name}.zerotier"
+  type   = "AAAA"
+  value  = zerotier_member.pve-dat.rfc4193_address
+}
+
+resource "cloudflare_record" "pve-dat-dhcp" {
+  domain = "bltavares.com"
+  name   = "${zerotier_member.pve-dat.name}.zerotier"
+  type   = "A"
+  value  = element(tolist(zerotier_member.pve-dat.ipv4_assignments), 0)
+}

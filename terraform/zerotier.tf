@@ -123,3 +123,11 @@ resource "zerotier_member" "p4" {
 
   ip_assignments = var.zerotier_members.p4.assignment_ips
 }
+
+resource "zerotier_member" "pve-dat" {
+  node_id    = var.zerotier_members.pve-dat.node_id
+  network_id = zerotier_network.homelab.id
+  name       = "pve-dat"
+
+  ip_assignments = var.zerotier_members.pve-dat.assignment_ips
+}
