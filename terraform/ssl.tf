@@ -15,6 +15,7 @@ resource "acme_certificate" "lab-certificate" {
   account_key_pem           = acme_registration.registration.account_key_pem
   common_name               = "*.lab.bltavares.com"
   subject_alternative_names = ["lab.bltavares.com"]
+  min_days_remaining        = 10
 
   dns_challenge {
     provider = "cloudflare"
@@ -37,8 +38,9 @@ resource "local_file" "lab-private-key" {
 }
 
 resource "acme_certificate" "archiver-certificate" {
-  account_key_pem = acme_registration.registration.account_key_pem
-  common_name     = "archiver.zerotier.bltavares.com"
+  account_key_pem    = acme_registration.registration.account_key_pem
+  common_name        = "archiver.zerotier.bltavares.com"
+  min_days_remaining = 10
 
   dns_challenge {
     provider = "cloudflare"
