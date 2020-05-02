@@ -10,7 +10,7 @@ variable "zerotier_network" {
 
 provider "zerotier" {
   api_key = var.zerotier_api_key
-  version = "0.2.0-wip" # https://github.com/bltavares/terraform-provider-zerotier#wip
+  version = "0.2.0-wip2" # https://github.com/bltavares/terraform-provider-zerotier#wip
 }
 
 resource "zerotier_network" "homelab" {
@@ -130,4 +130,12 @@ resource "zerotier_member" "pve-dat" {
   name       = "pve-dat"
 
   ip_assignments = var.zerotier_members.pve-dat.assignment_ips
+}
+
+resource "zerotier_member" "openwisp" {
+  node_id    = var.zerotier_members.openwisp.node_id
+  network_id = zerotier_network.homelab.id
+  name       = "openwisp"
+
+  ip_assignments = var.zerotier_members.openwisp.assignment_ips
 }

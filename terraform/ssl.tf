@@ -1,5 +1,5 @@
 provider "acme" {
-  version = "1.0.0-wip" # https://github.com/bltavares/terraform-provider-acme
+  version = "~> 1.5"
   #  server_url = "https://acme-staging-v02.api.letsencrypt.org/directory"
   server_url = "https://acme-v02.api.letsencrypt.org/directory"
 }
