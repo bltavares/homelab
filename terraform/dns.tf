@@ -1,5 +1,10 @@
-variable "cloudflare_email" {}
-variable "cloudflare_token" {}
+variable "cloudflare_email" {
+  type = string
+}
+
+variable "cloudflare_token" {
+  type = string
+}
 
 provider "cloudflare" {
   version = "~> 2.6"
@@ -315,4 +320,54 @@ resource "cloudflare_record" "openwisp-dhcp" {
   name    = "${zerotier_member.openwisp.name}.zerotier"
   type    = "A"
   value   = element(tolist(zerotier_member.openwisp.ipv4_assignments), 0)
+}
+
+module "dns_openwisp-controller" {
+  source           = "./modules/dns"
+  cloudflare_email = var.cloudflare_email
+  cloudflare_token = var.cloudflare_token
+  zone_id          = local.zone_id
+
+  domain       = "controller.openwisp.zerotier"
+  zt_addresses = zerotier_member.openwisp
+}
+
+module "dns_openwisp-dashboard" {
+  source           = "./modules/dns"
+  cloudflare_email = var.cloudflare_email
+  cloudflare_token = var.cloudflare_token
+  zone_id          = local.zone_id
+
+  domain       = "dashboard.openwisp.zerotier"
+  zt_addresses = zerotier_member.openwisp
+}
+
+module "dns_openwisp-topology" {
+  source           = "./modules/dns"
+  cloudflare_email = var.cloudflare_email
+  cloudflare_token = var.cloudflare_token
+  zone_id          = local.zone_id
+
+  domain       = "topology.openwisp.zerotier"
+  zt_addresses = zerotier_member.openwisp
+}
+
+module "dns_openwisp-radius" {
+  source           = "./modules/dns"
+  cloudflare_email = var.cloudflare_email
+  cloudflare_token = var.cloudflare_token
+  zone_id          = local.zone_id
+
+  domain       = "radius.openwisp.zerotier"
+  zt_addresses = zerotier_member.openwisp
+}
+
+module "dns_openwisp-openvpn" {
+  source           = "./modules/dns"
+  cloudflare_email = var.cloudflare_email
+  cloudflare_token = var.cloudflare_token
+  zone_id          = local.zone_id
+
+  domain       = "openvpn.openwisp.zerotier"
+  zt_addresses = zerotier_member.openwisp
 }

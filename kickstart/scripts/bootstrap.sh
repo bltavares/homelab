@@ -61,3 +61,4 @@ source "${current_dir}/../../secrets/env.sh"
 # Open Wisp
 # kickstart deploy root@"192.168.15.111" bootstrap-debian ssh-keys
 # kickstart deploy --sudo bltavares@"192.168.15.111" docker-ce connection <<<"$NETWORK_ID"
+kickstart deploy --sudo bltavares@"192.168.15.111" openwisp
