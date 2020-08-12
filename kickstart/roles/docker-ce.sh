@@ -28,4 +28,9 @@ if kickstart.user.exists bltavares; then
     kickstart.user.add_group bltavares docker
 fi
 
+if ! [[ -f /etc/docker/daemon.json ]]; then
+    cp -f files/docker/daemon.json /etc/docker/daemon.json
+    kickstart.service.restart docker
+fi
+
 docker ps
