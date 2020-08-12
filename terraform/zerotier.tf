@@ -10,7 +10,6 @@ variable "zerotier_network" {
 
 provider "zerotier" {
   api_key = var.zerotier_api_key
-  version = "0.2.0-wip2" # https://github.com/bltavares/terraform-provider-zerotier#wip
 }
 
 resource "zerotier_network" "homelab" {
