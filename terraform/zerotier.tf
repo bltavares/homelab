@@ -131,14 +131,6 @@ resource "zerotier_member" "pve-dat" {
   ip_assignments = var.zerotier_members.pve-dat.assignment_ips
 }
 
-resource "zerotier_member" "openwisp" {
-  node_id    = var.zerotier_members.openwisp.node_id
-  network_id = zerotier_network.homelab.id
-  name       = "openwisp"
-
-  ip_assignments = var.zerotier_members.openwisp.assignment_ips
-}
-
 resource "zerotier_member" "minecraft" {
   node_id    = var.zerotier_members.minecraft.node_id
   network_id = zerotier_network.homelab.id

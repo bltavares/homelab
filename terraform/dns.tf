@@ -298,85 +298,10 @@ resource "cloudflare_record" "pve-dat-dhcp" {
   value   = element(tolist(zerotier_member.pve-dat.ipv4_assignments), 0)
 }
 
-## openwisp
-
-resource "cloudflare_record" "openwisp-6plane" {
-  zone_id = local.zone_id
-  name    = "${zerotier_member.openwisp.name}.zerotier"
-  type    = "AAAA"
-  value   = zerotier_member.openwisp.zt6plane_address
-}
-
-resource "cloudflare_record" "openwisp-rfc" {
-  zone_id = local.zone_id
-  name    = "${zerotier_member.openwisp.name}.zerotier"
-  type    = "AAAA"
-  value   = zerotier_member.openwisp.rfc4193_address
-}
-
-resource "cloudflare_record" "openwisp-dhcp" {
-  zone_id = local.zone_id
-  name    = "${zerotier_member.openwisp.name}.zerotier"
-  type    = "A"
-  value   = element(tolist(zerotier_member.openwisp.ipv4_assignments), 0)
-}
-
-module "dns_openwisp-controller" {
-  source           = "./modules/dns"
-  cloudflare_email = var.cloudflare_email
-  cloudflare_token = var.cloudflare_token
-  zone_id          = local.zone_id
-
-  domain       = "controller.openwisp.zerotier"
-  zt_addresses = zerotier_member.openwisp
-}
-
-module "dns_openwisp-dashboard" {
-  source           = "./modules/dns"
-  cloudflare_email = var.cloudflare_email
-  cloudflare_token = var.cloudflare_token
-  zone_id          = local.zone_id
-
-  domain       = "dashboard.openwisp.zerotier"
-  zt_addresses = zerotier_member.openwisp
-}
-
-module "dns_openwisp-topology" {
-  source           = "./modules/dns"
-  cloudflare_email = var.cloudflare_email
-  cloudflare_token = var.cloudflare_token
-  zone_id          = local.zone_id
-
-  domain       = "topology.openwisp.zerotier"
-  zt_addresses = zerotier_member.openwisp
-}
-
-module "dns_openwisp-radius" {
-  source           = "./modules/dns"
-  cloudflare_email = var.cloudflare_email
-  cloudflare_token = var.cloudflare_token
-  zone_id          = local.zone_id
-
-  domain       = "radius.openwisp.zerotier"
-  zt_addresses = zerotier_member.openwisp
-}
-
-module "dns_openwisp-openvpn" {
-  source           = "./modules/dns"
-  cloudflare_email = var.cloudflare_email
-  cloudflare_token = var.cloudflare_token
-  zone_id          = local.zone_id
-
-  domain       = "openvpn.openwisp.zerotier"
-  zt_addresses = zerotier_member.openwisp
-}
-
 module "dns_minecraft" {
-  source           = "./modules/dns"
-  cloudflare_email = var.cloudflare_email
-  cloudflare_token = var.cloudflare_token
-  zone_id          = local.zone_id
+  source = "./modules/dns"
 
+  zone_id      = local.zone_id
   domain       = "minecraft.zerotier"
   zt_addresses = zerotier_member.minecraft
 }

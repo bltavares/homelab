@@ -1,11 +1,3 @@
-variable "cloudflare_email" {
-  type = string
-}
-
-variable "cloudflare_token" {
-  type = string
-}
-
 variable "zone_id" {
   type = string
 }

@@ -58,17 +58,11 @@ source "${current_dir}/../../secrets/env.sh"
 # kickstart deploy root@192.168.15.103 bootstrap-debian ssh-keys
 # kickstart deploy --sudo bltavares@192.168.15.103 docker-ce connection <<<"$NETWORK_ID"
 
-# Open Wisp
-# kickstart deploy root@"192.168.15.111" bootstrap-debian ssh-keys
-# kickstart deploy --sudo bltavares@"192.168.15.111" docker-ce connection <<<"$NETWORK_ID"
-# kickstart deploy --sudo bltavares@"192.168.15.111" openwisp
-
 # With certificates
 # kickstart deploy --sudo bltavares@192.168.15.2 bouncer
 # kickstart deploy --sudo bltavares@192.168.15.193 lab-web
 
-
 # Minecraft
 # kickstart deploy root@"192.168.15.218" bootstrap-debian ssh-keys
 # kickstart deploy --sudo bltavares@"192.168.15.218" docker-ce connection <<<"$NETWORK_ID"
-kickstart deploy --sudo bltavares@"192.168.15.218" minecraft
+# kickstart deploy --sudo bltavares@"192.168.15.218" minecraft
