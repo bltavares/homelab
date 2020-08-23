@@ -66,3 +66,9 @@ source "${current_dir}/../../secrets/env.sh"
 # With certificates
 # kickstart deploy --sudo bltavares@192.168.15.2 bouncer
 # kickstart deploy --sudo bltavares@192.168.15.193 lab-web
+
+
+# Minecraft
+# kickstart deploy root@"192.168.15.218" bootstrap-debian ssh-keys
+# kickstart deploy --sudo bltavares@"192.168.15.218" docker-ce connection <<<"$NETWORK_ID"
+kickstart deploy --sudo bltavares@"192.168.15.218" minecraft

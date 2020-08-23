@@ -370,3 +370,13 @@ module "dns_openwisp-openvpn" {
   domain       = "openvpn.openwisp.zerotier"
   zt_addresses = zerotier_member.openwisp
 }
+
+module "dns_minecraft" {
+  source           = "./modules/dns"
+  cloudflare_email = var.cloudflare_email
+  cloudflare_token = var.cloudflare_token
+  zone_id          = local.zone_id
+
+  domain       = "minecraft.zerotier"
+  zt_addresses = zerotier_member.minecraft
+}

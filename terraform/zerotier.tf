@@ -138,3 +138,11 @@ resource "zerotier_member" "openwisp" {
 
   ip_assignments = var.zerotier_members.openwisp.assignment_ips
 }
+
+resource "zerotier_member" "minecraft" {
+  node_id    = var.zerotier_members.minecraft.node_id
+  network_id = zerotier_network.homelab.id
+  name       = "minecraft"
+
+  ip_assignments = var.zerotier_members.minecraft.assignment_ips
+}
