@@ -8,6 +8,10 @@ terraform {
       source  = "terraform-providers/cloudflare"
       version = "~> 2.10.0"
     }
+    local = {
+      source  = "hashicorp/local"
+      version = "~> 1.4.0"
+    }
   }
 }
 
