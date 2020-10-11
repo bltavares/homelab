@@ -3,7 +3,7 @@
 Given the amount of things running, a Pi3 is ideal. It **will** struggle to run it all, specially as the USB and network use a single bus.
 Using torrents (which demands a lot of network) writing to the USB disk (which shares the network bus) **will** make the Pi freeze sometimes.
 
-Just remove the power cable, and restart as necessary. 
+Just remove the power cable, and restart as necessary.
 Maybe eperiment: celeron ultratop small form PC, Rock64 or Odroid would run them better
 
 Tested on Libreelec 8 and 9.

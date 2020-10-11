@@ -32,6 +32,7 @@ docker run -d -ti --name minecraft \
  -e LEVEL_NAME="Familia Corrosiva" \
  -e WHITE_LIST=true \
  -v /opt/minecraft:/data \
+ --restart=unless-stopped \
  --network host \
  itzg/minecraft-bedrock-server
 docker system prune -f
