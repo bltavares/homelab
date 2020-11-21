@@ -66,3 +66,9 @@ source "${current_dir}/../../secrets/env.sh"
 # kickstart deploy root@"192.168.15.218" bootstrap-debian ssh-keys
 # kickstart deploy --sudo bltavares@"192.168.15.218" docker-ce connection <<<"$NETWORK_ID"
 # kickstart deploy --sudo bltavares@"192.168.15.218" minecraft
+
+# zt
+# kickstart deploy --sudo bltavares@192.168.15.2 connection <<<"$NETWORK_ID"
+# kickstart deploy --sudo bltavares@192.168.15.3 connection <<<"$NETWORK_ID"
+# kickstart deploy --sudo bltavares@192.168.15.193 connection <<<"$NETWORK_ID"
+# kickstart deploy --sudo bltavares@192.168.15.218 connection <<<"$NETWORK_ID"
