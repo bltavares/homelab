@@ -13,9 +13,9 @@ source "${current_dir}/../../secrets/env.sh"
 
 # kickstart deploy --sudo bltavares@archiver.zerotier.bltavares.com nomad-server <../secrets/nomad.key
 # kickstart deploy --sudo bltavares@pve.zerotier.bltavares.com nomad-server <../secrets/nomad.key
-# kickstart deploy --sudo bltavares@controller.zerotier.bltavares.com nomad-server <../secrets/nomad.key
-
 # kickstart deploy --sudo bltavares@192.168.15.193 consul-client nomad-client <../secrets/consul.key
+
+# kickstart deploy --sudo bltavares@controller.zerotier.bltavares.com nomad-server <../secrets/nomad.key
 # kickstart deploy --sudo bltavares@p1.zerotier.bltavares.com consul-client nomad-client <../secrets/consul.key
 # kickstart deploy --sudo bltavares@p2.zerotier.bltavares.com consul-client nomad-client <../secrets/consul.key
 # kickstart deploy --sudo bltavares@p3.zerotier.bltavares.com consul-client nomad-client <../secrets/consul.key
