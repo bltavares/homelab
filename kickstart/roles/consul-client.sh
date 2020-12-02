@@ -38,6 +38,7 @@ docker run \
     --name=registrator \
     --net=host \
     -d --restart=unless-stopped \
+    -e 'GL_DISABLE_VERSION_CHECK=true' \
     --volume=/etc/hostname:/etc/hostname:ro \
     --volume=/var/run/docker.sock:/tmp/docker.sock:ro \
     gliderlabs/registrator:latest \
