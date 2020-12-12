@@ -72,3 +72,6 @@ source "${current_dir}/../../secrets/env.sh"
 # kickstart deploy --sudo bltavares@192.168.15.3 connection <<<"$NETWORK_ID"
 # kickstart deploy --sudo bltavares@192.168.15.193 connection <<<"$NETWORK_ID"
 # kickstart deploy --sudo bltavares@192.168.15.218 connection <<<"$NETWORK_ID"
+
+# kickstart deploy --sudo bltavares@192.168.15.193 prometheus
+# kickstart deploy --sudo bltavares@192.168.15.193 grafana
