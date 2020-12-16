@@ -10,6 +10,9 @@ scrape_configs:
       - targets: ['192.168.15.147:9100']
         labels:
           area: 'tv'
+      - targets: ['192.168.15.77:9100']
+        labels:
+          area: 'lounge'
     metric_relabel_configs:
       - source_labels: [ifname, __name__]
         regex: 'wlan0;wifi_.*'
