@@ -30,7 +30,6 @@ docker run -d -ti --name minecraft \
   -e EULA=TRUE \
   -e SERVER_NAME="Familia Corrosiva" \
   -e MOTD="Venha se divertir" \
-  -e MEMORY=2G \
   -e DIFFICULTY=peaceful \
   -e MODE=creative \
   -e WHITELIST="bltavares,*bltavares" \
