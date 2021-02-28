@@ -8,6 +8,7 @@ source "${current_dir}/../../secrets/env.sh"
 # kickstart deploy root@"192.168.15.32" ssh-keys connection <<<"$NETWORK_ID"
 # kickstart deploy root@"192.168.15.3" bootstrap-debian ssh-keys
 # kickstart deploy --sudo bltavares@"192.168.15.3" docker-ce monitoring consul-server <../secrets/consul.key
+# kickstart deploy --sudo bltavares@"192.168.15.3" consul-server <../secrets/consul.key
 # kickstart deploy --sudo bltavares@192.168.15.2 mediacenter
 # kickstart deploy --sudo bltavares@192.168.15.2 bouncer
 
@@ -50,9 +51,7 @@ source "${current_dir}/../../secrets/env.sh"
 # kickstart deploy --sudo bltavares@"192.168.15.10" docker-ce connection <<<"$NETWORK_ID"
 # kickstart deploy --sudo bltavares@"192.168.15.10" fileserver mediacenter
 # kickstart deploy --sudo bltavares@"192.168.15.2" monitoring mediacenter
-
-# LibreElec
-#kickstart deploy --sudo bltavares@"192.168.15.2" consul-server <../secrets/consul.key
+# kickstart deploy --sudo bltavares@"192.168.15.2" consul-server <../secrets/consul.key
 
 # PVE Dat
 # kickstart deploy root@192.168.15.103 bootstrap-debian ssh-keys
@@ -70,8 +69,14 @@ source "${current_dir}/../../secrets/env.sh"
 # zt
 # kickstart deploy --sudo bltavares@192.168.15.2 connection <<<"$NETWORK_ID"
 # kickstart deploy --sudo bltavares@192.168.15.3 connection <<<"$NETWORK_ID"
+# kickstart deploy --sudo bltavares@192.168.15.4 connection <<<"$NETWORK_ID"
 # kickstart deploy --sudo bltavares@192.168.15.193 connection <<<"$NETWORK_ID"
 # kickstart deploy --sudo bltavares@192.168.15.218 connection <<<"$NETWORK_ID"
 
 # kickstart deploy --sudo bltavares@192.168.15.193 prometheus
 # kickstart deploy --sudo bltavares@192.168.15.193 grafana
+
+# tiny
+# kickstart deploy root@"192.168.15.4" bootstrap-debian ssh-keys
+# kickstart deploy --sudo bltavares@"192.168.15.4" docker-ce connection <<<"$NETWORK_ID"
+# kickstart deploy --sudo bltavares@192.168.15.4 consul-server <../secrets/consul.key
