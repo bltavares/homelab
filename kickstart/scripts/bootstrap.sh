@@ -54,17 +54,17 @@ source "${current_dir}/../../secrets/env.sh"
 # kickstart deploy --sudo bltavares@"192.168.15.2" consul-server <../secrets/consul.key
 
 # PVE Dat
-# kickstart deploy root@192.168.15.103 bootstrap-debian ssh-keys
-# kickstart deploy --sudo bltavares@192.168.15.103 docker-ce connection <<<"$NETWORK_ID"
+# kickstart deploy root@192.168.15.213 bootstrap-debian ssh-keys
+# kickstart deploy --sudo bltavares@192.168.15.213 docker-ce connection <<<"$NETWORK_ID"
 
 # With certificates
 # kickstart deploy --sudo bltavares@192.168.15.2 bouncer
 # kickstart deploy --sudo bltavares@192.168.15.193 lab-web
 
 # Minecraft
-# kickstart deploy root@"192.168.15.218" bootstrap-debian ssh-keys
-# kickstart deploy --sudo bltavares@"192.168.15.218" docker-ce connection <<<"$NETWORK_ID"
-# kickstart deploy --sudo bltavares@"192.168.15.218" minecraft
+# kickstart deploy root@"192.168.15.158" bootstrap-debian ssh-keys
+# kickstart deploy --sudo bltavares@"192.168.15.158" docker-ce connection <<<"$NETWORK_ID"
+# kickstart deploy --sudo bltavares@"192.168.15.158" minecraft
 
 # zt
 # kickstart deploy --sudo bltavares@192.168.15.2 connection <<<"$NETWORK_ID"

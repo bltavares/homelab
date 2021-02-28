@@ -17,12 +17,10 @@ cp files/secrets/minecraft/godns.json /etc/godns.json
 kickstart.service.enable godns
 kickstart.service.start godns
 
-cp files/godns6.service /lib/systemd/system/godns6.service
-cp files/secrets/minecraft/godns6.json /etc/godns6.json
-cp files/godns.service /lib/systemd/system/godns.service
-cp files/secrets/minecraft/godns.json /etc/godns.json
-kickstart.service.enable godns6
-kickstart.service.start godns6
+# cp files/godns6.service /lib/systemd/system/godns6.service
+# cp files/secrets/minecraft/godns6.json /etc/godns6.json
+# kickstart.service.enable godns6
+# kickstart.service.start godns6
 
 docker pull bltavares/minecraft
 docker rm -f minecraft || true
