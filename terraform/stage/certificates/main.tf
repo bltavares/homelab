@@ -1,12 +1,12 @@
 terraform {
   required_providers {
     acme = {
-      source  = "terraform-providers/acme"
-      version = "~> 1.5.0"
+      source = "vancluever/acme"
+      version = "~> 2.4.0"
     }
     local = {
       source  = "hashicorp/local"
-      version = "~> 1.4.0"
+      version = "~> 2.1.0"
     }
   }
 
