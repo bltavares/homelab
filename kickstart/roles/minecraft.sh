@@ -12,17 +12,17 @@ if ! kickstart.command_exists godns; then
   )
 fi
 
-cp files/godns.service /lib/systemd/system/godns.service
-cp files/secrets/minecraft/godns.json /etc/godns.json
-kickstart.service.enable godns
-kickstart.service.start godns
+# cp files/godns.service /lib/systemd/system/godns.service
+# cp files/secrets/minecraft/godns.json /etc/godns.json
+# kickstart.service.enable godns
+# kickstart.service.start godns
 
 # cp files/godns6.service /lib/systemd/system/godns6.service
 # cp files/secrets/minecraft/godns6.json /etc/godns6.json
 # kickstart.service.enable godns6
 # kickstart.service.start godns6
 
-docker pull bltavares/minecraft
+docker pull bltavares/minecraft:1.17.1
 docker rm -f minecraft || true
 docker run -d -ti --name minecraft \
   -e EULA=TRUE \
@@ -35,5 +35,5 @@ docker run -d -ti --name minecraft \
   -v /opt/minecraft:/data \
   --restart=unless-stopped \
   --network host \
-  bltavares/minecraft
+  bltavares/minecraft:1.17.1
 docker system prune -f
