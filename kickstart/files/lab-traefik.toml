@@ -42,3 +42,12 @@ backend = "transmission"
 rule = "Host:transmission.lab.bltavares.com"
 [backends.transmission.servers.server0]
 url = "http://10.147.17.110:9091"
+
+[frontends.proxmox]
+backend = "proxmox"
+[frontends.proxmox.routes.route0]
+rule = "Host:proxmox.lab.bltavares.com"
+[backends.proxmox.servers.server0]
+url = "https://192.168.15.3:8006"
+[backends.proxmox.servers.server1]
+url = "https://192.168.15.4:8006"
