@@ -4,6 +4,24 @@ set -ueo pipefail
 current_dir=$(dirname "${BASH_SOURCE[0]}")
 source "${current_dir}/../../secrets/env.sh"
 
+archiver="192.168.15.2"
+pve="192.168.15.3"
+tiny="192.168.15.4"
+omv="192.168.15.5"
+debian_pve="192.168.15.193"
+
+## Bootstrap
+false && for server in $archiver $pve $tiny $omv $debian_pve; do
+    echo "$server"
+    kickstart deploy root@"$server" bootstrap-debian ssh-keys docker-ce
+done
+
+## Zerotier
+false && for server in $archiver $pve $tiny $omv $debian_pve; do
+    echo "$server"
+    kickstart deploy --sudo bltavares@"$server" connection <<<"$NETWORK_ID"
+done
+
 ## PVE
 # kickstart deploy root@"192.168.15.32" ssh-keys connection <<<"$NETWORK_ID"
 # kickstart deploy root@"192.168.15.3" bootstrap-debian ssh-keys
