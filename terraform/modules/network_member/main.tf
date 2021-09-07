@@ -1,14 +1,14 @@
 terraform {
   required_providers {
     zerotier = {
-      source  = "bltavares/zerotier"
-      version = "~> 0.3.0"
+      source  = "zerotier/zerotier"
+      version = "~> 1.0.2"
     }
   }
 }
 
 resource "zerotier_member" "node" {
-  node_id        = var.zerotier_member.node_id
+  member_id      = var.zerotier_member.node_id
   network_id     = var.zerotier_network_id
   name           = var.zerotier_member.name
   ip_assignments = var.zerotier_member.assignment_ips

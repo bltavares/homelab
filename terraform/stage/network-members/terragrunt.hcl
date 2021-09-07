@@ -3,7 +3,7 @@ generate "providers" {
   if_exists = "overwrite_terragrunt"
   contents  = <<EOF
 provider "zerotier" {
-  api_key = var.zerotier_api_key
+  zerotier_central_token = var.zerotier_api_key
 }
 
 provider "cloudflare" {

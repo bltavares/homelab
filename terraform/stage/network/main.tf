@@ -1,8 +1,8 @@
 terraform {
   required_providers {
     zerotier = {
-      source  = "bltavares/zerotier"
-      version = "~> 0.3.0"
+      source  = "zerotier/zerotier"
+      version = "~> 1.0.2"
     }
     cloudflare = {
       source  = "cloudflare/cloudflare"

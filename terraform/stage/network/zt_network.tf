@@ -1,21 +1,26 @@
 
 provider "zerotier" {
-  api_key = var.zerotier_api_key
+  zerotier_central_token = var.zerotier_api_key
 }
 
 resource "zerotier_network" "homelab" {
   name         = "zerotier.bltavares.com"
-  rules_source = file("../../../secrets/zerotier.config")
+  flow_rules = file("../../../secrets/zerotier.config")
 
-  auto_assign_v4     = true
-  auto_assign_6plane = true
-  auto_assign_v6     = true
+  assign_ipv4  {
+    zerotier = true
+  }
+  assign_ipv6 {
+    zerotier = true
+    sixplane = true
+    rfc4193 = true
+  }
 
   dynamic "assignment_pool" {
     for_each = var.zerotier_network
     content {
-      first = assignment_pool.value.first
-      last  = assignment_pool.value.last
+      start = assignment_pool.value.first
+      end  = assignment_pool.value.last
     }
   }
 
