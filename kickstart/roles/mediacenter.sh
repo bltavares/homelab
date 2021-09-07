@@ -3,6 +3,7 @@
 DOWNLOADS=/media/twotb
 MOVIES=/media/twotb/Filmes
 SERIES=/media/twotb/Seriados
+BOOKS=/media/twotb/Livros
 SYNCTHING_SHARE=/media/onetb/Syncthing
 CONFIG_FOLDER=/opt/config
 TZ=America/Sao_Paulo
@@ -87,5 +88,33 @@ docker run --name=radarr \
 #     --net=host \
 #     --restart=unless-stopped -d \
 #     $REPO/bazarr
+
+# docker pull $REPO/readarr:nightly
+# docker rm -f readarr
+# docker run --name=readarr \
+#   -e PGID=0 -e PUID=0 \
+#   -e TZ \
+#   -v "${CONFIG_FOLDER}/readarr/:/config" \
+#   -v "${DOWNLOADS}/:/downloads" \
+#   -v "${BOOKS}/:/books" \
+#   --net=host \
+#   -p 8787:8787 \
+#   -l SERVICE_TAGS="traefik.enable=false" \
+#   --restart=unless-stopped -d \
+#   $REPO/readarr:nightly
+
+docker pull $REPO/lazylibrarian
+docker rm -f lazylibrarian
+docker run --name=lazylibrarian \
+  -e PGID=0 -e PUID=0 \
+  -e TZ -e LANG \
+  -v "${CONFIG_FOLDER}/lazylibrarian/:/config" \
+  -v "${DOWNLOADS}/:/downloads" \
+  -v "${BOOKS}/:/books" \
+  --net=host \
+  -p 5299:5299 \
+  -l SERVICE_TAGS="traefik.enable=false" \
+  --restart=unless-stopped -d \
+  $REPO/lazylibrarian
 
 docker image prune -f
