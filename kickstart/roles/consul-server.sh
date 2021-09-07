@@ -18,7 +18,7 @@ docker run --name consul \
     -client '127.0.0.1 172.17.0.1 {{range $i, $e := GetPrivateInterfaces }}{{if eq $e.MTU 2800 }}{{if $i}} {{end}}{{attr "address" $e}}{{end}}{{end}}' \
     -retry-join "vaporware.zerotier.bltavares.com" \
     -retry-join "archiver.zerotier.bltavares.com" \
-    -retry-join "libreelec.zerotier.bltavares.com" \
+    -retry-join "tiny.zerotier.bltavares.com" \
     -retry-join "pve.zerotier.bltavares.com" \
     -ui
 
