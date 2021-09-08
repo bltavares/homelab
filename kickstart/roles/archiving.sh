@@ -1,9 +1,16 @@
 #!/bin/bash
+## TODO https://hub.docker.com/r/valeriansaliou/sonic
+kickstart.context "Setup Archivebox"
 
-docker pull nginx
-docker rm -f archivebox
+STORAGE=/mnt/meli/archivebox
+
+docker pull archivebox/archivebox
+docker rm -f archivebox || true
 docker run --name archivebox \
-    -p 8080:80 \
+    -v $STORAGE:/data \
+    -e ALLOWED_HOSTS="*" \
+    -e MEDIA_MAX_SIZE="50m" \
+    -p 8000:8000 \
     -l SERVICE_NAME=archivebox \
-    -v /media/onetb/Archive:/usr/share/nginx/html:ro \
-    -d --restart unless-stopped nginx
+    -d --restart unless-stopped \
+    archivebox/archivebox server --quick-init 0.0.0.0:8000
