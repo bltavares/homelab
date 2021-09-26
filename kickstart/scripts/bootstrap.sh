@@ -48,6 +48,9 @@ false && for server in $archiver $pve $tiny; do
     kickstart deploy --sudo bltavares@"$server" consul-server nomad-server <../secrets/consul.key
 done
 
+## Gitea
+false && kickstart deploy --sudo bltavares@"$debian_pve" gitea
+
 # Legacy
 
 ## Brumble
