@@ -1,5 +1,6 @@
 defaultEntryPoints = ["http", "https"]
 insecureSkipVerify = true
+logLevel = "INFO"
 
 [entryPoints]
 [entryPoints.http]
@@ -12,6 +13,10 @@ address = ":443"
 [[entryPoints.https.tls.certificates]]
 certFile = "/etc/traefik/traefik.crt"
 keyFile = "/etc/traefik/traefik.key"
+
+[entryPoints.https.auth.forward]
+    address = "http://localhost:4181"
+    authResponseHeaders = ["X-Forwarded-User"]
 
 [web]
     address = ":8080"

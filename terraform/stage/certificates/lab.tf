@@ -23,3 +23,8 @@ resource "local_file" "lab-private-key" {
   sensitive_content = acme_certificate.lab-certificate.private_key_pem
   filename          = "../../../kickstart/files/certificates/lab.bltavares.com.key"
 }
+
+resource "local_file" "lab-fullchain" {
+  sensitive_content = "${acme_certificate.lab-certificate.certificate_pem}${acme_certificate.lab-certificate.issuer_pem}"
+  filename          = "../../../kickstart/files/certificates/lab.bltavares.com.fullchain.cert"
+}

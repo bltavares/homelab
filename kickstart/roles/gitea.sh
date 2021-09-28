@@ -20,7 +20,7 @@ docker run --name gitea \
     -e USER_GID="$nfs_user" \
     -e GROUP_GID="$nfs_user" \
     --restart=unless-stopped -d \
-	gitea/gitea:1.15.3 \
+	gitea/gitea:1.15.3
 
 
 docker system prune -f

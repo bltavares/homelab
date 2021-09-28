@@ -3,7 +3,7 @@ kickstart.context "Web Proxy: Lab side"
 
 mkdir -p /etc/traefik/
 cp files/lab-traefik.toml /etc/traefik/traefik.toml
-cp files/certificates/lab.bltavares.com.cert /etc/traefik/traefik.crt
+cp files/certificates/lab.bltavares.com.fullchain.cert /etc/traefik/traefik.crt
 cp files/certificates/lab.bltavares.com.key /etc/traefik/traefik.key
 
 docker pull traefik:maroilles

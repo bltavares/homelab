@@ -28,6 +28,10 @@ false && kickstart deploy --sudo bltavares@"$archiver" bouncer
 
 ## Traefik proxy (SSL)
 false && kickstart deploy --sudo bltavares@"$debian_pve" lab-web
+### Authelia
+# false && kickstart deploy --sudo bltavares@"$debian_pve" authelia
+### traefik-forward-auth
+false && kickstart deploy --sudo bltavares@"$debian_pve" forward-auth <<<"$COOKIE_SECRET $DISCORD_OAUTH2_ID $DISCORD_OAUTH2_SECRET"
 
 # Mediacenter
 false && kickstart deploy --sudo bltavares@"$archiver" mediacenter
@@ -50,6 +54,7 @@ done
 
 ## Gitea
 false && kickstart deploy --sudo bltavares@"$debian_pve" gitea
+
 
 # Legacy
 
