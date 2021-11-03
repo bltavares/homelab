@@ -41,15 +41,17 @@ false && kickstart deploy --sudo bltavares@"$omv" archiving
 
 ## Consul/Nomad client
 ## OMV skipped as consul generates too many logs for a USB drive
-false && for server in $debian_pve; do
+true && for server in $debian_pve; do
     echo "$server"
-    kickstart deploy --sudo bltavares@"$server" consul-client nomad-client <../secrets/consul.key
+    # kickstart deploy --sudo bltavares@"$server" consul-client  <../secrets/consul.key
+    kickstart deploy --sudo bltavares@"$server" nomad-client <../secrets/nomad.key
 done
 
 ## Consul/Nomad server
 false && for server in $archiver $pve $tiny; do
     echo "$server"
-    kickstart deploy --sudo bltavares@"$server" consul-server nomad-server <../secrets/consul.key
+    kickstart deploy --sudo bltavares@"$server" consul-server <../secrets/consul.key
+    kickstart deploy --sudo bltavares@"$server" nomad-server <../secrets/nomad.key
 done
 
 ## Gitea

@@ -18,4 +18,5 @@ docker run --name traefik \
     -l SERVICE_80_TAGS="traefik.enable=false" \
     -v /etc/traefik:/etc/traefik:ro \
     traefik:maroilles
+
 docker system prune -f

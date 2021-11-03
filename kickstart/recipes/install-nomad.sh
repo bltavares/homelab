@@ -1,10 +1,11 @@
 #!/bin/bash
-nomad_version=0.12.9
+nomad_version=1.1.6
 
 arch="$(uname -m)"
 
 case "$arch" in
 armv6*)
+    # TODO: Generate a new nomad build for armel
     url=https://github.com/bltavares/nomad/releases/download/v${nomad_version}-armel/linux_armel.zip
     arch_base="arm32v6"
     ;;

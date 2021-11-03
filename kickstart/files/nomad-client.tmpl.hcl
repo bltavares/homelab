@@ -5,10 +5,16 @@ bind_addr = "{{ GetPrivateInterfaces | include \"network\" \"fc36:152b:7a00::/40
 client {
   enabled           = true
   network_interface = "zt5u44ufvb"
-  node_class = "$arch"
+  node_class        = "$arch"
 
   meta {
-    "arch" = "$arch"
+    "arch"      = "$arch"
     "arch_base" = "$arch_base"
+  }
+}
+
+plugin "docker" {
+  config {
+    allow_privileged = true
   }
 }

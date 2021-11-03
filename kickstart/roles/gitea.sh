@@ -22,5 +22,4 @@ docker run --name gitea \
     --restart=unless-stopped -d \
 	gitea/gitea:1.15.3
 
-
 docker system prune -f
