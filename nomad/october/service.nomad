@@ -4,7 +4,7 @@ job "october" {
 
   group "service" {
     network {
-      port "web" { static = 3493 }
+      port "web" {}
     }
 
     service {
@@ -16,20 +16,23 @@ job "october" {
       driver = "docker"
 
       config {
-        image = "bltavares/october"
-        ports = ["web"]
+        image        = "bltavares/october"
         network_mode = "host"
-        args = ["-a", "${NOMAD_TASK_DIR}/addresses.csv"]
+        args = [
+          "-a", "${NOMAD_TASK_DIR}/addresses.csv",
+          "--listen", "0.0.0.0:${NOMAD_PORT_web}",
+        ]
       }
 
       template {
-        data = file("./addresses.csv")
+        data        = file("./addresses.csv")
         destination = "local/addresses.csv"
       }
 
       resources {
-        cpu = 100
+        cpu    = 100
         memory = 10
+        disk   = 1
       }
 
     }
