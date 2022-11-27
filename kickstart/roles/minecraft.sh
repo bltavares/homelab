@@ -22,7 +22,7 @@ fi
 # kickstart.service.enable godns6
 # kickstart.service.start godns6
 
-docker pull bltavares/minecraft:1.17.1
+docker pull bltavares/minecraft:1.19.2
 docker rm -f minecraft || true
 docker run -d -ti --name minecraft \
   -e EULA=TRUE \
@@ -35,5 +35,5 @@ docker run -d -ti --name minecraft \
   -v /opt/minecraft:/data \
   --restart=unless-stopped \
   --network host \
-  bltavares/minecraft:1.17.1
+  bltavares/minecraft:1.19.2
 docker system prune -f
