@@ -28,6 +28,7 @@ false && kickstart deploy --sudo bltavares@"$archiver" bouncer
 
 ## Traefik proxy (SSL)
 false && kickstart deploy --sudo bltavares@"$debian_pve" lab-web
+
 ### Authelia
 # false && kickstart deploy --sudo bltavares@"$debian_pve" authelia
 ### traefik-forward-auth
@@ -41,7 +42,7 @@ false && kickstart deploy --sudo bltavares@"$omv" archiving
 
 ## Consul/Nomad client
 ## OMV skipped as consul generates too many logs for a USB drive
-true && for server in $debian_pve; do
+false && for server in $debian_pve; do
     echo "$server"
     # kickstart deploy --sudo bltavares@"$server" consul-client  <../secrets/consul.key
     kickstart deploy --sudo bltavares@"$server" nomad-client <../secrets/nomad.key
@@ -86,9 +87,9 @@ false && kickstart deploy --sudo bltavares@"$debian_pve" gitea
 # kickstart deploy --sudo bltavares@"192.168.15.162" consul-client <../secrets/consul.key
 
 # Minecraft
-# kickstart deploy root@"192.168.15.158" bootstrap-debian ssh-keys
-# kickstart deploy --sudo bltavares@"192.168.15.158" docker-ce connection <<<"$NETWORK_ID"
-# kickstart deploy --sudo bltavares@"192.168.15.158" minecraft
+# kickstart deploy root@"192.168.15.157" bootstrap-debian ssh-keys
+# kickstart deploy --sudo bltavares@"192.168.15.157" docker-ce connection <<<"$NETWORK_ID"
+false && kickstart deploy --sudo bltavares@"192.168.15.157" minecraft
 
 # Monitoring (prototype)
 # kickstart deploy --sudo bltavares@192.168.15.193 prometheus
