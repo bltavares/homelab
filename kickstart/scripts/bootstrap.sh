@@ -44,7 +44,7 @@ false && kickstart deploy --sudo bltavares@"$omv" archiving
 ## OMV skipped as consul generates too many logs for a USB drive
 false && for server in $debian_pve; do
     echo "$server"
-    # kickstart deploy --sudo bltavares@"$server" consul-client  <../secrets/consul.key
+    kickstart deploy --sudo bltavares@"$server" consul-client  <../secrets/consul.key
     kickstart deploy --sudo bltavares@"$server" nomad-client <../secrets/nomad.key
 done
 
