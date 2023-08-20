@@ -6,7 +6,7 @@ plugin_id = "nfs"
 capacity_max = "10G"
 
 capability {
-  access_mode     = "multi-node-multi-writer"
+  access_mode     = "single-node-writer"
   attachment_mode = "file-system"
 }
 
