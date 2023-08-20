@@ -10,56 +10,35 @@ tiny="192.168.15.4"
 omv="192.168.15.5"
 debian_pve="192.168.15.193"
 pve_dat="192.168.15.213"
+citadel="REDACTED"
+ryzen="192.168.15.6"
 
 ## Bootstrap
-false && for server in $archiver $pve $tiny $omv $debian_pve $pve_dat; do
+false && for server in $archiver $pve $tiny $omv $debian_pve $pve_dat $ryzen $citadel; do
     echo "$server"
     kickstart deploy root@"$server" bootstrap-debian ssh-keys docker-ce
 done
 
 ## Zerotier
-false && for server in $archiver $pve $tiny $omv $debian_pve $pve_dat; do
+false && for server in $archiver $pve $tiny $omv $debian_pve $pve_dat $ryzen $citadel; do
     echo "$server"
     kickstart deploy --sudo bltavares@"$server" connection <<<"$NETWORK_ID"
 done
 
-## Bouncer (SSL)
-false && kickstart deploy --sudo bltavares@"$archiver" bouncer
-
-## Traefik proxy (SSL)
-false && kickstart deploy --sudo bltavares@"$debian_pve" lab-web
-
-### Authelia
-# false && kickstart deploy --sudo bltavares@"$debian_pve" authelia
-### traefik-forward-auth
-false && kickstart deploy --sudo bltavares@"$debian_pve" forward-auth <<<"$COOKIE_SECRET $DISCORD_OAUTH2_ID $DISCORD_OAUTH2_SECRET"
-
-# Mediacenter
-false && kickstart deploy --sudo bltavares@"$archiver" mediacenter
-
-# Archivebox
-false && kickstart deploy --sudo bltavares@"$omv" archiving
-
 ## Consul/Nomad client
 ## OMV skipped as consul generates too many logs for a USB drive
-false && for server in $debian_pve; do
+false && for server in false; do
     echo "$server"
     kickstart deploy --sudo bltavares@"$server" consul-client  <../secrets/consul.key
     kickstart deploy --sudo bltavares@"$server" nomad-client <../secrets/nomad.key
 done
 
 ## Consul/Nomad server
-false && for server in $archiver $pve $tiny; do
+true && for server in $ryzen; do
     echo "$server"
     kickstart deploy --sudo bltavares@"$server" consul-server <../secrets/consul.key
     kickstart deploy --sudo bltavares@"$server" nomad-server <../secrets/nomad.key
 done
-
-## Gitea
-false && kickstart deploy --sudo bltavares@"$debian_pve" gitea
-
-
-# Legacy
 
 ## Brumble
 # kickstart deploy --sudo bltavares@controller.zerotier.bltavares.com nomad-server <../secrets/nomad.key
@@ -89,8 +68,4 @@ false && kickstart deploy --sudo bltavares@"$debian_pve" gitea
 # Minecraft
 # kickstart deploy root@"192.168.15.157" bootstrap-debian ssh-keys
 # kickstart deploy --sudo bltavares@"192.168.15.157" docker-ce connection <<<"$NETWORK_ID"
-false && kickstart deploy --sudo bltavares@"192.168.15.157" minecraft
-
-# Monitoring (prototype)
-# kickstart deploy --sudo bltavares@192.168.15.193 prometheus
-# kickstart deploy --sudo bltavares@192.168.15.193 grafana
+# false && kickstart deploy --sudo bltavares@"192.168.15.157" minecraft
