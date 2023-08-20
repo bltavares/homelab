@@ -7,13 +7,14 @@ job "storage-node" {
       driver = "docker"
 
       config {
-        image = "registry.gitlab.com/rocketduck/csi-plugin-nfs:0.3.0"
+        image = "registry.gitlab.com/rocketduck/csi-plugin-nfs:0.6.1"
 
         args = [
           "--type=node",
           "--node-id=${attr.unique.hostname}",
           "--nfs-server=omv.zerotier.bltavares.com:/meli/services",
-          "--mount-options=rw,nfsvers=4,async",
+          # https://docs.aws.amazon.com/efs/latest/ug/mounting-fs-nfs-mount-settings.html
+          "--mount-options=rw,vers=4.2,async,relatime,timeo=600,rsize=1048576,wsize=1048576,retrans=2,hard,fsc",
         ]
 
         network_mode = "host" # required so the mount works even after stopping the container
@@ -27,7 +28,7 @@ job "storage-node" {
       }
 
       resources {
-        cpu    = 100
+        cpu    = 50
         memory = 100
       }
     }
