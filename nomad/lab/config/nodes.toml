@@ -1,0 +1,20 @@
+[http.routers.proxmox]
+rule = "Host(`proxmox.lab.bltavares.com`)"
+service = "proxmox"
+[http.services.proxmox.loadBalancer]
+serversTransport = "insecureHttps"
+[[http.services.proxmox.loadBalancer.servers]]
+url = "https://192.168.15.3:8006"
+[[http.services.proxmox.loadBalancer.servers]]
+url = "https://192.168.15.4:8006"
+
+[http.routers.omv]
+rule = "Host(`omv.lab.bltavares.com`)"
+service = "omv"
+[http.services.omv.loadBalancer]
+serversTransport = "insecureHttps"
+[[http.services.omv.loadBalancer.servers]]
+url = "https://omv.zerotier.bltavares.com:443"
+
+[http.serversTransports.insecureHttps]
+insecureSkipVerify = true

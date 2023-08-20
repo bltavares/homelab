@@ -1,0 +1,18 @@
+
+[http.routers.radarr]
+rule = "Host(`radarr.lab.bltavares.com`)"
+service = "radarr"
+[[http.services.radarr.loadBalancer.servers]]
+url = "http://10.147.17.110:7878"
+
+[http.routers.sonarr]
+rule = "Host(`sonarr.lab.bltavares.com`)"
+service = "sonarr"
+[[http.services.sonarr.loadBalancer.servers]]
+url = "http://10.147.17.110:8989"
+
+[http.routers.transmission]
+rule = "Host(`transmission.lab.bltavares.com`)"
+service = "transmission"
+[[http.services.transmission.loadBalancer.servers]]
+url = "http://10.147.17.110:9091"
