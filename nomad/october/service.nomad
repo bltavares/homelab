@@ -16,7 +16,7 @@ job "october" {
       driver = "docker"
 
       config {
-        image        = "bltavares/october"
+        image        = "registry.lab.bltavares.com/bltavares/october"
         network_mode = "host"
         args = [
           "-a", "${NOMAD_TASK_DIR}/addresses.csv",
@@ -30,7 +30,7 @@ job "october" {
       }
 
       resources {
-        cpu    = 100
+        cpu    = 10
         memory = 10
         disk   = 1
       }
