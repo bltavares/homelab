@@ -5,7 +5,11 @@ kickstart.context "Nomad: Server"
 read -r NOMAD_KEY
 source recipes/install-nomad.sh
 
-arch="$(uname -m)" nomad_key="$NOMAD_KEY" kickstart.file.template files/nomad-server.tmpl.hcl >/etc/nomad.d/server.hcl
+rm -f /etc/nomad.d/server.hcl || true
+arch="$(uname -m)" nomad_key="$NOMAD_KEY" kickstart.file.template files/nomad-server.tmpl.hcl >/etc/nomad.d/00-server.hcl
+if [[ -f files/nomad/"$(hostname)".hcl ]]; then
+    cp files/nomad/"$(hostname)".hcl /etc/nomad.d
+fi
 
 kickstart.service.enable nomad
 kickstart.service.restart nomad

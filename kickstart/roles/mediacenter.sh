@@ -11,17 +11,17 @@ REPO=linuxserver
 
 mkdir -p "$CONFIG_FOLDER"
 
-docker pull $REPO/syncthing
-docker rm -f syncthing
-docker run --name=syncthing \
-  -e PGID=0 -e PUID=0 -e UMASK_SET=000 \
-  -e TZ \
-  -v "${CONFIG_FOLDER}/syncthing/:/config" \
-  -v "${SYNCTHING_SHARE}/:/data1" \
-  --network=host \
-  -p 8384:8384 \
-  --restart=unless-stopped -d \
-  $REPO/syncthing
+# docker pull $REPO/syncthing
+# docker rm -f syncthing
+# docker run --name=syncthing \
+#   -e PGID=0 -e PUID=0 -e UMASK_SET=000 \
+#   -e TZ \
+#   -v "${CONFIG_FOLDER}/syncthing/:/config" \
+#   -v "${SYNCTHING_SHARE}/:/data1" \
+#   --network=host \
+#   -p 8384:8384 \
+#   --restart=unless-stopped -d \
+#   $REPO/syncthing
 
 docker pull $REPO/transmission
 docker rm -f transmission
