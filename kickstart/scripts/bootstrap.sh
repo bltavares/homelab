@@ -12,11 +12,12 @@ debian_pve="192.168.15.193"
 pve_dat="192.168.15.213"
 citadel="REDACTED"
 ryzen="192.168.15.6"
+gibson="192.168.15.195"
 
 ## Bootstrap
 false && for server in $archiver $pve $tiny $omv $debian_pve $pve_dat $ryzen $citadel; do
     echo "$server"
-    kickstart deploy root@"$server" bootstrap-debian ssh-keys docker-ce
+    kickstart deploy root@"$server" bootstrap ssh-keys docker-ce
 done
 
 ## Zerotier

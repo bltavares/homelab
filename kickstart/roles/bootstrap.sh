@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -e
-kickstart.context "Bootstrap Debian"
+kickstart.context "Bootstrap"
 
 kickstart.package.update
 kickstart.package.install sudo
