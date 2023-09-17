@@ -130,8 +130,7 @@ EOH
     task "proxyAuth" {
       driver = "docker"
       config {
-        // TODO mirror on GHCR.io
-        image = "bltavares/traefik-forward-auth:patch"
+        image = "ghcr.io/bltavares/traefik-forward-auth:patch"
         ports = ["proxyAuth"]
       }
 
