@@ -32,6 +32,12 @@ docker exec zerotier zerotier-cli join "$NETWORK_ID"
 
 kickstart.context "Networking"
 kickstart.info "Install dependencies"
-kickstart.package.install avahi-daemon
-kickstart.package.install libnss-mdns
+
+if kickstart.os.is Suse; then
+  kickstart.package.install avahi
+  kickstart.package.install nss-mdns
+else 
+  kickstart.package.install avahi-daemon
+  kickstart.package.install libnss-mdns
+fi
 kickstart.package.install mosh
