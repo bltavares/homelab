@@ -23,12 +23,4 @@ docker run --name consul \
     -retry-join "tiny.zerotier.bltavares.com" \
     -retry-join "pve.zerotier.bltavares.com"
 
-address_6plane="$(ip addr show zt5u44ufvb | grep fc | awk '{print $2}' | cut -d/ -f1)/80"
-cat >/etc/docker/daemon.json <<<"
-{
-    \"ipv6\": true,
-    \"fixed-cidr-v6\": \"$address_6plane\"
-}
-"
-kickstart.service.restart docker
 docker system prune -f

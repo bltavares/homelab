@@ -1,0 +1,16 @@
+# /etc/systemd/system/docker-networking@.service
+[Unit]
+Description=docker networking permission for ipv6 on %i
+Requires=docker.service
+After=docker.service
+
+[Service]
+Type=oneshot
+# Allow incoming ipv6 routing as Docker default policy is Drop
+ExecStart=ip6tables -I DOCKER-USER -i %i -o docker0 -j ACCEPT
+# Allow masquerading outbound IPv6 public requests
+# Managed by docker/daemon.json ip6tables:true
+#ExecStart=bash -c "ip6tables -A POSTROUTING -s $(ip addr show %i | grep fc | awk '{print $2}' | cut -d/ -f1)/80 ! -o docker0 -j MASQUERADE"
+
+[Install]
+WantedBy=multi-user.target

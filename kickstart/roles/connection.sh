@@ -30,6 +30,27 @@ sleep 1
 kickstart.info "Joining network"
 docker exec zerotier zerotier-cli join "$NETWORK_ID"
 
+kickstart.context "Docker networking"
+kickstart.package.install moreutils
+kickstart.package.install jq
+address_6plane="$(ip addr show zt5u44ufvb | grep fc | awk '{print $2}' | cut -d/ -f1)/80"
+jq  '. * input' /etc/docker/daemon.json <(cat <<EOF
+{
+    "ipv6": true,
+    "fixed-cidr-v6": "$address_6plane",
+    "experimental": true,
+    "ip6tables": true
+}
+EOF
+) | sponge /etc/docker/daemon.json
+
+kickstart.service.restart docker
+
+kickstart.info "Setting up docker networking fixes"
+cp files/docker-networking@.service /etc/systemd/system/docker-networking@.service
+systemctl daemon-reload
+systemctl enable docker-networking@zt5u44ufvb.service --now
+
 kickstart.context "Networking"
 kickstart.info "Install dependencies"
 
