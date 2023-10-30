@@ -2,7 +2,7 @@
 
 kickstart.context "Docker CE"
 
-if [[ $(kickstart.package.manager) == "apt" ]]; then
+if [[ $(kickstart.package.manager) == "apt-get" ]]; then
     packages=(
         apt-transport-https
         ca-certificates
