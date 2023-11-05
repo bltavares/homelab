@@ -36,6 +36,7 @@ scopy gitea/gitea
 scopy linuxserver/transmission
 scopy matrixconduit/matrix-conduit:next
 scopy nginx:latest
+scopy actualbudget/actual-server:latest-alpine
 EOH
 
       destination = "local/copy.sh"
