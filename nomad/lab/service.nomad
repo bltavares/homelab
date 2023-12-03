@@ -4,7 +4,7 @@ job "lab" {
 
   constraint {
     attribute = "${node.unique.name}"
-    value     = "tiny"
+    value     = "ryzen"
   }
 
   group "service" {

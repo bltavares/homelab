@@ -4,7 +4,7 @@ job "registry" {
 
   constraint {
     attribute = "${node.unique.name}"
-    value     = "tiny"
+    value     = "ryzen"
   }
 
 
