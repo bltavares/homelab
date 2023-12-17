@@ -102,7 +102,7 @@ job "matrix" {
 
       resources {
         cpu    = 10
-        memory = 10
+        memory = 20
       }
     }
 
