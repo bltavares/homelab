@@ -72,8 +72,8 @@ PUSH_INSTALLATION_ID={{ key "vaultwarden/bitwarden/id" }}
 PUSH_INSTALLATION_KEY={{ key "vaultwarden/bitwarden/key" }}
 
 ## You can generate it here: https://upgrade.yubico.com/getapikey/
-YUBICO_CLIENT_ID={{ key "vaultwarden/bitwarden/id" }}
-YUBICO_SECRET_KEY="{{ key "vaultwarden/bitwarden/key" }}"
+YUBICO_CLIENT_ID={{ key "vaultwarden/yubico/id" }}
+YUBICO_SECRET_KEY="{{ key "vaultwarden/yubico/key" }}"
 EOH
         destination = "secrets/env.sh"
         env         = true
