@@ -30,12 +30,12 @@ done
 ## OMV skipped as consul generates too many logs for a USB drive
 false && for server in false; do
     echo "$server"
-    kickstart deploy --sudo bltavares@"$server" consul-client  <../secrets/consul.key
+    kickstart deploy --sudo bltavares@"$server" consul-client <../secrets/consul.key
     kickstart deploy --sudo bltavares@"$server" nomad-client <../secrets/nomad.key
 done
 
 ## Consul/Nomad server
-true && for server in $ryzen; do
+true && for server in $ryzen $archiver $tiny $pve; do
     echo "$server"
     kickstart deploy --sudo bltavares@"$server" consul-server <../secrets/consul.key
     kickstart deploy --sudo bltavares@"$server" nomad-server <../secrets/nomad.key

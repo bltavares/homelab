@@ -7,9 +7,10 @@ plugin "docker" {
   }
 }
 
-client {
-  reserved {
-    cpu    = 1000
-    memory = 3072
-  }
-}
+//  Semantics changed?
+// client {
+//   reserved {
+//     cpu    = 1000
+//     memory = 3072
+//   }
+// }
