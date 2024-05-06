@@ -32,10 +32,10 @@ job "matrix" {
       driver = "docker"
 
       config {
-        image      = "registry.lab.bltavares.com/matrixconduit/matrix-conduit:next"
+        // image      = "registry.lab.bltavares.com/matrixconduit/matrix-conduit:next"
+        image      = "registry.lab.bltavares.com/girlbossceo/conduwuit:latest"
         force_pull = true
         ports      = ["conduit"]
-        init       = true
       }
 
       service {

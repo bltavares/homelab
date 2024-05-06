@@ -2,7 +2,7 @@ job "images-sync" {
   type = "batch"
 
   periodic {
-    cron             = "@weekly"
+    crons            = ["@weekly"]
     prohibit_overlap = true
   }
 
@@ -20,7 +20,10 @@ job "images-sync" {
 # skopeo copy docker://gcr.io/radicle-services/radicle-httpd docker://registry.lab.bltavares.com/radicle-services/radicle-httpd
 # skopeo copy docker://gcr.io/radicle-services/radicle-httpd docker://registry.lab.bltavares.com/radicle-services/radicle-node
 
-function scopy() { skopeo copy docker://$1 docker://registry.lab.bltavares.com/$1; }
+function scopy() { 
+  echo "Sync: $1"
+  skopeo copy docker://$1 docker://registry.lab.bltavares.com/$1
+}
 
 scopy bltavares/october
 scopy bltavares/postgres
@@ -35,6 +38,7 @@ scopy cloudflare/cloudflared:latest
 scopy gitea/gitea
 scopy linuxserver/transmission
 scopy matrixconduit/matrix-conduit:next
+scopy girlbossceo/conduwuit:latest
 scopy nginx:latest
 scopy actualbudget/actual-server:latest-alpine
 EOH
