@@ -41,6 +41,7 @@ scopy matrixconduit/matrix-conduit:next
 scopy girlbossceo/conduwuit:latest
 scopy nginx:latest
 scopy actualbudget/actual-server:latest-alpine
+scopy superseriousbusiness/gotosocial:latest
 EOH
 
       destination = "local/copy.sh"

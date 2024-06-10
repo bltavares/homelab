@@ -4,11 +4,11 @@ job "activepub" {
 
   group "service" {
     network {
-      port "web" { to = 8000 }
+      port "web" { to = 8080 }
     }
 
     service {
-      name = "pub"
+      name = "fedi"
       port = "web"
     }
 
@@ -27,8 +27,18 @@ job "activepub" {
       driver = "docker"
 
       config {
-        image = "registry.lab.bltavares.com/bltavares/microblogpub:latest"
+        image = "registry.lab.bltavares.com/superseriousbusiness/gotosocial:latest"
         ports = ["web"]
+      }
+
+      env {
+        GTS_HOST                      = "fedi.bltavares.com"
+        GTS_DB_TYPE                   = "sqlite"
+        GTS_DB_ADDRESS                = "/gotosocial/storage/gotosocial.sqlite.db"
+        GTS_LANDING_PAGE_USER         = "bltavares"
+        GTS_ACCOUNTS_ALLOW_CUSTOM_CSS = "true"
+        TZ                            = "UTC"
+        GTS_TRUSTED_PROXIES           = "172.17.0.1/24"
       }
 
       kill_signal = "SIGKILL"
@@ -37,7 +47,7 @@ job "activepub" {
         check {
           name     = "alive"
           type     = "http"
-          path     = "/"
+          path     = "/livez"
           port     = "web"
           interval = "5m"
           timeout  = "10s"
@@ -52,12 +62,12 @@ job "activepub" {
 
       volume_mount {
         volume      = "storage"
-        destination = "/app/data"
+        destination = "/gotosocial/storage"
       }
 
       resources {
-        cpu    = 100
-        memory = 800
+        cpu    = 300
+        memory = 300
       }
     }
 
