@@ -1,5 +1,5 @@
 #!/bin/bash
-nomad_version=1.7.6
+nomad_version=1.8.1
 
 arch="$(uname -m)"
 
