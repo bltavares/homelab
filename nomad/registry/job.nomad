@@ -31,6 +31,7 @@ scopy elasticdog/tiddlywiki
 scopy linuxserver/jackett
 scopy linuxserver/radarr
 scopy linuxserver/sonarr
+scopy linuxserver/syncthing
 scopy miniflux/miniflux:latest
 scopy vaultwarden/server
 scopy bltavares/home-consule:0.1.0
