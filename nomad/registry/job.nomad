@@ -43,6 +43,7 @@ scopy nginx:latest
 scopy actualbudget/actual-server:latest-alpine
 scopy superseriousbusiness/gotosocial:latest
 scopy codeberg.org/forgejo/forgejo:9 forgejo/forgejo:9
+scopy lscr.io/linuxserver/calibre-web:latest linuxserver/calibre-web:latest
 EOH
 
       destination = "local/copy.sh"
