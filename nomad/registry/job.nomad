@@ -22,7 +22,7 @@ job "images-sync" {
 
 function scopy() { 
   echo "Sync: $1"
-  skopeo copy docker://$1 docker://registry.lab.bltavares.com/$1
+  skopeo copy docker://$1 docker://registry.lab.bltavares.com/$${2:-1}
 }
 
 scopy bltavares/october
@@ -36,13 +36,13 @@ scopy miniflux/miniflux:latest
 scopy vaultwarden/server
 scopy bltavares/home-consule:0.1.0
 scopy cloudflare/cloudflared:latest
-scopy gitea/gitea
 scopy linuxserver/transmission
 scopy matrixconduit/matrix-conduit:next
 scopy girlbossceo/conduwuit:latest
 scopy nginx:latest
 scopy actualbudget/actual-server:latest-alpine
 scopy superseriousbusiness/gotosocial:latest
+scopy codeberg.org/forgejo/forgejo:9 forgejo/forgejo:9
 EOH
 
       destination = "local/copy.sh"

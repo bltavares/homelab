@@ -163,9 +163,9 @@ EOH
 # vaultwarden
 rule.vaultwarden.action = allow
 rule.vaultwarden.rule = Host(`pass.lab.bltavares.com`)
-# Gitea registry
-rule.gitea.action = allow
-rule.gitea.rule = Host(`gitea.lab.bltavares.com`) && (PathPrefix(`/v2`) || PathPrefix(`/api`))
+# Git api
+rule.git.action = allow
+rule.git.rule = Host(`git.lab.bltavares.com`) && (PathPrefix(`/v2`) || PathPrefix(`/api`))
 # Trow registry
 rule.registry.action = allow
 rule.registry.rule = Host(`registry.lab.bltavares.com`)

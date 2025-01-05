@@ -1,4 +1,4 @@
-job "gitea" {
+job "git" {
   type        = "service"
   datacenters = ["dc1"]
 
@@ -9,13 +9,13 @@ job "gitea" {
     }
 
     service {
-      name = "gitea"
+      name = "git"
       port = "web"
     }
 
     volume "storage" {
       type            = "csi"
-      source          = "gitea"
+      source          = "git"
       read_only       = false
       attachment_mode = "file-system"
       access_mode     = "single-node-writer"
@@ -38,8 +38,9 @@ job "gitea" {
       }
 
       config {
-        image = "registry.lab.bltavares.com/gitea/gitea"
-        ports = ["web", "ssh"]
+        image      = "registry.lab.bltavares.com/forgejo/forgejo:9"
+        force_pull = true
+        ports      = ["web", "ssh"]
       }
 
       volume_mount {
@@ -54,7 +55,7 @@ job "gitea" {
 
       resources {
         cpu    = 500
-        memory = 512
+        memory = 1024
       }
     }
   }

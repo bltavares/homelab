@@ -1,5 +1,5 @@
-id        = "gitea"
-name      = "gitea"
+id        = "git"
+name      = "git"
 type      = "csi"
 plugin_id = "nfs"
 
