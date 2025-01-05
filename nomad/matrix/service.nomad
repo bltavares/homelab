@@ -2,6 +2,14 @@ job "matrix" {
   type        = "service"
   datacenters = ["dc1"]
 
+  ## TODO preprocessor include?
+  affinity {
+    attribute = "${node.unique.name}"
+    operator  = "set_contains_any"
+    value     = "archiver,pve"
+    weight    = -100
+  }
+
   group "service" {
     meta {
       domain = "matrix.bltavares.com"
