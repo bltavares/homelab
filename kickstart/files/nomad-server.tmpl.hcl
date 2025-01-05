@@ -6,6 +6,7 @@ server {
   enabled          = true
   bootstrap_expect = 3
   encrypt          = "$nomad_key"
+  heartbeat_grace  = "2m"
 }
 
 client {
