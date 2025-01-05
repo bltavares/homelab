@@ -66,8 +66,8 @@ job "activepub" {
       }
 
       resources {
-        cpu    = 900
-        memory = 800
+        cpu    = 1500
+        memory = 1500
       }
     }
 
@@ -86,7 +86,7 @@ job "activepub" {
       }
 
       resources {
-        cpu    = 10
+        cpu    = 50
         memory = 50
       }
     }
