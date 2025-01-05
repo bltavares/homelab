@@ -160,9 +160,6 @@ EOH
 
       template {
         data        = <<EOH
-# micropub.blog
-rule.activitypub.action = allow
-rule.activitypub.rule = Host(`write.lab.bltavares.com`)
 # vaultwarden
 rule.vaultwarden.action = allow
 rule.vaultwarden.rule = Host(`pass.lab.bltavares.com`)
