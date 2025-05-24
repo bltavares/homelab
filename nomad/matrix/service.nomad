@@ -77,6 +77,16 @@ job "matrix" {
         CONDUIT_CONFIG  = "" # Ignore file lookups and use env vars
       }
 
+      template {
+        data        = <<EOF
+CONDUIT_TURN_URIS=["turn:turn.cloudflare.com:3478?transport=udp","turn:turn.cloudflare.com:3478?transport=tcp","turns:turn.cloudflare.com:5349?transport=tcp"]
+CONDUIT_TURN_USERNAME="{{key "conduwuit/turn/username"}}"
+CONDUIT_TURN_PASSWORD="{{key "conduwuit/turn/password"}}"
+EOF
+        destination = "secrets/turn.env"
+        env         = true
+      }
+
 
       volume_mount {
         volume      = "storage"
