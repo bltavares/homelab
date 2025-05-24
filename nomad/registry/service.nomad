@@ -33,13 +33,13 @@ job "registry" {
       driver = "docker"
 
       config {
-        image = "bltavares/trow:patch"
+        image = "ghcr.io/trow-registry/trow:0.7.5"
         ports = ["web"]
         args = [
           "--host", "::",
           "-d", "/data",
           "-n", "registry.lab.bltavares.com",
-          "--proxy-registry-config-file", "local/proxies.yaml",
+          "--config-file", "local/proxies.yaml",
         ]
       }
 
@@ -67,8 +67,10 @@ job "registry" {
 
       template {
         data        = <<EOF
-- alias: docker
-  host: registry-1.docker.io
+registry_proxies:
+  registries:
+    - alias: docker
+      host: registry-1.docker.io
 EOF
         destination = "local/proxies.yaml"
 
