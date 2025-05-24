@@ -38,7 +38,7 @@ job "git" {
       }
 
       config {
-        image      = "registry.lab.bltavares.com/forgejo/forgejo:10"
+        image      = "registry.lab.bltavares.com/forgejo/forgejo:11"
         force_pull = true
         ports      = ["web", "ssh"]
       }

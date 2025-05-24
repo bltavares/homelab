@@ -41,7 +41,7 @@ scopy girlbossceo/conduwuit:latest
 scopy nginx:latest
 scopy actualbudget/actual-server:latest-alpine
 scopy superseriousbusiness/gotosocial:latest
-scopy codeberg.org/forgejo/forgejo:10 forgejo/forgejo:10
+scopy codeberg.org/forgejo/forgejo:11 forgejo/forgejo:11
 scopy lscr.io/linuxserver/calibre-web:latest linuxserver/calibre-web:latest
 scopy sintan1729/chhoto-url:latest
 scopy ghcr.io/sissbruecker/linkding:latest sissbruecker/linkding:latest
