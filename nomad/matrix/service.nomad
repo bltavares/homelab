@@ -41,7 +41,7 @@ job "matrix" {
 
       config {
         // image      = "registry.lab.bltavares.com/matrixconduit/matrix-conduit:next"
-        image      = "registry.lab.bltavares.com/girlbossceo/conduwuit:latest"
+        image      = "registry.lab.bltavares.com/continuwuation/continuwuity:latest"
         force_pull = true
         ports      = ["conduit"]
       }
@@ -85,7 +85,7 @@ job "matrix" {
 
       resources {
         cpu    = 300
-        memory = 300
+        memory = 400
       }
     }
 

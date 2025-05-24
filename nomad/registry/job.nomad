@@ -37,7 +37,7 @@ scopy vaultwarden/server
 scopy bltavares/home-consule:0.1.0
 scopy cloudflare/cloudflared:latest
 scopy linuxserver/transmission
-scopy girlbossceo/conduwuit:latest
+scopy forgejo.ellis.link/continuwuation/continuwuity:latest continuwuation/continuwuity:latest
 scopy nginx:latest
 scopy actualbudget/actual-server:latest-alpine
 scopy superseriousbusiness/gotosocial:latest
