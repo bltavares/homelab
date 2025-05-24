@@ -43,6 +43,7 @@ scopy actualbudget/actual-server:latest-alpine
 scopy superseriousbusiness/gotosocial:latest
 scopy codeberg.org/forgejo/forgejo:10 forgejo/forgejo:10
 scopy lscr.io/linuxserver/calibre-web:latest linuxserver/calibre-web:latest
+scopy sintan1729/chhoto-url:latest
 EOH
 
       destination = "local/copy.sh"
