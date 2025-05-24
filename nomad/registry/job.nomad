@@ -44,6 +44,7 @@ scopy superseriousbusiness/gotosocial:latest
 scopy codeberg.org/forgejo/forgejo:10 forgejo/forgejo:10
 scopy lscr.io/linuxserver/calibre-web:latest linuxserver/calibre-web:latest
 scopy sintan1729/chhoto-url:latest
+scopy ghcr.io/sissbruecker/linkding:latest sissbruecker/linkding:latest
 EOH
 
       destination = "local/copy.sh"

@@ -177,6 +177,10 @@ rule.kubo.rule =  Host(`ipfs.lab.bltavares.com`) ||  Host(`ipfs-gateway.lab.blta
 # Calibre + Kobo
 rule.calibre_kobo.action = allow
 rule.calibre_kobo.rule = Host(`calibre.lab.bltavares.com`) && (PathPrefix(`/kobo`) || PathPrefix(`/opds`))
+
+# Bookmarks
+rule.bookmarks.action = allow
+rule.bookmarks.rule = Host(`bookmarks.lab.bltavares.com`)
 EOH
         destination = "local/config.ini"
       }
