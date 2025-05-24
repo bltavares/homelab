@@ -173,6 +173,10 @@ rule.registry.rule = Host(`registry.lab.bltavares.com`)
 # ipfs
 rule.kubo.action = allow
 rule.kubo.rule =  Host(`ipfs.lab.bltavares.com`) ||  Host(`ipfs-gateway.lab.bltavares.com`)
+
+# Calibre + Kobo
+rule.calibre_kobo.action = allow
+rule.calibre_kobo.rule = Host(`calibre.lab.bltavares.com`) && (PathPrefix(`/kobo`) || PathPrefix(`/opds`))
 EOH
         destination = "local/config.ini"
       }
