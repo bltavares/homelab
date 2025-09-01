@@ -13,6 +13,15 @@ job "git" {
       port = "web"
     }
 
+    service {
+      name = "git-ssh"
+      port = "ssh"
+      tags = [
+        "traefik.tcp.routers.git-ssh.entrypoints=git",
+        "traefik.tcp.routers.git-ssh.rule=HostSNI(`*`)",
+      ]
+    }
+
     volume "storage" {
       type            = "csi"
       source          = "git"
@@ -51,6 +60,7 @@ job "git" {
       env {
         USER_GID  = 1000
         GROUP_GID = 1000
+        FORGEJO__server__SSH_PORT  = 222
       }
 
       resources {

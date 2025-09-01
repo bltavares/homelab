@@ -25,6 +25,9 @@
     main = "lab.bltavares.com"
     sans = ["*.lab.bltavares.com"]
 
+[entryPoints.git]
+  address = ":222"
+
 [certificatesResolvers.letsencrypt.acme]
   email = "{{ key "acme/email" }}"
   storage = "/storage/acme.json"

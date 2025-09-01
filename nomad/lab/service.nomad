@@ -20,6 +20,10 @@ job "lab" {
       port "proxyAuth" {
         to = 4181
       }
+
+      port "git" {
+        static = 222
+      }
     }
 
     reschedule {
