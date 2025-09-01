@@ -5,4 +5,5 @@ consul.exe agent -dev -ui `
     -client '127.0.0.1 {{range $i, $e := GetPrivateInterfaces }}{{if eq $e.MTU 2800 }}{{if $i}} {{end}}{{attr  \"address\" $e}}{{end}}{{end}}' `
     -retry-join "vaporware.zerotier.bltavares.com" `
     -retry-join "tiny.zerotier.bltavares.com" `
+    -retry-join "romulus.zerotier.bltavares.com" `
     -retry-join "ryzen.zerotier.bltavares.com" `
