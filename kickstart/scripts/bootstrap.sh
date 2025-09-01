@@ -4,8 +4,6 @@ set -ueo pipefail
 current_dir=$(dirname "${BASH_SOURCE[0]}")
 source "${current_dir}/../../secrets/env.sh"
 
-archiver="192.168.15.2"
-pve="192.168.15.3"
 tiny="192.168.15.4"
 omv="192.168.15.5"
 debian_pve="192.168.15.193"
@@ -14,28 +12,28 @@ citadel="REDACTED"
 ryzen="192.168.15.6"
 gibson="192.168.15.195"
 
-## Bootstrap
-true && for server in $archiver $pve $tiny $omv $ryzen $gibson; do
-    echo "$server"
-    kickstart deploy root@"$server" bootstrap ssh-keys docker-ce
-done
+# ## Bootstrap
+# true && for server in $tiny $omv $ryzen $gibson; do
+    # echo "$server"
+    # kickstart deploy root@"$server" bootstrap ssh-keys docker-ce
+# done
 
-## Zerotier
-true && for server in $archiver $pve $tiny $omv $ryzen $gibson; do
-    echo "$server"
-    kickstart deploy --sudo bltavares@"$server" connection <<<"$NETWORK_ID"
-done
+# ## Zerotier
+# false && for server in $tiny $omv $ryzen $gibson; do
+#     echo "$server"
+    # kickstart deploy --sudo bltavares@"$server" connection <<<"$NETWORK_ID"
+# done
 
-## Consul/Nomad client
-## OMV skipped as consul generates too many logs for a USB drive
+# ## Consul/Nomad client
+# ## OMV skipped as consul generates too many logs for a USB drive
 false && for server in false; do
     echo "$server"
     kickstart deploy --sudo bltavares@"$server" consul-client <../secrets/consul.key
     kickstart deploy --sudo bltavares@"$server" nomad-client <../secrets/nomad.key
 done
 
-## Consul/Nomad server
-true && for server in $ryzen $archiver $tiny $pve; do
+# ## Consul/Nomad server
+true && for server in $tiny $ryzen; do
     echo "$server"
     kickstart deploy --sudo bltavares@"$server" consul-server <../secrets/consul.key
     kickstart deploy --sudo bltavares@"$server" nomad-server <../secrets/nomad.key
