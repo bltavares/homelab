@@ -33,10 +33,9 @@ job "registry" {
       driver = "docker"
 
       config {
-        image = "ghcr.io/trow-registry/trow:0.7.5"
+        image = "ghcr.io/trow-registry/trow:0.9.0"
         ports = ["web"]
         args = [
-          "--host", "::",
           "-d", "/data",
           "-n", "registry.lab.bltavares.com",
           "--config-file", "local/proxies.yaml",
