@@ -170,7 +170,7 @@ rule.vaultwarden.rule = Host(`pass.lab.bltavares.com`)
 
 # Git api
 rule.git.action = allow
-rule.git.rule = Host(`git.lab.bltavares.com`) && (PathPrefix(`/v2`) || PathPrefix(`/api`) || HeadersRegexp(`Authorization`, `.+`))
+rule.git.rule = Host(`git.lab.bltavares.com`) && (PathPrefix(`/v2`) || PathPrefix(`/api`) || HeadersRegexp(`User-Agent`, `git/2.+`))
 # Trow registry
 rule.registry.action = allow
 rule.registry.rule = Host(`registry.lab.bltavares.com`)
