@@ -66,6 +66,6 @@ done
 # kickstart deploy --sudo bltavares@"192.168.15.162" consul-client <../secrets/consul.key
 
 # Minecraft
-# kickstart deploy root@"192.168.15.157" bootstrap-debian ssh-keys
-# kickstart deploy --sudo bltavares@"192.168.15.157" docker-ce connection <<<"$NETWORK_ID"
-# false && kickstart deploy --sudo bltavares@"192.168.15.157" minecraft
+# kickstart deploy root@"minecraft.lan" bootstrap-debian ssh-keys
+# kickstart deploy --sudo bltavares@"minecraft.lan" docker-ce connection <<<"$NETWORK_ID"
+# kickstart deploy --sudo bltavares@"minecraft.lan" minecraft
