@@ -1,5 +1,5 @@
 #!/bin/bash
-nomad_version=1.9.4
+nomad_version=1.10.4
 
 arch="$(uname -m)"
 
@@ -35,7 +35,7 @@ kickstart.info "Arch: ${arch} - url: ${url}"
 
     kickstart.package.install unzip
     rm -f nomad
-    unzip nomad.zip >/dev/null
+    unzip -o nomad.zip >/dev/null
     chmod +x nomad
     mv nomad /usr/local/bin/nomad
 
