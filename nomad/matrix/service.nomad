@@ -63,10 +63,9 @@ job "matrix" {
       }
 
       env {
-        CONDUIT_SERVER_NAME      = "${NOMAD_META_domain}"
-        CONDUIT_DATABASE_PATH    = "/var/lib/matrix-conduit/"
-        CONDUIT_DATABASE_BACKEND = "rocksdb"
-        CONDUIT_PORT             = "${NOMAD_PORT_conduit}"
+        CONDUIT_SERVER_NAME   = "${NOMAD_META_domain}"
+        CONDUIT_DATABASE_PATH = "/var/lib/matrix-conduit/"
+        CONDUIT_PORT          = "${NOMAD_PORT_conduit}"
         // CONDUIT_MAX_REQUEST_SIZE   = "20_000_000" # in bytes, ~20 MB
         CONDUIT_ALLOW_REGISTRATION = "false"
         CONDUIT_ALLOW_FEDERATION   = "true"
