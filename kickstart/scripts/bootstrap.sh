@@ -5,6 +5,7 @@ current_dir=$(dirname "${BASH_SOURCE[0]}")
 source "${current_dir}/../../secrets/env.sh"
 
 romulus="192.168.15.2"
+rotterdam="192.168.15.3"
 tiny="192.168.15.4"
 omv="192.168.15.5"
 debian_pve="192.168.15.193"
@@ -14,13 +15,13 @@ ryzen="192.168.15.6"
 gibson="192.168.15.195"
 
 # ## Bootstrap
-# true && for server in $romulus $tiny $omv $ryzen $gibson; do
+# true && for server in $romulus $tiny $omv $ryzen $rotterdam $gibson; do
     # echo "$server"
     # kickstart deploy root@"$server" bootstrap ssh-keys docker-ce
 # done
 
 # ## Zerotier
-# false && for server in $romulus $tiny $omv $ryzen $gibson; do
+# false && for server in $romulus $tiny $omv $ryzen $rotterdam $gibson; do
 #     echo "$server"
     # kickstart deploy --sudo bltavares@"$server" connection <<<"$NETWORK_ID"
 # done
@@ -34,7 +35,7 @@ false && for server in false; do
 done
 
 # ## Consul/Nomad server
-true && for server in $romulus $tiny $ryzen; do
+true && for server in $romulus $tiny $ryzen $rotterdam; do
     echo "$server"
     kickstart deploy --sudo bltavares@"$server" consul-server <../secrets/consul.key
     kickstart deploy --sudo bltavares@"$server" nomad-server <../secrets/nomad.key

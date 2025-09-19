@@ -6,9 +6,12 @@ serversTransport = "insecureHttps"
 [[http.services.proxmox.loadBalancer.servers]]
 url = "https://192.168.15.2:8006"
 [[http.services.proxmox.loadBalancer.servers]]
+url = "https://192.168.15.3:8006"
+[[http.services.proxmox.loadBalancer.servers]]
 url = "https://192.168.15.4:8006"
 [[http.services.proxmox.loadBalancer.servers]]
 url = "https://192.168.15.6:8006"
+
 
 [http.routers.omv]
 rule = "Host(`omv.lab.bltavares.com`)"
