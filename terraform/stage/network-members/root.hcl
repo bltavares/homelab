@@ -17,14 +17,12 @@ generate "backend" {
   path      = "backend.tf"
   if_exists = "overwrite_terragrunt"
   contents  = <<EOF
-  terraform {
-    backend "remote" {
-      organization = "homelab"
-      workspaces {
-        name = "member-${path_relative_to_include()}"
-      }
-    }
+terraform {
+  backend "consul" {
+    path = "terraform/network-members/${path_relative_to_include()}/state"
+    gzip = true
   }
+}
 EOF
 }
 
@@ -35,7 +33,13 @@ terraform {
     commands           = get_terraform_commands_that_need_vars()
     required_var_files = ["${get_parent_terragrunt_dir()}/../../../secrets/production.tfvars"]
   }
+
+  extra_arguments "backend" {
+    commands = ["init"]
+    arguments = [
+      "-backend-config=${get_parent_terragrunt_dir()}/../../../secrets/config.consul.tfbackend"
+    ]
+  }
 }
 
 download_dir = "${get_parent_terragrunt_dir()}/../../terragrunt/.terragrunt-cache"
-skip         = true

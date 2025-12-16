@@ -20,3 +20,10 @@ variable "zerotier_members" {
 variable "name" {
   type = string
 }
+
+variable "consul" {
+  type = object({
+    address      = string,
+    access_token = string,
+  })
+}

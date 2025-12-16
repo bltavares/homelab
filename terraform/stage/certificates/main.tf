@@ -2,19 +2,11 @@ terraform {
   required_providers {
     acme = {
       source = "vancluever/acme"
-      version = "~> 2.4.0"
+      version = "~> 2.39.0"
     }
     local = {
       source  = "hashicorp/local"
       version = "~> 2.1.0"
-    }
-  }
-
-  backend "remote" {
-    organization = "homelab"
-
-    workspaces {
-      name = "certificates"
     }
   }
 }

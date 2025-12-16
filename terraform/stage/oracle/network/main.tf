@@ -4,7 +4,7 @@ terraform {
       source  = "bltavares/zerotier"
       version = "~> 0.3.0"
     }
-   
+
     oci = {
       source  = "oracle/oci"
       version = "4.110.0"
@@ -12,12 +12,9 @@ terraform {
 
   }
 
-  backend "remote" {
-    organization = "homelab"
-
-    workspaces {
-      name = "oracle-network"
-    }
+  backend "consul" {
+    path = "terraform/oracle/network/state"
+    gzip = true
   }
 }
 

@@ -9,13 +9,5 @@ terraform {
       version = "~> 2.10.0"
     }
   }
-
-  backend "remote" {
-    organization = "homelab"
-
-    workspaces {
-      name = "network"
-    }
-  }
 }
 

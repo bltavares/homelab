@@ -16,11 +16,11 @@ terraform {
 }
 
 data "terraform_remote_state" "network" {
-  backend = "remote"
+  backend = "consul"
   config = {
-    organization = "homelab"
-    workspaces = {
-      name = "network"
-    }
+    path = "terraform/network/state"
+    gzip = true
+    address = var.consul.address
+    access_token = var.consul.access_token
   }
 }
