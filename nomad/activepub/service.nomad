@@ -19,11 +19,20 @@ job "activepub" {
       attachment_mode = "file-system"
       access_mode     = "single-node-writer"
     }
+
+    volume "persistence" {
+      type            = "csi"
+      source          = "linstor-activepub"
+      read_only       = false
+      attachment_mode = "file-system"
+      access_mode     = "single-node-writer"
+    }
+
     update {
       max_parallel = 0
     }
 
-    task "image" {
+    task "service" {
       driver = "docker"
 
       config {
@@ -32,9 +41,11 @@ job "activepub" {
       }
 
       env {
-        GTS_HOST                      = "fedi.bltavares.com"
-        GTS_DB_TYPE                   = "sqlite"
-        GTS_DB_ADDRESS                = "/gotosocial/storage/gotosocial.sqlite.db"
+        GTS_HOST       = "fedi.bltavares.com"
+        GTS_DB_TYPE    = "sqlite"
+        GTS_DB_ADDRESS = "/gotosocial/storage/gotosocial.sqlite.db"
+        # GTS_DB_SQLITE_JOURNAL_MODE    = "DELETE"
+        # GTS_DB_SQLITE_SYNCHRONOUS     = "NORMAL"
         GTS_LANDING_PAGE_USER         = "bltavares"
         GTS_ACCOUNTS_ALLOW_CUSTOM_CSS = "true"
         TZ                            = "UTC"
@@ -60,8 +71,14 @@ job "activepub" {
         }
       }
 
+      # volume_mount {
+      #   volume      = "storage"
+      #   destination = "/gotosocial/storage"
+      # }
+
+
       volume_mount {
-        volume      = "storage"
+        volume      = "persistence"
         destination = "/gotosocial/storage"
       }
 
@@ -71,8 +88,29 @@ job "activepub" {
       }
     }
 
+    task "permission-fix" {
+      lifecycle {
+        hook    = "prestart"
+        sidecar = false
+      }
+      driver = "docker"
+      config {
+        image = "registry.lab.bltavares.com/alpine:latest"
+        args  = ["chown", "1000:1000", "/mnt/data"]
+      }
+      volume_mount {
+        volume      = "persistence"
+        destination = "/mnt/data"
+      }
+    }
+
     task "ingress" {
       driver = "docker"
+
+      lifecycle {
+        hook    = "poststart"
+        sidecar = true
+      }
 
       config {
         image = "registry.lab.bltavares.com/cloudflare/cloudflared:latest"
