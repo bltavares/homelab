@@ -49,7 +49,23 @@ job "activepub" {
         GTS_LANDING_PAGE_USER         = "bltavares"
         GTS_ACCOUNTS_ALLOW_CUSTOM_CSS = "true"
         TZ                            = "UTC"
-        GTS_TRUSTED_PROXIES           = "172.17.0.1/24"
+
+        GTS_STORAGE_BACKEND         = "s3"
+        GTS_STORAGE_S3_PROXY        = "false"
+        GTS_STORAGE_S3_ENDPOINT     = "aricanduva.bltavares.com"
+        GTS_STORAGE_S3_USE_SSL      = "true"
+        GTS_STORAGE_S3_BUCKET       = "gotosocial"
+        GTS_ADVANCED_CSP_EXTRA_URIS = "dweb.link,*.dweb.link"
+      }
+
+      template {
+        data        = <<EOH
+GTS_TRUSTED_PROXIES={{key "authProxy/network_range"}}
+GTS_STORAGE_S3_ACCESS_KEY={{key "aricanduva/access_key"}}
+GTS_STORAGE_S3_SECRET_KEY={{key "aricanduva/secret_key"}}
+EOH
+        destination = "secrets/config.env"
+        env         = true
       }
 
       kill_signal = "SIGKILL"
