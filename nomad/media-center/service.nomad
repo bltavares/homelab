@@ -3,8 +3,6 @@ locals {
   DOWNLOADS     = "/media/twotb"
   MOVIES        = "/media/twotb/Filmes"
   SERIES        = "/media/twotb/Seriados"
-  AUDIOBOOKS    = "/media/twotb/Audiobooks"
-  PODCASTS      = "/media/twotb/Podcasts"
   TZ            = "America/Sao_Paulo"
 }
 
@@ -25,7 +23,6 @@ job "media-center" {
       port "sonarr" { static = 8989 }
       port "radarr" { static = 7878 }
       port "jackett" { static = 9117 }
-      port "audiobooks" { to = 80 }
     }
 
     task "transmission" {
@@ -116,32 +113,6 @@ job "media-center" {
         PGID = 0
         PUID = 0
         TZ   = "${local.TZ}"
-      }
-    }
-
-    service {
-      name = "audiobooks"
-      port = "audiobooks"
-    }
-
-    task "audiobookshelf" {
-      driver = "docker"
-
-      config {
-        # image = "ghcr.io/advplyr/audiobookshelf:latest"
-        image = "registry.lab.bltavares.com/advplyr/audiobookshelf:latest"
-        ports = ["audiobooks"]
-
-        volumes = [
-          "${local.CONFIG_FOLDER}/audiobookshelf/config/:/config",
-          "${local.CONFIG_FOLDER}/audiobookshelf/metadata/:/metadata",
-          "${local.AUDIOBOOKS}/:/audiobooks",
-          "${local.PODCASTS}/:/podcasts",
-        ]
-      }
-
-      env {
-        TZ = "${local.TZ}"
       }
     }
   }
