@@ -33,6 +33,7 @@ job "miniflux" {
 {{ range service "miniflux-db" }}
 DATABASE_URL=postgres://miniflux:${file("../../secrets/miniflux/postgres-passwd")}@{{ .Address }}:{{ .Port }}/miniflux?sslmode=disable
 {{ end }}
+TRUSTED_REVERSE_PROXY_NETWORKS={{key "authProxy/network_range"}}
 EOH
         destination = "secrets/postgres-addr"
         env         = true
@@ -88,6 +89,11 @@ EOH
     task "ingress" {
       driver = "docker"
 
+      lifecycle {
+        hook    = "poststart"
+        sidecar = true
+      }
+
       config {
         image = "registry.lab.bltavares.com/cloudflare/cloudflared:latest"
         args = [
@@ -123,6 +129,15 @@ EOH
       attachment_mode = "file-system"
       access_mode     = "single-node-writer"
     }
+
+    volume "persistence" {
+      type            = "csi"
+      source          = "linstor-miniflux"
+      read_only       = false
+      attachment_mode = "file-system"
+      access_mode     = "single-node-writer"
+    }
+
     update {
       max_parallel = 0
     }
@@ -137,8 +152,13 @@ EOH
 
       kill_signal = "SIGTERM"
 
+      # volume_mount {
+      #   volume      = "storage"
+      #   destination = "/var/lib/postgresql/data"
+      # }
+
       volume_mount {
-        volume      = "storage"
+        volume      = "persistence"
         destination = "/var/lib/postgresql/data"
       }
 
