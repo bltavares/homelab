@@ -41,6 +41,12 @@ true && for server in $romulus $tiny $ryzen $rotterdam; do
     kickstart deploy --sudo bltavares@"$server" nomad-server <../secrets/nomad.key
 done
 
+## Linstor
+false && for server in $romulus $tiny $ryzen $rotterdam; do
+    echo "$server"
+    kickstart deploy --sudo bltavares@"$server" storage
+done
+
 ## Brumble
 # kickstart deploy --sudo bltavares@controller.zerotier.bltavares.com nomad-server <../secrets/nomad.key
 # kickstart deploy --sudo bltavares@p1.zerotier.bltavares.com consul-client nomad-client <../secrets/consul.key
