@@ -23,3 +23,7 @@ url = "https://omv.zerotier.bltavares.com:443"
 
 [http.serversTransports.insecureHttps]
 insecureSkipVerify = true
+
+[http.routers.aricanduva-short]
+rule = "Host(`aricanduva.bltavares.com`)"
+service = "aricanduva@consulcatalog"

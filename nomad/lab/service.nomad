@@ -186,6 +186,10 @@ rule.calibre_kobo.rule = Host(`calibre.lab.bltavares.com`) && (PathPrefix(`/kobo
 # Bookmarks
 rule.bookmarks.action = allow
 rule.bookmarks.rule = Host(`bookmarks.lab.bltavares.com`)
+
+# aricanduva
+rule.aricanduva.action = allow
+rule.aricanduva.rule = Host(`aricanduva.lab.bltavares.com`) || Host(`aricanduva.bltavares.com`)
 EOH
         destination = "local/config.ini"
       }
