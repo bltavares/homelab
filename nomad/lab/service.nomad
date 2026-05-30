@@ -187,6 +187,10 @@ rule.calibre_kobo.rule = Host(`calibre.lab.bltavares.com`) && (PathPrefix(`/kobo
 rule.bookmarks.action = allow
 rule.bookmarks.rule = Host(`bookmarks.lab.bltavares.com`)
 
+# wallabag
+rule.wallabag.action = allow
+rule.wallabag.rule = Host(`wallabag.lab.bltavares.com`)
+
 # aricanduva
 rule.aricanduva.action = allow
 rule.aricanduva.rule = Host(`aricanduva.lab.bltavares.com`) || Host(`aricanduva.bltavares.com`)
