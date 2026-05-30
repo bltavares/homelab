@@ -18,3 +18,8 @@ plugin "docker" {
     allow_privileged = true
   }
 }
+
+telemetry {
+  publish_allocation_metrics = true
+  publish_node_metrics       = true
+}
