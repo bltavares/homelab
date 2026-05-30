@@ -183,6 +183,10 @@ rule.kubo.rule =  Host(`ipfs.lab.bltavares.com`) ||  Host(`ipfs-gateway.lab.blta
 rule.calibre_kobo.action = allow
 rule.calibre_kobo.rule = Host(`calibre.lab.bltavares.com`) && (PathPrefix(`/kobo`) || PathPrefix(`/opds`))
 
+# AudioBookShelf
+rule.auiobookshelf.action = allow
+rule.auiobookshelf.rule = Host(`audiobooks.lab.bltavares.com`)
+
 # Bookmarks
 rule.bookmarks.action = allow
 rule.bookmarks.rule = Host(`bookmarks.lab.bltavares.com`)
