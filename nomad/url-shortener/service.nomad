@@ -23,13 +23,15 @@ job "url-shortener" {
       max_parallel = 0
     }
 
-    task "image" {
+    task "service" {
       driver = "docker"
 
       config {
         image = "registry.lab.bltavares.com/sintan1729/chhoto-url:latest"
         ports = ["web"]
       }
+
+      user = "1000:1000"
 
       env {
         site_url = "z.bltavares.com"
@@ -69,8 +71,8 @@ EOH
       }
 
       resources {
-        cpu    = 1500
-        memory = 1500
+        cpu    = 100
+        memory = 100
       }
     }
 

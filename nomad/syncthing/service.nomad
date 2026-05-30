@@ -57,6 +57,11 @@ job "syncthing" {
         TZ   = "America/Sao_Paulo"
       }
 
+      resources {
+        cpu    = 500
+        memory = 500
+      }
+
       service {
         check {
           type     = "tcp"

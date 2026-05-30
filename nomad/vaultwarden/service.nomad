@@ -23,8 +23,7 @@ job "vaultwarden" {
       max_parallel = 0
     }
 
-
-    task "image" {
+    task "service" {
       driver = "docker"
 
       config {
