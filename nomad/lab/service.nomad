@@ -179,6 +179,10 @@ rule.registry.rule = Host(`registry.lab.bltavares.com`)
 rule.kubo.action = allow
 rule.kubo.rule =  Host(`ipfs.lab.bltavares.com`) ||  Host(`ipfs-gateway.lab.bltavares.com`)
 
+# Paperless API
+rule.paperless.action = allow
+rule.paperless.rule = Host(`paperless.lab.bltavares.com`) && PathPrefix(`/api`)
+
 # Calibre + Kobo
 rule.calibre_kobo.action = allow
 rule.calibre_kobo.rule = Host(`calibre.lab.bltavares.com`) && (PathPrefix(`/kobo`) || PathPrefix(`/opds`))
