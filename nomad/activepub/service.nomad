@@ -38,6 +38,7 @@ job "activepub" {
       config {
         image = "registry.lab.bltavares.com/superseriousbusiness/gotosocial:latest"
         ports = ["web"]
+        init  = true
       }
 
       env {
