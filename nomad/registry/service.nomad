@@ -4,9 +4,8 @@ job "registry" {
 
   constraint {
     attribute = "${node.unique.name}"
-    value     = "ryzen"
+    value     = "romulus"
   }
-
 
   group "service" {
     network {
