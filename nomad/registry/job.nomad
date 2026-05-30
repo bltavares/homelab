@@ -25,26 +25,29 @@ function scopy() {
   skopeo copy docker://$1 docker://registry.lab.bltavares.com/$${2:-$1}
 }
 
-scopy bltavares/october
-scopy bltavares/postgres
-scopy elasticdog/tiddlywiki
-scopy linuxserver/jackett
-scopy linuxserver/radarr
-scopy linuxserver/sonarr
-scopy linuxserver/syncthing
-scopy miniflux/miniflux:latest
-scopy vaultwarden/server
+#scopy actualbudget/actual-server:latest-alpine
+scopy alpine:latest
+scopy bltavares/aricanduva:latest
 scopy bltavares/home-consule:0.1.0
+scopy bltavares/october:latest
+scopy bltavares/postgres:latest
 scopy cloudflare/cloudflared:latest
-scopy linuxserver/transmission
+scopy codeberg.org/forgejo/forgejo:15 forgejo/forgejo:15
+scopy elasticdog/tiddlywiki:latest
 scopy forgejo.ellis.link/continuwuation/continuwuity:latest continuwuation/continuwuity:latest
-scopy nginx:latest
-scopy actualbudget/actual-server:latest-alpine
-scopy superseriousbusiness/gotosocial:latest
-scopy codeberg.org/forgejo/forgejo:13 forgejo/forgejo:13
-scopy lscr.io/linuxserver/calibre-web:latest linuxserver/calibre-web:latest
-scopy sintan1729/chhoto-url:latest
 scopy ghcr.io/sissbruecker/linkding:latest sissbruecker/linkding:latest
+scopy ipfs/kubo:latest
+scopy linuxserver/jackett:latest
+scopy linuxserver/radarr:latest
+scopy linuxserver/sonarr:latest
+scopy linuxserver/syncthing:latest
+scopy linuxserver/transmission:latest
+scopy lscr.io/linuxserver/calibre-web:latest linuxserver/calibre-web:latest
+scopy miniflux/miniflux:latest
+scopy nginx:latest
+scopy sintan1729/chhoto-url:latest
+scopy superseriousbusiness/gotosocial:latest
+scopy vaultwarden/server:latest
 EOH
 
       destination = "local/copy.sh"
