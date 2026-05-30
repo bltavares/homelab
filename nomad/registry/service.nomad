@@ -33,7 +33,7 @@ job "registry" {
       driver = "docker"
 
       config {
-        image = "ghcr.io/trow-registry/trow:0.9.0"
+        image = "ghcr.io/trow-registry/trow:0.9.3"
         ports = ["web"]
         args = [
           "-d", "/data",
@@ -67,6 +67,7 @@ job "registry" {
       template {
         data        = <<EOF
 registry_proxies:
+  max_size: 10GiB
   registries:
     - alias: docker
       host: registry-1.docker.io
