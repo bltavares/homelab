@@ -19,9 +19,9 @@ job "ipfs" {
     }
 
     network {
-      port "web" { to = 8080 }
-      port "swarm" { to = 4001 } # TCP/UDP
-      port "admin" { to = 5001 }
+      port "web" { static = 8080 }
+      port "swarm" { static = 4001 } # TCP/UDP
+      port "admin" { static = 5001 }
     }
 
     service {
@@ -47,7 +47,17 @@ job "ipfs" {
 
       config {
         image = "registry.lab.bltavares.com/ipfs/kubo"
-        ports = ["web", "swarm", "admin"]
+        args = [
+          # default
+          "daemon", "--migrate=true", "--agent-version-suffix=docker",
+          # add
+          "--enable-gc"
+        ]
+        ports        = ["web", "swarm", "admin"]
+        network_mode = "host"
+        volumes = [
+          "alloc/container-init.d:/container-init.d"
+        ]
       }
 
       volume_mount {
@@ -55,13 +65,22 @@ job "ipfs" {
         destination = "/data/ipfs"
       }
 
-      env {
-        IPFS_PROFILE = "lowpower"
+      template {
+        data        = <<EOD
+#!/bin/sh
+set -ex
+ipfs config Addresses.API /ip4/$NOMAD_IP_admin/tcp/5001
+ipfs config Addresses.Gateway /ip4/$NOMAD_IP_web/tcp/8080
+ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin '["https://ipfs.lab.bltavares.com", "https://ipfs-geateway.lab.bltavares.com", "http://localhost:3000", "http://127.0.0.1:5001", "https://webui.ipfs.io"]'
+ipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods '["GET", "PUT", "POST", "HEAD"]'
+EOD
+        destination = "alloc/container-init.d/configure-private-ips.sh"
+        perms       = "755"
       }
 
       resources {
         cpu    = 3500
-        memory = 300
+        memory = 900
       }
     }
   }
