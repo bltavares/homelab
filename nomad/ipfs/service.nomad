@@ -36,13 +36,13 @@ job "ipfs" {
 
     volume "storage" {
       type            = "csi"
-      source          = "kubo"
+      source          = "linstor-ipfs"
       read_only       = false
       attachment_mode = "file-system"
-      access_mode     = "multi-node-multi-writer"
+      access_mode     = "single-node-writer"
     }
 
-    task "image" {
+    task "service" {
       driver = "docker"
 
       config {
