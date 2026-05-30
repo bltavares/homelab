@@ -56,6 +56,7 @@ job "vaultwarden" {
 
       env {
         SIGNUPS_ALLOWED = false
+        ENABLE_DB_WAL   = false
 
         ## For U2F to work, the server must use HTTPS
         DOMAIN = "https://pass.lab.bltavares.com"
