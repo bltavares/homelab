@@ -1,3 +1,1 @@
-client {
-  enabled = false
-}
+datacenter = "oracle"
