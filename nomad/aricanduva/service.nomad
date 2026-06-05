@@ -20,6 +20,9 @@ job "aricanduva" {
     service {
       name = "aricanduva"
       port = "web"
+      tags = [
+        "gateway.enable=true",
+      ]
     }
 
     task "permission-fix" {
@@ -44,13 +47,13 @@ job "aricanduva" {
       config {
         image = "registry.lab.bltavares.com/bltavares/aricanduva:latest"
         ports = ["web"]
-        init = true
+        init  = true
       }
 
       env {
         IP_EXTRACTION = "RightmostXForwardedFor"
         RPC_ADDRESS   = "https://ipfs.lab.bltavares.com/api/v0"
-        RUST_LOG = "aricanduva=info"
+        RUST_LOG      = "aricanduva=info"
       }
 
       template {
@@ -87,31 +90,6 @@ EOH
           grace           = "90s"
           ignore_warnings = false
         }
-      }
-    }
-
-    task "ingress" {
-      driver = "docker"
-
-      lifecycle {
-        hook    = "poststart"
-        sidecar = true
-      }
-
-      config {
-        image = "registry.lab.bltavares.com/cloudflare/cloudflared:latest"
-        args = [
-          "tunnel", "--no-autoupdate",
-          "run",
-          "--token", file("../../secrets/aricanduva/tunnel.token"),
-          "--url", "${NOMAD_ADDR_web}",
-          "aricanduva",
-        ]
-      }
-
-      resources {
-        cpu    = 10
-        memory = 20
       }
     }
   }
