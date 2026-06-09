@@ -23,6 +23,7 @@ job "matrix" {
     service {
       name = "matrix"
       port = "web"
+      tags = ["gateway.enable=true"]
     }
 
     volume "storage" {
@@ -77,11 +78,11 @@ job "matrix" {
       }
 
       template {
-        data        = <<EOF
+        data        = <<-INI
 CONDUIT_TURN_URIS=["turn:turn.cloudflare.com:3478?transport=udp","turn:turn.cloudflare.com:3478?transport=tcp","turns:turn.cloudflare.com:5349?transport=tcp"]
 CONDUIT_TURN_USERNAME="{{key "conduwuit/turn/username"}}"
 CONDUIT_TURN_PASSWORD="{{key "conduwuit/turn/password"}}"
-EOF
+INI
         destination = "secrets/turn.env"
         env         = true
       }
@@ -113,40 +114,35 @@ EOF
 
 
       template {
-        data        = file("./well-known.conf")
         destination = "local/well-known.conf"
+        data        = <<-NGINX
+server {
+    server_name {{ env "NOMAD_META_domain" }}
+    listen      80 default_server http2;
+    proxy_buffering off;
+
+    location /.well-known/matrix/server {
+       return 200 '{"m.server": "{{ env "NOMAD_META_domain" }}:443"}';
+       types { } default_type "application/json; charset=utf-8";
+    }
+
+   location /.well-known/matrix/client {
+       return 200 '{"m.homeserver": {"base_url": "https://{{ env "NOMAD_META_domain" }}"}, "org.matrix.msc3575.proxy": {"url": "https://{{ env "NOMAD_META_domain" }}"}}';
+       types { } default_type "application/json; charset=utf-8";
+       add_header "Access-Control-Allow-Origin" *;
+   }
+
+   location / {
+        proxy_set_header Host $host;
+        proxy_pass http://{{ env "NOMAD_ADDR_conduit" }};
+   }
+}
+NGINX
       }
 
       resources {
         cpu    = 10
         memory = 20
-      }
-    }
-
-    task "ingress" {
-      driver = "docker"
-
-      config {
-        image = "registry.lab.bltavares.com/cloudflare/cloudflared:latest"
-        args = [
-          "tunnel", "--no-autoupdate",
-          "run",
-          "--url", "${NOMAD_ADDR_web}",
-          "matrix",
-        ]
-      }
-
-      template {
-        data        = <<EOH
-TUNNEL_TOKEN="{{key "cloudflare/tunnel/matrix"}}"
-EOH
-        destination = "secrets/token.env"
-        env         = true
-      }
-
-      resources {
-        cpu    = 20
-        memory = 50
       }
     }
   }
