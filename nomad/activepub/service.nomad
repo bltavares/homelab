@@ -10,6 +10,10 @@ job "activepub" {
     service {
       name = "fedi"
       port = "web"
+      tags = [
+        "gateway.enable=true",
+        "gateway.name=fedi",
+      ]
     }
 
     volume "storage" {
@@ -60,11 +64,11 @@ job "activepub" {
       }
 
       template {
-        data        = <<EOH
+        data        = <<-ini
 GTS_TRUSTED_PROXIES={{key "authProxy/network_range"}}
 GTS_STORAGE_S3_ACCESS_KEY={{key "aricanduva/access_key"}}
 GTS_STORAGE_S3_SECRET_KEY={{key "aricanduva/secret_key"}}
-EOH
+ini
         destination = "secrets/config.env"
         env         = true
       }
@@ -118,31 +122,6 @@ EOH
       volume_mount {
         volume      = "persistence"
         destination = "/mnt/data"
-      }
-    }
-
-    task "ingress" {
-      driver = "docker"
-
-      lifecycle {
-        hook    = "poststart"
-        sidecar = true
-      }
-
-      config {
-        image = "registry.lab.bltavares.com/cloudflare/cloudflared:latest"
-        args = [
-          "tunnel", "--no-autoupdate",
-          "run",
-          "--token", file("../../secrets/activitypub/tunnel.token"),
-          "--url", "${NOMAD_ADDR_web}",
-          "activitypub",
-        ]
-      }
-
-      resources {
-        cpu    = 50
-        memory = 50
       }
     }
   }
