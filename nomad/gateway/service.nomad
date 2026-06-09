@@ -26,7 +26,7 @@ job "gateway" {
     }
 
     service {
-      name = "geteway-traefik"
+      name = "gateway-traefik"
       port = "admin"
     }
 
