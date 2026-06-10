@@ -1,2 +1,3 @@
 .vscode
 .terraform.lock.hcl
+nomad-lsp.log

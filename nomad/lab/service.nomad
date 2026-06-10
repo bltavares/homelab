@@ -96,25 +96,125 @@ job "lab" {
       }
 
       template {
-        data        = file("./config/static.toml.tpl")
         destination = "local/traefik.toml"
+        data        = <<-TOML
+[log]
+  level = "DEBUG"
+
+[entrypoints.traefik]
+ address = "{{ env "NOMAD_ADDR_admin" }}"
+
+[api]
+  dashboard = true
+  insecure = true
+
+[entryPoints.web]
+  address = ":80"
+
+[entryPoints.web.http.redirections.entryPoint]
+    to = "ssl"
+    scheme = "https"
+
+[entryPoints.ssl]
+  address = ":443"
+[entryPoints.ssl.http]
+  middlewares = ["auth@file"]
+[entryPoints.ssl.http.tls]
+  certResolver = "letsencrypt"
+[[entryPoints.ssl.http.tls.domains]]
+    main = "lab.bltavares.com"
+    sans = ["*.lab.bltavares.com", "aricanduva.bltavares.com", "id.bltavares.com"]
+
+[entryPoints.git]
+  address = ":222"
+
+[certificatesResolvers.letsencrypt.acme]
+  email = "{{ key "acme/email" }}"
+  storage = "/storage/acme.json"
+[certificatesResolvers.letsencrypt.acme.dnsChallenge]
+  provider = "cloudflare"
+
+[providers.file]
+  directory = "/etc/traefik/dynamic"
+
+[providers.consulCatalog]
+    defaultRule = "Host(`{{"{{ normalize .Name }}"}}.lab.bltavares.com`)"
+    endpoint = { address = "localhost:8500" }
+TOML
       }
 
       template {
-        data        = file("./config/mediacenter.toml")
         destination = "local/dynamic/mediacenter.toml"
         change_mode = "noop"
+        data        = <<-TOML
+[http.routers.radarr]
+rule = "Host(`radarr.lab.bltavares.com`)"
+service = "radarr"
+[[http.services.radarr.loadBalancer.servers]]
+url = "http://10.147.17.110:7878"
+
+[http.routers.sonarr]
+rule = "Host(`sonarr.lab.bltavares.com`)"
+service = "sonarr"
+[[http.services.sonarr.loadBalancer.servers]]
+url = "http://10.147.17.110:8989"
+
+[http.routers.transmission]
+rule = "Host(`transmission.lab.bltavares.com`)"
+service = "transmission"
+[[http.services.transmission.loadBalancer.servers]]
+url = "http://10.147.17.110:9091"
+TOML
       }
 
       template {
-        data        = file("./config/nodes.toml")
         destination = "local/dynamic/nodes.toml"
         change_mode = "noop"
+        data        = <<-TOML
+[http.routers.proxmox]
+rule = "Host(`proxmox.lab.bltavares.com`)"
+service = "proxmox"
+[http.services.proxmox.loadBalancer]
+serversTransport = "insecureHttps"
+[[http.services.proxmox.loadBalancer.servers]]
+url = "https://192.168.15.2:8006"
+[[http.services.proxmox.loadBalancer.servers]]
+url = "https://192.168.15.3:8006"
+[[http.services.proxmox.loadBalancer.servers]]
+url = "https://192.168.15.4:8006"
+[[http.services.proxmox.loadBalancer.servers]]
+url = "https://192.168.15.6:8006"
+
+
+[http.routers.omv]
+rule = "Host(`omv.lab.bltavares.com`)"
+service = "omv"
+[http.services.omv.loadBalancer]
+serversTransport = "insecureHttps"
+[[http.services.omv.loadBalancer.servers]]
+url = "https://omv.zerotier.bltavares.com:443"
+
+[http.serversTransports.insecureHttps]
+insecureSkipVerify = true
+
+[http.routers.aricanduva-short]
+rule = "Host(`aricanduva.bltavares.com`)"
+service = "aricanduva@consulcatalog"
+
+[http.routers.auth-short]
+rule = "Host(`id.bltavares.com`)"
+service = "id@consulcatalog"
+TOML
       }
+
       template {
-        data        = file("./config/secure.toml.tpl")
         destination = "local/dynamic/secure.toml"
         change_mode = "noop"
+        data        = <<-TOML
+[http.middlewares.auth.forwardAuth]
+    address = "http://{{ env "NOMAD_ADDR_proxyAuth" }}"
+    authResponseHeaders = ["X-Forwarded-User"]
+TOML
       }
 
       template {
