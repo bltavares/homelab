@@ -1,5 +1,5 @@
 [log]
-  level = "DEBUG"
+#  level = "DEBUG"
 
 [entrypoints.traefik]
  address = "{{ env "NOMAD_ADDR_admin" }}"
