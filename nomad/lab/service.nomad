@@ -117,6 +117,8 @@ job "lab" {
 
 [entryPoints.ssl]
   address = ":443"
+  http3 = {}
+  asDefault = true
 [entryPoints.ssl.http]
   middlewares = ["auth@file"]
 [entryPoints.ssl.http.tls]

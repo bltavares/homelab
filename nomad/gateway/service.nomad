@@ -104,6 +104,8 @@ job "gateway" {
 
 [entryPoints.ssl]
   address = ":443"
+  asDefault = true
+  http3 = {}
 [entryPoints.ssl.http.tls]
   certResolver = "letsencrypt"
 [[entryPoints.ssl.http.tls.domains]]
