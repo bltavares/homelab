@@ -23,7 +23,7 @@
   certResolver = "letsencrypt"
 [[entryPoints.ssl.http.tls.domains]]
     main = "lab.bltavares.com"
-    sans = ["*.lab.bltavares.com", "aricanduva.bltavares.com"]
+    sans = ["*.lab.bltavares.com", "aricanduva.bltavares.com", "id.bltavares.com"]
 
 [entryPoints.git]
   address = ":222"

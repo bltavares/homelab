@@ -190,6 +190,10 @@ rule.bookmarks.rule = Host(`bookmarks.lab.bltavares.com`)
 # aricanduva
 rule.aricanduva.action = allow
 rule.aricanduva.rule = Host(`aricanduva.lab.bltavares.com`) || Host(`aricanduva.bltavares.com`)
+
+# auth
+rule.auth.action = allow
+rule.auth.rule = Host(`id.lab.bltavares.com`) || Host(`id.bltavares.com`)
 EOH
         destination = "local/config.ini"
       }

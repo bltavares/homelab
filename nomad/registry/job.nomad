@@ -20,7 +20,7 @@ job "images-sync" {
 # skopeo copy docker://gcr.io/radicle-services/radicle-httpd docker://registry.lab.bltavares.com/radicle-services/radicle-httpd
 # skopeo copy docker://gcr.io/radicle-services/radicle-httpd docker://registry.lab.bltavares.com/radicle-services/radicle-node
 
-function scopy() { 
+function scopy() {
   echo "Sync: $1"
   skopeo copy docker://$1 docker://registry.lab.bltavares.com/$${2:-$1}
 }
@@ -48,6 +48,7 @@ scopy nginx:latest
 scopy sintan1729/chhoto-url:latest
 scopy superseriousbusiness/gotosocial:latest
 scopy vaultwarden/server:latest
+scopy ghcr.io/sebadob/rauthy:latest sebadob/rauthy:latest
 EOH
 
       destination = "local/copy.sh"

@@ -27,3 +27,7 @@ insecureSkipVerify = true
 [http.routers.aricanduva-short]
 rule = "Host(`aricanduva.bltavares.com`)"
 service = "aricanduva@consulcatalog"
+
+[http.routers.auth-short]
+rule = "Host(`id.bltavares.com`)"
+service = "id@consulcatalog"
