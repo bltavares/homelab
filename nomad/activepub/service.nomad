@@ -66,6 +66,7 @@ job "activepub" {
       template {
         data        = <<-ini
 GTS_TRUSTED_PROXIES={{key "authProxy/network_range"}}
+GTS_ADVANCED_RATE_LIMIT_EXCEPTIONS="192.168.15.0/24"
 GTS_STORAGE_S3_ACCESS_KEY={{key "aricanduva/access_key"}}
 GTS_STORAGE_S3_SECRET_KEY={{key "aricanduva/secret_key"}}
 ini

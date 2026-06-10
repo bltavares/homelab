@@ -126,7 +126,7 @@ job "lab" {
   certResolver = "letsencrypt"
 [[entryPoints.ssl.http.tls.domains]]
     main = "lab.bltavares.com"
-    sans = ["*.lab.bltavares.com", "aricanduva.bltavares.com", "id.bltavares.com"]
+    sans = ["*.lab.bltavares.com", "aricanduva.bltavares.com", "id.bltavares.com", "fedi.bltavares.com"]
 
 [entryPoints.git]
   address = ":222"
@@ -207,6 +207,10 @@ service = "aricanduva@consulcatalog"
 [http.routers.auth-short]
 rule = "Host(`id.bltavares.com`)"
 service = "id@consulcatalog"
+
+[http.routers.fedi-short]
+rule = "Host(`fedi.bltavares.com`)"
+service = "fedi@consulcatalog"
 TOML
       }
 
@@ -299,6 +303,10 @@ rule.aricanduva.rule = Host(`aricanduva.lab.bltavares.com`) || Host(`aricanduva.
 # auth
 rule.auth.action = allow
 rule.auth.rule = Host(`id.lab.bltavares.com`) || Host(`id.bltavares.com`)
+
+# gotosocial
+rule.activepub.action = allow
+rule.auth.rule = Host(`fedi.lab.bltavares.com`) || Host(`fedi.bltavares.com`)
 INI
       }
 
