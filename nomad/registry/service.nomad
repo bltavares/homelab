@@ -12,11 +12,6 @@ job "registry" {
       port "web" { to = 8000 }
     }
 
-    service {
-      name = "registry"
-      port = "web"
-    }
-
     volume "storage" {
       type            = "csi"
       source          = "trow"
@@ -42,6 +37,9 @@ job "registry" {
       }
 
       service {
+        name = "registry"
+        port = "web"
+
         check {
           name     = "alive"
           type     = "http"
