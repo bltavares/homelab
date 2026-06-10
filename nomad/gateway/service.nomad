@@ -83,16 +83,55 @@ job "gateway" {
       }
 
       template {
-        data        = file("./config/static.toml.tpl")
         destination = "local/traefik.toml"
+        data        = <<-TOML
+[log]
+#  level = "DEBUG"
+
+[entrypoints.traefik]
+ address = "{{ env "NOMAD_ADDR_admin" }}"
+
+[api]
+  dashboard = true
+  insecure = true
+
+[entryPoints.web]
+  address = ":80"
+
+[entryPoints.web.http.redirections.entryPoint]
+    to = "ssl"
+    scheme = "https"
+
+[entryPoints.ssl]
+  address = ":443"
+[entryPoints.ssl.http.tls]
+  certResolver = "letsencrypt"
+[[entryPoints.ssl.http.tls.domains]]
+    main = "gateway.bltavares.com"
+
+[certificatesResolvers.letsencrypt.acme]
+  email = "{{ key "acme/email" }}"
+  storage = "/storage/acme.json"
+[certificatesResolvers.letsencrypt.acme.dnsChallenge]
+  provider = "cloudflare"
+
+[providers.file]
+  directory = "/etc/traefik/dynamic"
+
+[providers.consulCatalog]
+    exposedByDefault = false
+    prefix = "gateway"
+    defaultRule = "Host(`{{"{{ coalesce (index .Labels \\\"traefik.name\\\") .Name }}"}}.bltavares.com`)"
+    endpoint = { address = "localhost:8500" }
+TOML
       }
 
       template {
-        data        = <<EOH
-CF_DNS_API_TOKEN={{ key "acme/cloudflare/token" }}
-EOH
         destination = "secrets/env.sh"
         env         = true
+        data        = <<-INI
+CF_DNS_API_TOKEN={{ key "acme/cloudflare/token" }}
+INI
       }
 
       resources {
