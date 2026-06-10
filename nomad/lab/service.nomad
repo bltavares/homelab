@@ -34,7 +34,7 @@ job "lab" {
     }
 
     service {
-      name = "lab-traefik"
+      name = "traefik-lab"
       port = "admin"
     }
 
