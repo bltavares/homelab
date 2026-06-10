@@ -50,6 +50,7 @@ job "lab" {
       attachment_mode = "file-system"
       access_mode     = "single-node-writer"
     }
+
     update {
       max_parallel = 0
     }
@@ -112,8 +113,8 @@ job "lab" {
   address = ":80"
 
 [entryPoints.web.http.redirections.entryPoint]
-    to = "ssl"
-    scheme = "https"
+  to = "ssl"
+  scheme = "https"
 
 [entryPoints.ssl]
   address = ":443"
@@ -220,11 +221,11 @@ TOML
       }
 
       template {
-        data        = <<EOH
-CF_DNS_API_TOKEN={{ key "acme/cloudflare/token" }}
-EOH
         destination = "secrets/env.sh"
         env         = true
+        data        = <<-INI
+CF_DNS_API_TOKEN={{ key "acme/cloudflare/token" }}
+INI
       }
 
       resources {
@@ -241,7 +242,9 @@ EOH
       }
 
       template {
-        data        = <<EOH
+        destination = "secrets/env.sh"
+        env         = true
+        data        = <<-INI
 LOG_LEVEL="debug"
 
 COOKIE_DOMAIN="lab.bltavares.com"
@@ -259,13 +262,12 @@ AUTH_HOST="login.lab.bltavares.com"
 # RULES
 DOMAIN="bltavares.com"
 CONFIG="{{ env "NOMAD_TASK_DIR" }}/config.ini"
-EOH
-        destination = "secrets/env.sh"
-        env         = true
+INI
       }
 
       template {
-        data        = <<EOH
+        destination = "local/config.ini"
+        data        = <<-INI
 # vaultwarden
 rule.vaultwarden.action = allow
 rule.vaultwarden.rule = Host(`pass.lab.bltavares.com`)
@@ -273,6 +275,7 @@ rule.vaultwarden.rule = Host(`pass.lab.bltavares.com`)
 # Git api
 rule.git.action = allow
 rule.git.rule = Host(`git.lab.bltavares.com`) && (PathPrefix(`/v2`) || PathPrefix(`/api`) || HeadersRegexp(`User-Agent`, `git/2.+`))
+
 # Trow registry
 rule.registry.action = allow
 rule.registry.rule = Host(`registry.lab.bltavares.com`)
@@ -296,8 +299,7 @@ rule.aricanduva.rule = Host(`aricanduva.lab.bltavares.com`) || Host(`aricanduva.
 # auth
 rule.auth.action = allow
 rule.auth.rule = Host(`id.lab.bltavares.com`) || Host(`id.bltavares.com`)
-EOH
-        destination = "local/config.ini"
+INI
       }
 
       resources {
