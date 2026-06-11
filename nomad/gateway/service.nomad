@@ -102,9 +102,11 @@ to = "ssl"
 scheme = "https"
 
 [entryPoints.ssl]
-  address = ":443"
-  asDefault = true
-  http3 = {}
+address = ":443"
+asDefault = true
+http3 = {}
+[entryPoints.ssl.http]
+middlewares = ["cloudflare@file"]
 [entryPoints.ssl.http.tls]
 certResolver = "letsencrypt"
 [[entryPoints.ssl.http.tls.domains]]
@@ -121,10 +123,25 @@ provider = "cloudflare"
 directory = "/etc/traefik/dynamic"
 
 [providers.consulCatalog]
-    exposedByDefault = false
-    prefix = "gateway"
-    defaultRule = "Host(`{{"{{ coalesce (index .Labels \\\"traefik.name\\\") .Name }}"}}.bltavares.com`)"
-    endpoint = { address = "localhost:8500" }
+exposedByDefault = false
+prefix = "gateway"
+defaultRule = "Host(`{{"{{ coalesce (index .Labels \\\"traefik.name\\\") .Name }}"}}.bltavares.com`)"
+endpoint = { address = "localhost:8500" }
+
+[experimental.plugins.cloudflare]
+moduleName = "github.com/agence-gaya/traefik-plugin-cloudflare"
+version = "v1.2.0"
+TOML
+      }
+
+
+      template {
+        destination = "local/dynamic/cldouflare.toml"
+        data        = <<-TOML
+[http.middlewares.cloudflare.plugin.cloudflare]
+trustedCIDRs = []
+overwriteRequestHeader = true
+debug = true
 TOML
       }
 
