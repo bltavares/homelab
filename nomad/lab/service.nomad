@@ -125,8 +125,8 @@ middlewares = ["auth@file"]
 [entryPoints.ssl.http.tls]
 certResolver = "letsencrypt"
 [[entryPoints.ssl.http.tls.domains]]
-main = "lab.bltavares.com"
-sans = ["*.lab.bltavares.com", "aricanduva.bltavares.com", "id.bltavares.com", "fedi.bltavares.com"]
+main = "bltavares.com"
+sans = ["*.lab.bltavares.com", "*.bltavares.com"]
 
 [entryPoints.git]
 address = ":222"
