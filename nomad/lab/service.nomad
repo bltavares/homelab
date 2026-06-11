@@ -211,6 +211,10 @@ service = "id@consulcatalog"
 [http.routers.fedi-short]
 rule = "Host(`fedi.bltavares.com`)"
 service = "fedi@consulcatalog"
+
+[http.routers.bookmarks-short]
+rule = "Host(`bookmarks.bltavares.com`)"
+service = "bookmarks@consulcatalog"
 TOML
       }
 
@@ -294,7 +298,7 @@ rule.calibre_kobo.rule = Host(`calibre.lab.bltavares.com`) && (PathPrefix(`/kobo
 
 # Bookmarks
 rule.bookmarks.action = allow
-rule.bookmarks.rule = Host(`bookmarks.lab.bltavares.com`)
+rule.bookmarks.rule = Host(`bookmarks.lab.bltavares.com`) || Host(`bookmarks.bltavares.com`)
 
 # aricanduva
 rule.aricanduva.action = allow

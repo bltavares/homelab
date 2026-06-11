@@ -10,6 +10,10 @@ job "bookmarks" {
     service {
       name = "bookmarks"
       port = "web"
+
+      tags = [
+        "gateway.enable=true",
+      ]
     }
 
     volume "storage" {
@@ -76,27 +80,6 @@ job "bookmarks" {
         memory = 500
       }
     }
-
-    task "ingress" {
-      driver = "docker"
-
-      config {
-        image = "registry.lab.bltavares.com/cloudflare/cloudflared:latest"
-        args = [
-          "tunnel", "--no-autoupdate",
-          "run",
-          "--token", file("../../secrets/bookmarks/tunnel.token"),
-          "--url", "${NOMAD_ADDR_web}",
-          "bookmarks",
-        ]
-      }
-
-      resources {
-        cpu    = 50
-        memory = 50
-      }
-    }
-
   }
 
 }
