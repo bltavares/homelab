@@ -89,36 +89,36 @@ job "gateway" {
 #  level = "DEBUG"
 
 [entrypoints.traefik]
- address = "{{ env "NOMAD_ADDR_admin" }}"
+address = "{{ env "NOMAD_ADDR_admin" }}"
 
 [api]
-  dashboard = true
-  insecure = true
+dashboard = true
+insecure = true
 
 [entryPoints.web]
-  address = ":80"
-
+address = ":80"
 [entryPoints.web.http.redirections.entryPoint]
-    to = "ssl"
-    scheme = "https"
+to = "ssl"
+scheme = "https"
 
 [entryPoints.ssl]
   address = ":443"
   asDefault = true
   http3 = {}
 [entryPoints.ssl.http.tls]
-  certResolver = "letsencrypt"
+certResolver = "letsencrypt"
 [[entryPoints.ssl.http.tls.domains]]
-    main = "gateway.bltavares.com"
+main = "bltavares.com"
+sans = ["*.bltavares.com"]
 
 [certificatesResolvers.letsencrypt.acme]
-  email = "{{ key "acme/email" }}"
-  storage = "/storage/acme.json"
+email = "{{ key "acme/email" }}"
+storage = "/storage/acme.json"
 [certificatesResolvers.letsencrypt.acme.dnsChallenge]
-  provider = "cloudflare"
+provider = "cloudflare"
 
 [providers.file]
-  directory = "/etc/traefik/dynamic"
+directory = "/etc/traefik/dynamic"
 
 [providers.consulCatalog]
     exposedByDefault = false

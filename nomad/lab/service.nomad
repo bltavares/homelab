@@ -106,43 +106,43 @@ job "lab" {
  address = "{{ env "NOMAD_ADDR_admin" }}"
 
 [api]
-  dashboard = true
-  insecure = true
+dashboard = true
+insecure = true
 
 [entryPoints.web]
-  address = ":80"
+address = ":80"
 
 [entryPoints.web.http.redirections.entryPoint]
-  to = "ssl"
-  scheme = "https"
+to = "ssl"
+scheme = "https"
 
 [entryPoints.ssl]
-  address = ":443"
-  http3 = {}
-  asDefault = true
+address = ":443"
+http3 = {}
+asDefault = true
 [entryPoints.ssl.http]
-  middlewares = ["auth@file"]
+middlewares = ["auth@file"]
 [entryPoints.ssl.http.tls]
-  certResolver = "letsencrypt"
+certResolver = "letsencrypt"
 [[entryPoints.ssl.http.tls.domains]]
-    main = "lab.bltavares.com"
-    sans = ["*.lab.bltavares.com", "aricanduva.bltavares.com", "id.bltavares.com", "fedi.bltavares.com"]
+main = "lab.bltavares.com"
+sans = ["*.lab.bltavares.com", "aricanduva.bltavares.com", "id.bltavares.com", "fedi.bltavares.com"]
 
 [entryPoints.git]
-  address = ":222"
+address = ":222"
 
 [certificatesResolvers.letsencrypt.acme]
-  email = "{{ key "acme/email" }}"
-  storage = "/storage/acme.json"
+email = "{{ key "acme/email" }}"
+storage = "/storage/acme.json"
 [certificatesResolvers.letsencrypt.acme.dnsChallenge]
-  provider = "cloudflare"
+provider = "cloudflare"
 
 [providers.file]
-  directory = "/etc/traefik/dynamic"
+directory = "/etc/traefik/dynamic"
 
 [providers.consulCatalog]
-    defaultRule = "Host(`{{"{{ normalize .Name }}"}}.lab.bltavares.com`)"
-    endpoint = { address = "localhost:8500" }
+defaultRule = "Host(`{{"{{ normalize .Name }}"}}.lab.bltavares.com`)"
+endpoint = { address = "localhost:8500" }
 TOML
       }
 
@@ -219,8 +219,8 @@ TOML
         change_mode = "noop"
         data        = <<-TOML
 [http.middlewares.auth.forwardAuth]
-    address = "http://{{ env "NOMAD_ADDR_proxyAuth" }}"
-    authResponseHeaders = ["X-Forwarded-User"]
+address = "http://{{ env "NOMAD_ADDR_proxyAuth" }}"
+authResponseHeaders = ["X-Forwarded-User"]
 TOML
       }
 
