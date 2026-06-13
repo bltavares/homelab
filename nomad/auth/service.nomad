@@ -77,9 +77,6 @@ rp_id = "id.bltavares.com"
 rp_origin = "https://id.bltavares.com:443"
 rp_name = "homelab"
 
-[auth_headers]
-enable = true
-
 [access]
 admin_button_hide = true
 
