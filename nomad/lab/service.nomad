@@ -204,10 +204,6 @@ insecureSkipVerify = true
 rule = "Host(`aricanduva.bltavares.com`)"
 service = "aricanduva@consulcatalog"
 
-[http.routers.auth-short]
-rule = "Host(`id.bltavares.com`)"
-service = "id@consulcatalog"
-
 [http.routers.fedi-short]
 rule = "Host(`fedi.bltavares.com`)"
 service = "fedi@consulcatalog"
@@ -262,13 +258,11 @@ LOG_LEVEL="debug"
 COOKIE_DOMAIN="lab.bltavares.com"
 SECRET="{{key "authProxy/cookie_secret"}}"
 
-DEFAULT_PROVIDER="generic-oauth"
-PROVIDERS_GENERIC_OAUTH_AUTH_URL="https://discord.com/api/oauth2/authorize"
-PROVIDERS_GENERIC_OAUTH_TOKEN_URL="https://discord.com/api/oauth2/token"
-PROVIDERS_GENERIC_OAUTH_USER_URL="https://discord.com/api/users/@me"
-PROVIDERS_GENERIC_OAUTH_SCOPE="identify email"
-PROVIDERS_GENERIC_OAUTH_CLIENT_ID="{{ key "authProxy/discord/id" }}"
-PROVIDERS_GENERIC_OAUTH_CLIENT_SECRET="{{ key "authProxy/discord/secret" }}"
+DEFAULT_PROVIDER="oidc"
+PROVIDERS_OIDC_ISSUER_URL="https://id.bltavares.com/auth/v1/"
+PROVIDERS_OIDC_CLIENT_ID="homelab"
+PROVIDERS_OIDC_CLIENT_SECRET="{{ key "authProxy/rauthy_secret" }}"
+LOGOUT_REDIRECT="https://id.bltavares.com/auth/v1/oidc/logout"
 AUTH_HOST="login.lab.bltavares.com"
 
 # RULES
@@ -310,7 +304,7 @@ rule.aricanduva.rule = Host(`aricanduva.lab.bltavares.com`) || Host(`aricanduva.
 
 # auth
 rule.auth.action = allow
-rule.auth.rule = Host(`id.lab.bltavares.com`) || Host(`id.bltavares.com`)
+rule.auth.rule = Host(`id.lab.bltavares.com`)
 
 # gotosocial
 rule.activepub.action = allow
