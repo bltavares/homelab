@@ -314,7 +314,7 @@ rule.auth.rule = Host(`id.lab.bltavares.com`) || Host(`id.bltavares.com`)
 
 # gotosocial
 rule.activepub.action = allow
-rule.auth.rule = Host(`fedi.lab.bltavares.com`) || Host(`fedi.bltavares.com`)
+rule.activepub.rule = Host(`fedi.lab.bltavares.com`) || Host(`fedi.bltavares.com`)
 INI
       }
 
