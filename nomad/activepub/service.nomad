@@ -16,14 +16,6 @@ job "activepub" {
       ]
     }
 
-    volume "storage" {
-      type            = "csi"
-      source          = "activepub"
-      read_only       = false
-      attachment_mode = "file-system"
-      access_mode     = "single-node-writer"
-    }
-
     volume "persistence" {
       type            = "csi"
       source          = "linstor-activepub"
@@ -92,12 +84,6 @@ ini
           ignore_warnings = false
         }
       }
-
-      # volume_mount {
-      #   volume      = "storage"
-      #   destination = "/gotosocial/storage"
-      # }
-
 
       volume_mount {
         volume      = "persistence"
