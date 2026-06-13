@@ -7,11 +7,6 @@ job "url-shortener" {
       port "web" { to = 4567 }
     }
 
-    service {
-      name = "url-shortener"
-      port = "web"
-    }
-
     volume "storage" {
       type            = "csi"
       source          = "url-shortener"
@@ -49,10 +44,18 @@ EOH
       kill_signal = "SIGKILL"
 
       service {
+        name = "url-shortener"
+        port = "web"
+
+        tags = [
+          "gateway.enable=true",
+          "gateway.name=z",
+        ]
+
         check {
           name     = "alive"
           type     = "http"
-          path     = "/"
+          path     = "/api/version"
           port     = "web"
           interval = "5m"
           timeout  = "10s"
@@ -73,26 +76,6 @@ EOH
       resources {
         cpu    = 100
         memory = 100
-      }
-    }
-
-    task "ingress" {
-      driver = "docker"
-
-      config {
-        image = "registry.lab.bltavares.com/cloudflare/cloudflared:latest"
-        args = [
-          "tunnel", "--no-autoupdate",
-          "run",
-          "--token", file("../../secrets/url-shortener/tunnel.token"),
-          "--url", "${NOMAD_ADDR_web}",
-          "url-shortener",
-        ]
-      }
-
-      resources {
-        cpu    = 50
-        memory = 50
       }
     }
   }
