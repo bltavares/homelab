@@ -30,8 +30,7 @@ scopy alpine:latest
 scopy bltavares/aricanduva:latest
 scopy bltavares/home-consule:0.1.0
 scopy bltavares/october:latest
-scopy bltavares/postgres:latest
-scopy cloudflare/cloudflared:latest
+scopy postgres:18
 scopy codeberg.org/forgejo/forgejo:15 forgejo/forgejo:15
 scopy elasticdog/tiddlywiki:latest
 scopy forgejo.ellis.link/continuwuation/continuwuity:latest continuwuation/continuwuity:latest

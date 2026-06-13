@@ -215,7 +215,11 @@ service = "fedi@consulcatalog"
 [http.routers.bookmarks-short]
 rule = "Host(`bookmarks.bltavares.com`)"
 service = "bookmarks@consulcatalog"
-TOML
+
+[http.routers.miniflux-short]
+rule = "Host(`read.bltavares.com`)"
+service = "miniflux@consulcatalog"
+        TOML
       }
 
       template {

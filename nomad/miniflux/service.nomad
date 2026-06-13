@@ -7,18 +7,12 @@ job "miniflux" {
       port "web" { to = 8080 }
     }
 
-    service {
-      name = "miniflux"
-      port = "web"
-    }
-
     reschedule {
       delay          = "30s"
       delay_function = "exponential"
       max_delay      = "120s"
       unlimited      = true
     }
-
 
     task "service" {
       driver = "docker"
@@ -31,8 +25,11 @@ job "miniflux" {
       template {
         data        = <<EOH
 {{ range service "miniflux-db" }}
-DATABASE_URL=postgres://miniflux:${file("../../secrets/miniflux/postgres-passwd")}@{{ .Address }}:{{ .Port }}/miniflux?sslmode=disable
+DATABASE_URL=postgres://miniflux:{{key "miniflux/postgres-password"}}@{{ .Address }}:{{ .Port }}/miniflux?sslmode=disable
+{{ else }}
+DATABASE_URL={{ key "fake_key_to_await_db" }}
 {{ end }}
+
 TRUSTED_REVERSE_PROXY_NETWORKS={{key "authProxy/network_range"}}
 EOH
         destination = "secrets/postgres-addr"
@@ -41,14 +38,19 @@ EOH
 
       env {
         RUN_MIGRATIONS    = "1"
-        CREATE_ADMIN      = "1"
-        ADMIN_USERNAME    = "bltavares"
-        ADMIN_PASSWORD    = file("../../secrets/miniflux/admin-passwd")
         AUTH_PROXY_HEADER = "X-Forwarded-User"
-        BASE_URL          = "http://miniflux.lab.bltavares.com"
+        BASE_URL          = "https://miniflux.bltavares.com"
       }
 
       service {
+        name = "miniflux"
+        port = "web"
+
+        tags = [
+          "gateway.enable=true",
+          "gateway.name=read",
+        ]
+
         check {
           name     = "Service Check"
           type     = "script"
@@ -85,49 +87,12 @@ EOH
         memory = 500
       }
     }
-
-    task "ingress" {
-      driver = "docker"
-
-      lifecycle {
-        hook    = "poststart"
-        sidecar = true
-      }
-
-      config {
-        image = "registry.lab.bltavares.com/cloudflare/cloudflared:latest"
-        args = [
-          "tunnel", "--no-autoupdate",
-          "run",
-          "--token", file("../../secrets/miniflux/tunnel.token"),
-          "--url", "${NOMAD_ADDR_web}",
-          "miniflux",
-        ]
-      }
-
-      resources {
-        cpu    = 10
-        memory = 20
-      }
-    }
   }
 
   group "db" {
+
     network {
       port "db" { to = 5432 }
-    }
-
-    service {
-      name = "miniflux-db"
-      port = "db"
-    }
-
-    volume "storage" {
-      type            = "csi"
-      source          = "miniflux"
-      read_only       = false
-      attachment_mode = "file-system"
-      access_mode     = "single-node-writer"
     }
 
     volume "persistence" {
@@ -138,31 +103,27 @@ EOH
       access_mode     = "single-node-writer"
     }
 
-    update {
-      max_parallel = 0
-    }
-
     task "db" {
       driver = "docker"
 
       config {
-        image = "registry.lab.bltavares.com/bltavares/postgres"
+        image = "registry.lab.bltavares.com/postgres:18"
         ports = ["db"]
+        init  = true
       }
 
       kill_signal = "SIGTERM"
 
-      # volume_mount {
-      #   volume      = "storage"
-      #   destination = "/var/lib/postgresql/data"
-      # }
-
       volume_mount {
         volume      = "persistence"
-        destination = "/var/lib/postgresql/data"
+        destination = "/var/lib/postgresql"
       }
 
       service {
+        name = "miniflux-db"
+        port = "db"
+        tags = ["traefik.enable=false"]
+
         check {
           name      = "Postgres Check"
           type      = "script"
@@ -186,16 +147,6 @@ EOH
             grace = "15m"
           }
         }
-      }
-
-      template {
-        data        = file("../../secrets/miniflux/postgres-passwd")
-        destination = "secrets/postgres-passwd"
-      }
-
-      env {
-        POSTGRES_USER          = "miniflux"
-        POSTGRES_PASSWORD_FILE = "${NOMAD_SECRETS_DIR}/postgres-passwd"
       }
 
       resources {
