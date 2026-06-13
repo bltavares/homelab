@@ -70,7 +70,7 @@ node_id = 1
 listen_scheme = "http"
 pub_url = "id.bltavares.com"
 proxy_mode = true
-trusted_proxies = ["10.147.17.0/24"]
+trusted_proxies = {{ key "authProxy/network_range" | split "," | toTOML }}
 
 [webauthn]
 rp_id = "id.bltavares.com"
