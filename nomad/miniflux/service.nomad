@@ -48,7 +48,6 @@ EOH
 
         tags = [
           "gateway.enable=true",
-          "gateway.name=read",
         ]
 
         check {

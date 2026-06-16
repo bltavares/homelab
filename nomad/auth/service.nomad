@@ -21,7 +21,6 @@ job "auth" {
       port = "http"
       tags = [
         "gateway.enable=true",
-        "gateway.name=id",
       ]
     }
 

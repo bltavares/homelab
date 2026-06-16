@@ -44,12 +44,11 @@ EOH
       kill_signal = "SIGKILL"
 
       service {
-        name = "url-shortener"
+        name = "z"
         port = "web"
 
         tags = [
           "gateway.enable=true",
-          "gateway.name=z",
         ]
 
         check {

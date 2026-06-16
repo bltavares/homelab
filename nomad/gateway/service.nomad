@@ -125,7 +125,7 @@ directory = "/etc/traefik/dynamic"
 [providers.consulCatalog]
 exposedByDefault = false
 prefix = "gateway"
-defaultRule = "Host(`{{"{{ coalesce (index .Labels \\\"traefik.name\\\") .Name }}"}}.bltavares.com`)"
+defaultRule = "Host(`{{"{{ normalize .Name }}"}}.bltavares.com`)"
 endpoint = { address = "localhost:8500" }
 
 [experimental.plugins.cloudflare]

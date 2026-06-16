@@ -12,7 +12,6 @@ job "activepub" {
       port = "web"
       tags = [
         "gateway.enable=true",
-        "gateway.name=fedi",
       ]
     }
 
