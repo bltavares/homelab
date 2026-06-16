@@ -141,7 +141,7 @@ provider = "cloudflare"
 directory = "/etc/traefik/dynamic"
 
 [providers.consulCatalog]
-defaultRule = "Host(`{{"{{ normalize .Name }}"}}.lab.bltavares.com`)"
+defaultRule = "Host(`{{"{{ normalize .Name }}"}}.lab.bltavares.com`) || Host(`{{"{{ normalize .Name }}"}}.bltavares.com`)"
 endpoint = { address = "localhost:8500" }
 TOML
       }
@@ -188,7 +188,6 @@ url = "https://192.168.15.4:8006"
 [[http.services.proxmox.loadBalancer.servers]]
 url = "https://192.168.15.6:8006"
 
-
 [http.routers.omv]
 rule = "Host(`omv.lab.bltavares.com`)"
 service = "omv"
@@ -196,26 +195,9 @@ service = "omv"
 serversTransport = "insecureHttps"
 [[http.services.omv.loadBalancer.servers]]
 url = "https://omv.zerotier.bltavares.com:443"
-
 [http.serversTransports.insecureHttps]
 insecureSkipVerify = true
-
-[http.routers.aricanduva-short]
-rule = "Host(`aricanduva.bltavares.com`)"
-service = "aricanduva@consulcatalog"
-
-[http.routers.fedi-short]
-rule = "Host(`fedi.bltavares.com`)"
-service = "fedi@consulcatalog"
-
-[http.routers.bookmarks-short]
-rule = "Host(`bookmarks.bltavares.com`)"
-service = "bookmarks@consulcatalog"
-
-[http.routers.miniflux-short]
-rule = "Host(`read.bltavares.com`)"
-service = "miniflux@consulcatalog"
-        TOML
+TOML
       }
 
       template {
