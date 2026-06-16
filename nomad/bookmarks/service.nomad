@@ -30,7 +30,6 @@ job "bookmarks" {
       config {
         image = "registry.lab.bltavares.com/sissbruecker/linkding:latest"
         # image = "ghcr.io/sissbruecker/linkding:latest"
-
         ports = ["web"]
       }
 
@@ -39,41 +38,22 @@ job "bookmarks" {
         destination = "/etc/linkding/data"
       }
 
-      env {
+      template {
+        destination = "secrets/config.env"
+        env         = true
+        data        = <<-ini
+LD_DISABLE_LOGIN_FORM=True
+LD_ENABLE_OIDC=True
+OIDC_OP_AUTHORIZATION_ENDPOINT=https://id.bltavares.com/auth/v1/oidc/authorize
+OIDC_OP_TOKEN_ENDPOINT=https://id.bltavares.com/auth/v1/oidc/token
+OIDC_OP_USER_ENDPOINT=https://id.bltavares.com/auth/v1/oidc/userinfo
+OIDC_OP_JWKS_ENDPOINT=https://id.bltavares.com/auth/v1/oidc/certs
+OIDC_RP_CLIENT_ID=linkding
+OIDC_RP_CLIENT_SECRET="{{ key "linkding/oidc_secret" }}"
+OIDC_USERNAME_CLAIM=preferred_username
+ini
 
       }
-
-      # service {
-      #   check {
-      #     name     = "Service Check"
-      #     type     = "script"
-      #     command  = "/usr/bin/miniflux"
-      #     args     = ["-healthcheck", "auto"]
-      #     interval = "1m"
-      #     timeout  = "30s"
-
-      #     check_restart {
-      #       limit = 10
-      #       grace = "5m"
-      #     }
-      #   }
-
-      //   check {
-      //     name      = "startup check"
-      //     type      = "tcp"
-      //     port      = "web"
-      //     interval  = "10s"
-      //     timeout   = "30s"
-      //     on_update = "ignore_warnings"
-      //   }
-      # }
-
-      // restart {
-      //   attempts = 5
-      //   delay    = "1m"
-      //   interval = "10m"
-      //   mode     = "fail"
-      // }
 
       resources {
         cpu    = 200
