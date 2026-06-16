@@ -23,23 +23,27 @@ job "miniflux" {
       }
 
       template {
-        data        = <<EOH
-{{ range service "miniflux-db" }}
-DATABASE_URL=postgres://miniflux:{{key "miniflux/postgres-password"}}@{{ .Address }}:{{ .Port }}/miniflux?sslmode=disable
-{{ else }}
-DATABASE_URL={{ key "fake_key_to_await_db" }}
-{{ end }}
-
-TRUSTED_REVERSE_PROXY_NETWORKS={{key "authProxy/network_range"}}
-EOH
         destination = "secrets/postgres-addr"
         env         = true
-      }
+        data        = <<-INI
+{{ range service "miniflux-db" }}
+DATABASE_URL="postgres://miniflux:{{key "miniflux/postgres-password"}}@{{ .Address }}:{{ .Port }}/miniflux?sslmode=disable"
+{{ else }}
+DATABASE_URL="{{ key "fake_key_to_await_db" }}"
+{{ end }}
 
-      env {
-        RUN_MIGRATIONS    = "1"
-        AUTH_PROXY_HEADER = "X-Forwarded-User"
-        BASE_URL          = "https://miniflux.bltavares.com"
+TRUSTED_REVERSE_PROXY_NETWORKS="{{key "authProxy/network_range"}}"
+
+RUN_MIGRATIONS="1"
+BASE_URL="https://miniflux.bltavares.com"
+
+OAUTH2_PROVIDER=oidc
+OAUTH2_OIDC_DISCOVERY_ENDPOINT="https://id.bltavares.com/auth/v1/"
+OAUTH2_CLIENT_ID="miniflux"
+OAUTH2_CLIENT_SECRET="{{ key "miniflux/oidc_secret" }}"
+OAUTH2_REDIRECT_URL="https://miniflux.bltavares.com/oauth2/oidc/callback"
+DISABLE_LOCAL_AUTH=true
+INI
       }
 
       service {
