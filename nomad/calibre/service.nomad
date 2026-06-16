@@ -24,9 +24,17 @@ job "calibre" {
       port = "web"
     }
 
-    volume "storage" {
+    volume "config" {
       type            = "csi"
       source          = "calibre"
+      read_only       = false
+      attachment_mode = "file-system"
+      access_mode     = "single-node-writer"
+    }
+
+    volume "storage" {
+      type            = "csi"
+      source          = "calibre-books"
       read_only       = false
       attachment_mode = "file-system"
       access_mode     = "single-node-writer"
@@ -36,7 +44,7 @@ job "calibre" {
       driver = "docker"
 
       config {
-        image = "registry.lab.bltavares.com/linuxserver/calibre-web:latest"
+        image = "registry.lab.bltavares.com/crocodilestick/calibre-web-automated:latest"
         ports = ["web"]
       }
 
@@ -57,14 +65,19 @@ job "calibre" {
       #}
 
       env {
-        DOCKER_MODS = "linuxserver/mods:universal-calibre"
-        PUID        = "1000"
-        GUID        = "1000"
+        PUID               = "1000"
+        GUID               = "1000"
+        NETWORK_SHARE_MODE = true
+      }
+
+      volume_mount {
+        volume      = "config"
+        destination = "/config"
       }
 
       volume_mount {
         volume      = "storage"
-        destination = "/config"
+        destination = "/calibre-library"
       }
 
       resources {

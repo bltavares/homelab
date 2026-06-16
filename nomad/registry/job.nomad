@@ -41,7 +41,7 @@ scopy linuxserver/radarr:latest
 scopy linuxserver/sonarr:latest
 scopy linuxserver/syncthing:latest
 scopy linuxserver/transmission:latest
-scopy lscr.io/linuxserver/calibre-web:latest linuxserver/calibre-web:latest
+scopy ghcr.io/crocodilestick/calibre-web-automated:latest crocodilestick/calibre-web-automated:latest
 scopy miniflux/miniflux:latest
 scopy nginx:latest
 scopy sintan1729/chhoto-url:latest
