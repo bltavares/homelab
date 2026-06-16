@@ -7,11 +7,12 @@ job "storage-node" {
       driver = "docker"
 
       config {
-        image = "registry.gitlab.com/rocketduck/csi-plugin-nfs:0.6.1"
+        image = "registry.gitlab.com/rocketduck/csi-plugin-nfs:1.1.0"
 
         args = [
           "--type=node",
           "--node-id=${attr.unique.hostname}",
+          "--allow-nested-volumes",
           "--nfs-server=omv.zerotier.bltavares.com:/meli/services",
           # https://docs.aws.amazon.com/efs/latest/ug/mounting-fs-nfs-mount-settings.html
           "--mount-options=rw,vers=4.2,async,relatime,timeo=600,rsize=1048576,wsize=1048576,retrans=2,hard,fsc",

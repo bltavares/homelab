@@ -7,7 +7,7 @@ job "nas-storage-node" {
       driver = "docker"
 
       config {
-        image = "registry.gitlab.com/rocketduck/csi-plugin-nfs:0.6.1"
+        image = "registry.gitlab.com/rocketduck/csi-plugin-nfs:1.1.0"
 
         args = [
           "--type=node",
