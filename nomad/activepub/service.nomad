@@ -7,24 +7,12 @@ job "activepub" {
       port "web" { to = 8080 }
     }
 
-    service {
-      name = "fedi"
-      port = "web"
-      tags = [
-        "gateway.enable=true",
-      ]
-    }
-
     volume "persistence" {
       type            = "csi"
       source          = "linstor-activepub"
       read_only       = false
       attachment_mode = "file-system"
       access_mode     = "single-node-writer"
-    }
-
-    update {
-      max_parallel = 0
     }
 
     task "service" {
@@ -55,19 +43,34 @@ job "activepub" {
       }
 
       template {
-        data        = <<-ini
-GTS_TRUSTED_PROXIES={{key "authProxy/network_range"}}
-GTS_ADVANCED_RATE_LIMIT_EXCEPTIONS="192.168.15.0/24"
-GTS_STORAGE_S3_ACCESS_KEY={{key "aricanduva/access_key"}}
-GTS_STORAGE_S3_SECRET_KEY={{key "aricanduva/secret_key"}}
-ini
         destination = "secrets/config.env"
         env         = true
+        data        = <<-INI
+GTS_TRUSTED_PROXIES={{key "authProxy/network_range"}}
+GTS_ADVANCED_RATE_LIMIT_EXCEPTIONS="192.168.15.0/24"
+
+# Aricanduva secrets
+GTS_STORAGE_S3_ACCESS_KEY={{key "aricanduva/access_key"}}
+GTS_STORAGE_S3_SECRET_KEY={{key "aricanduva/secret_key"}}
+
+# OIDC
+GTS_OIDC_ENABLED=true
+GTS_OIDC_IDP_NAME='Homelab'
+GTS_OIDC_ISSUER="https://id.bltavares.com/auth/v1/"
+GTS_OIDC_CLIENT_ID=gotosocial
+GTS_OIDC_CLIENT_SECRET="{{ key "gotosocial/oidc_secret" }}"
+GTS_OIDC_LINK_EXISTING=true
+INI
       }
 
-      kill_signal = "SIGKILL"
-
       service {
+        name = "fedi"
+        port = "web"
+        tags = [
+          "gateway.enable=true",
+          "oidc",
+        ]
+
         check {
           name     = "alive"
           type     = "http"
