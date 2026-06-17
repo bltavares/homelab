@@ -8,20 +8,6 @@ job "git" {
       port "ssh" { to = 22 }
     }
 
-    service {
-      name = "git"
-      port = "web"
-    }
-
-    service {
-      name = "git-ssh"
-      port = "ssh"
-      tags = [
-        "traefik.tcp.routers.git-ssh.entrypoints=git",
-        "traefik.tcp.routers.git-ssh.rule=HostSNI(`*`)",
-      ]
-    }
-
     volume "storage" {
       type            = "csi"
       source          = "git"
@@ -29,22 +15,9 @@ job "git" {
       attachment_mode = "file-system"
       access_mode     = "single-node-writer"
     }
-    update {
-      max_parallel = 0
-    }
 
     task "image" {
       driver = "docker"
-
-      service {
-        check {
-          type     = "http"
-          path     = "/api/healthz"
-          port     = "web"
-          interval = "30s"
-          timeout  = "1s"
-        }
-      }
 
       config {
         image      = "registry.lab.bltavares.com/forgejo/forgejo:15"
@@ -58,9 +31,31 @@ job "git" {
       }
 
       env {
-        USER_GID  = 1000
-        GROUP_GID = 1000
-        FORGEJO__server__SSH_PORT  = 222
+        USER_GID                  = 1000
+        GROUP_GID                 = 1000
+        FORGEJO__server__SSH_PORT = 222
+      }
+
+      service {
+        name = "git"
+        port = "web"
+
+        check {
+          type     = "http"
+          path     = "/api/healthz"
+          port     = "web"
+          interval = "30s"
+          timeout  = "1s"
+        }
+      }
+
+      service {
+        name = "git-ssh"
+        port = "ssh"
+        tags = [
+          "traefik.tcp.routers.git-ssh.entrypoints=git",
+          "traefik.tcp.routers.git-ssh.rule=HostSNI(`*`)",
+        ]
       }
 
       resources {
