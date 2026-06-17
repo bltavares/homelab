@@ -39,6 +39,9 @@ job "registry" {
       service {
         name = "registry"
         port = "web"
+        tags = [
+          "passthru",
+        ]
 
         check {
           name     = "alive"

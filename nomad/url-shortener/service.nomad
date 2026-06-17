@@ -14,9 +14,6 @@ job "url-shortener" {
       attachment_mode = "file-system"
       access_mode     = "single-node-writer"
     }
-    update {
-      max_parallel = 0
-    }
 
     task "service" {
       driver = "docker"
@@ -24,6 +21,7 @@ job "url-shortener" {
       config {
         image = "registry.lab.bltavares.com/sintan1729/chhoto-url:latest"
         ports = ["web"]
+        init  = true
       }
 
       user = "1000:1000"
@@ -34,14 +32,12 @@ job "url-shortener" {
       }
 
       template {
-        data        = <<EOH
-password={{ key "chhoto/password" }}
-EOH
         destination = "secrets/env.sh"
         env         = true
+        data        = <<-INI
+password={{ key "chhoto/password" }}
+INI
       }
-
-      kill_signal = "SIGKILL"
 
       service {
         name = "z"
@@ -49,6 +45,7 @@ EOH
 
         tags = [
           "gateway.enable=true",
+          "passthru",
         ]
 
         check {

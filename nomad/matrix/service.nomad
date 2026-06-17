@@ -20,12 +20,6 @@ job "matrix" {
       port "web" { to = 80 }
     }
 
-    service {
-      name = "matrix"
-      port = "web"
-      tags = ["gateway.enable=true"]
-    }
-
     volume "storage" {
       type            = "csi"
       source          = "matrix"
@@ -48,6 +42,13 @@ job "matrix" {
       }
 
       service {
+        name = "matrix"
+        port = "web"
+        tags = [
+          "gateway.enable=true",
+          "passthru",
+        ]
+
         check {
           name     = "Service Check"
           type     = "http"

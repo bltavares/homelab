@@ -57,6 +57,9 @@ job "lab" {
       service {
         name = "traefik-lab"
         port = "admin"
+        tags = [
+          "passthru",
+        ]
 
         check {
           name     = "alive"

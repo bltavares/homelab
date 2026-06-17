@@ -27,11 +27,18 @@ job "ipfs" {
     service {
       name = "ipfs-gateway"
       port = "web"
+      tags = [
+        "passthru",
+      ]
+
     }
 
     service {
       name = "ipfs"
       port = "admin"
+      tags = [
+        "passthru",
+      ]
     }
 
     volume "storage" {

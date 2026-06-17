@@ -16,14 +16,6 @@ job "auth" {
       unlimited      = true
     }
 
-    service {
-      name = "id"
-      port = "http"
-      tags = [
-        "gateway.enable=true",
-      ]
-    }
-
     volume "persistence" {
       type            = "csi"
       source          = "linstor-auth"
@@ -101,6 +93,13 @@ INI
       }
 
       service {
+        name = "id"
+        port = "http"
+        tags = [
+          "gateway.enable=true",
+          "passthru",
+        ]
+
         check {
           name     = "alive"
           type     = "http"

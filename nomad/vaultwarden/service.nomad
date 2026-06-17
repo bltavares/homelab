@@ -7,11 +7,6 @@ job "vaultwarden" {
       port "web" { to = 80 }
     }
 
-    service {
-      name = "pass"
-      port = "web"
-    }
-
     volume "storage" {
       type            = "csi"
       source          = "vaultwarden"
@@ -38,6 +33,12 @@ job "vaultwarden" {
       }
 
       service {
+        name = "pass"
+        port = "web"
+        tags = [
+          "passthru",
+        ]
+
         check {
           name     = "Service Check"
           type     = "http"

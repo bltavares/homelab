@@ -17,14 +17,6 @@ job "aricanduva" {
       access_mode     = "single-node-writer"
     }
 
-    service {
-      name = "aricanduva"
-      port = "web"
-      tags = [
-        "gateway.enable=true",
-      ]
-    }
-
     task "permission-fix" {
       lifecycle {
         hook    = "prestart"
@@ -76,6 +68,13 @@ EOH
       }
 
       service {
+        name = "aricanduva"
+        port = "web"
+        tags = [
+          "gateway.enable=true",
+          "passthru",
+        ]
+
         check {
           name     = "alive"
           type     = "http"
