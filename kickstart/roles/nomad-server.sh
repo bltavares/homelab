@@ -14,7 +14,7 @@ fi
 kickstart.service.enable nomad
 kickstart.service.restart nomad
 
-curl -X PUT -v -d '{"name": "nomad-server", "port": 4646}' -H 'Content-Type: application/json' localhost:8500/v1/agent/service/register
+curl -X PUT -v -d '{"name": "nomad-server", "port": 4646, "tags": ["sso"]}' -H 'Content-Type: application/json' localhost:8500/v1/agent/service/register
 
 # Docker based agent
 # docker volume create nomad

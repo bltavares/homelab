@@ -22,6 +22,6 @@ docker run --name consul \
     -retry-join "ryzen.zerotier.bltavares.com" \
     -ui
 
-curl -X PUT -v -d '{"name": "consul-server", "port": 8500}' -H 'Content-Type: application/json' localhost:8500/v1/agent/service/register
+curl -X PUT -v -d '{"name": "consul-server", "port": 8500, "tags": ["sso"]}' -H 'Content-Type: application/json' localhost:8500/v1/agent/service/register
 
 docker system prune -f
