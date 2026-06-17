@@ -1,3 +1,4 @@
 [tools]
 "github:bltavares/nomad-lsp" = "latest" # fork with update jobspec2
 "tombi" = "latest"
+nomad = "latest"
