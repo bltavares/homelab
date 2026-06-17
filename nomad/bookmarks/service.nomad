@@ -13,6 +13,7 @@ job "bookmarks" {
 
       tags = [
         "gateway.enable=true",
+        "oidc",
       ]
     }
 

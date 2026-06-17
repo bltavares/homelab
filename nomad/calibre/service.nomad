@@ -22,6 +22,9 @@ job "calibre" {
     service {
       name = "calibre"
       port = "web"
+      tags = [
+        "oidc",
+      ]
     }
 
     volume "config" {

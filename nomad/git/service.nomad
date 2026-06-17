@@ -39,6 +39,9 @@ job "git" {
       service {
         name = "git"
         port = "web"
+        tags = [
+          "oidc",
+        ]
 
         check {
           type     = "http"

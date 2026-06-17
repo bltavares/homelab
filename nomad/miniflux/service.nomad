@@ -52,6 +52,7 @@ INI
 
         tags = [
           "gateway.enable=true",
+          "oidc",
         ]
 
         check {
@@ -114,8 +115,6 @@ INI
         ports = ["db"]
         init  = true
       }
-
-      kill_signal = "SIGTERM"
 
       volume_mount {
         volume      = "persistence"
