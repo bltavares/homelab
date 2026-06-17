@@ -17,10 +17,6 @@ job "lab" {
       }
       port "admin" {}
 
-      port "proxyAuth" {
-        to = 4181
-      }
-
       port "git" {
         static = 222
       }
@@ -31,16 +27,6 @@ job "lab" {
       delay_function = "exponential"
       max_delay      = "120s"
       unlimited      = true
-    }
-
-    service {
-      name = "traefik-lab"
-      port = "admin"
-    }
-
-    service {
-      name = "login"
-      port = "proxyAuth"
     }
 
     volume "storage" {
@@ -69,6 +55,9 @@ job "lab" {
       }
 
       service {
+        name = "traefik-lab"
+        port = "admin"
+
         check {
           name     = "alive"
           type     = "tcp"
@@ -99,8 +88,11 @@ job "lab" {
       template {
         destination = "local/traefik.toml"
         data        = <<-TOML
-[log]
-  level = "DEBUG"
+# [log]
+# level = "DEBUG"
+#
+# [accessLog]
+# format = "json"
 
 [entrypoints.traefik]
  address = "{{ env "NOMAD_ADDR_admin" }}"
@@ -120,8 +112,6 @@ scheme = "https"
 address = ":443"
 http3 = {}
 asDefault = true
-[entryPoints.ssl.http]
-middlewares = ["auth@file"]
 [entryPoints.ssl.http.tls]
 certResolver = "letsencrypt"
 [[entryPoints.ssl.http.tls.domains]]
@@ -201,12 +191,35 @@ TOML
       }
 
       template {
-        destination = "local/dynamic/secure.toml"
+        destination = "local/dynamic/sso.toml"
         change_mode = "noop"
         data        = <<-TOML
-[http.middlewares.auth.forwardAuth]
-address = "http://{{ env "NOMAD_ADDR_proxyAuth" }}"
-authResponseHeaders = ["X-Forwarded-User"]
+{{- range service "id" -}}
+{{- scratch.Set "auth" (printf "http://%s:%d" .Address .Port) -}}
+{{- end -}}
+{{- range $services := services}}
+{{- if .Tags | contains "sso"}}
+
+[http.middlewares.{{.Name}}-sso.forwardAuth]
+address = "{{ scratch.Get "auth" }}/auth/v1/clients/{{.Name}}/forward_auth?redirect_state=302"
+[http.routers.{{ .Name }}]
+rule = "Host(`{{ .Name }}.lab.bltavares.com`) || Host(`{{ .Name }}.bltavares.com`)"
+middlewares = ["{{ .Name }}-sso@file"]
+service = "{{ .Name }}@consulcatalog"
+priority = 100
+[http.routers.{{ .Name }}-sso]
+rule = "(Host(`{{ .Name }}.lab.bltavares.com`) || Host(`{{ .Name }}.bltavares.com`)) && Path(`/auth/v1/clients/{{.Name}}/forward_auth/callback`)"
+service = "id@consulcatalog"
+priority = 101
+{{- else if .Tags | containsAny ("[oidc,passthru]" | parseYAML) | not }}
+
+# {{.Name}}: {{.Tags}}
+[http.routers.{{ .Name }}-disable]
+rule = "Host(`{{ .Name }}.lab.bltavares.com`) || Host(`{{ .Name }}.bltavares.com`)"
+service = "noop@internal"
+priority = 1000
+{{- end}}
+{{- end}}
 TOML
       }
 
@@ -221,82 +234,6 @@ INI
       resources {
         cpu    = 1000
         memory = 80
-      }
-    }
-
-    task "proxyAuth" {
-      driver = "docker"
-      config {
-        image = "ghcr.io/bltavares/traefik-forward-auth:patch"
-        ports = ["proxyAuth"]
-      }
-
-      template {
-        destination = "secrets/env.sh"
-        env         = true
-        data        = <<-INI
-LOG_LEVEL="debug"
-
-COOKIE_DOMAIN="lab.bltavares.com"
-SECRET="{{key "authProxy/cookie_secret"}}"
-
-DEFAULT_PROVIDER="oidc"
-PROVIDERS_OIDC_ISSUER_URL="https://id.bltavares.com/auth/v1/"
-PROVIDERS_OIDC_CLIENT_ID="homelab"
-PROVIDERS_OIDC_CLIENT_SECRET="{{ key "authProxy/rauthy_secret" }}"
-LOGOUT_REDIRECT="https://id.bltavares.com/auth/v1/oidc/logout"
-AUTH_HOST="login.lab.bltavares.com"
-
-# RULES
-DOMAIN="bltavares.com"
-CONFIG="{{ env "NOMAD_TASK_DIR" }}/config.ini"
-INI
-      }
-
-      template {
-        destination = "local/config.ini"
-        data        = <<-INI
-# vaultwarden
-rule.vaultwarden.action = allow
-rule.vaultwarden.rule = Host(`pass.lab.bltavares.com`)
-
-# Git api
-rule.git.action = allow
-rule.git.rule = Host(`git.lab.bltavares.com`) && (PathPrefix(`/v2`) || PathPrefix(`/api`) || HeadersRegexp(`User-Agent`, `git/2.+`))
-
-# Trow registry
-rule.registry.action = allow
-rule.registry.rule = Host(`registry.lab.bltavares.com`)
-
-# ipfs
-rule.kubo.action = allow
-rule.kubo.rule =  Host(`ipfs.lab.bltavares.com`) ||  Host(`ipfs-gateway.lab.bltavares.com`)
-
-# Calibre + Kobo
-rule.calibre_kobo.action = allow
-rule.calibre_kobo.rule = Host(`calibre.lab.bltavares.com`) && (PathPrefix(`/kobo`) || PathPrefix(`/opds`))
-
-# Bookmarks
-rule.bookmarks.action = allow
-rule.bookmarks.rule = Host(`bookmarks.lab.bltavares.com`) || Host(`bookmarks.bltavares.com`)
-
-# aricanduva
-rule.aricanduva.action = allow
-rule.aricanduva.rule = Host(`aricanduva.lab.bltavares.com`) || Host(`aricanduva.bltavares.com`)
-
-# auth
-rule.auth.action = allow
-rule.auth.rule = Host(`id.lab.bltavares.com`)
-
-# gotosocial
-rule.activepub.action = allow
-rule.activepub.rule = Host(`fedi.lab.bltavares.com`) || Host(`fedi.bltavares.com`)
-INI
-      }
-
-      resources {
-        cpu    = 400
-        memory = 50
       }
     }
   }
