@@ -10,6 +10,9 @@ job "wiki" {
     service {
       name = "wiki"
       port = "web"
+      tags = [
+        "sso",
+      ]
     }
 
     volume "storage" {

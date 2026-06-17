@@ -8,20 +8,12 @@ job "home" {
       port "web" { to = 3000 }
     }
 
-    service {
-      name = "home"
-      port = "web"
-    }
-
     volume "storage" {
       type            = "csi"
       source          = "home-consule"
       read_only       = false
       attachment_mode = "file-system"
       access_mode     = "single-node-writer"
-    }
-    update {
-      max_parallel = 0
     }
 
     task "image" {
@@ -32,6 +24,12 @@ job "home" {
       }
 
       service {
+        name = "home"
+        port = "web"
+        tags = [
+          "sso",
+        ]
+
         check {
           name     = "alive"
           type     = "http"

@@ -7,11 +7,6 @@ job "syncthing" {
       port "web" { static = 8384 }
     }
 
-    service {
-      name = "syncthing"
-      port = "web"
-    }
-
     volume "config" {
       type            = "csi"
       source          = "syncthing"
@@ -63,6 +58,12 @@ job "syncthing" {
       }
 
       service {
+        name = "syncthing"
+        port = "web"
+        tags = [
+          "sso",
+        ]
+
         check {
           type     = "tcp"
           port     = "web"

@@ -25,11 +25,6 @@ job "gateway" {
       unlimited      = true
     }
 
-    service {
-      name = "gateway-traefik"
-      port = "admin"
-    }
-
     volume "storage" {
       type            = "host"
       source          = "traefik-gateway"
@@ -55,6 +50,12 @@ job "gateway" {
       }
 
       service {
+        name = "gateway-traefik"
+        port = "admin"
+        tags = [
+          "sso",
+        ]
+
         check {
           name     = "alive"
           type     = "tcp"
