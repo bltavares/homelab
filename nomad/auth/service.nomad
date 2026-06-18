@@ -70,6 +70,9 @@ rp_name = "homelab"
 
 [access]
 admin_button_hide = true
+# Allow split horizon access (*.lab auth with id. from public) meanwhile full-split horizon is not ready
+# TODO: Revert after split horizon
+session_validate_ip = false
 
 #[matrix]
 #msc3861_enable = true
