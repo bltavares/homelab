@@ -35,6 +35,8 @@ DATABASE_URL="{{ key "fake_key_to_await_db" }}"
 TRUSTED_REVERSE_PROXY_NETWORKS="{{key "authProxy/network_range"}}"
 
 RUN_MIGRATIONS="1"
+# Allow access to split-horizon linkding on private ip
+INTEGRATION_ALLOW_PRIVATE_NETWORKS=1
 BASE_URL="https://miniflux.bltavares.com"
 
 OAUTH2_PROVIDER=oidc
