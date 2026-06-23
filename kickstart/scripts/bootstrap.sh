@@ -17,7 +17,7 @@ gibson="192.168.15.195"
 # ## Bootstrap
 # true && for server in $romulus $tiny $omv $ryzen $rotterdam $gibson; do
     # echo "$server"
-    # kickstart deploy root@"$server" bootstrap ssh-keys docker-ce
+    # kickstart deploy root@"$server" bootstrap ssh-keys docker-ce opkssh
 # done
 
 # ## Zerotier
