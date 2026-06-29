@@ -33,8 +33,9 @@ job "october" {
 tiny,64:1c:67:6b:9d:10
 omv,a0:b3:cc:e2:58:aa
 ryzen,84:47:09:1D:D3:E4
-romulus,C8:FF:BF:04:04:6A
+romulus,84:47:09:83:02:62
 rotterdam,84:47:09:65:1E:9C
+synthcore,30:56:0F:03:D4:A0
 CSV
       }
 
